@@ -1,0 +1,322 @@
+import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { Eye, EyeOff, Mail, Lock, Loader2, Phone, MessageCircle, User } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Separator } from '@/components/ui/separator';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import useAuth from '@/hooks/useAuth';
+
+type LoginMethod = 'email' | 'phone' | 'wechat';
+
+export function LoginForm() {
+  const { t } = useTranslation();
+  const navigate = useNavigate();
+  const { login, demoLogin, guestLogin } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState('');
+  const [loginMethod, setLoginMethod] = useState<LoginMethod>('email');
+  const [countdown, setCountdown] = useState(0);
+  
+  const [formData, setFormData] = useState({
+    email: '',
+    phone: '',
+    password: '',
+    verificationCode: '',
+    rememberMe: false,
+  });
+
+  const handleSendCode = async () => {
+    if (!formData.phone || countdown > 0) return;
+    
+    setCountdown(60);
+    const timer = setInterval(() => {
+      setCountdown(prev => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setIsLoading(true);
+
+    try {
+      if (loginMethod === 'email') {
+        await login({
+          email: formData.email,
+          password: formData.password,
+        });
+      } else if (loginMethod === 'phone') {
+        await login({
+          phone: formData.phone,
+          verificationCode: formData.verificationCode,
+        });
+      }
+      navigate('/');
+    } catch (err: any) {
+      setError(err.message || t('auth.invalidCredentials'));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleDemoLogin = async () => {
+    setError('');
+    setIsLoading(true);
+    try {
+      await demoLogin();
+      navigate('/');
+    } catch (err: any) {
+      setError(err.message || t('auth.invalidCredentials'));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleGuestLogin = async () => {
+    setError('');
+    setIsLoading(true);
+    try {
+      await guestLogin();
+      navigate('/');
+    } catch (err: any) {
+      setError(err.message || t('auth.invalidCredentials'));
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleWechatLogin = () => {
+    setError(t('auth.comingSoon') || '微信登录即将上线');
+  };
+
+  return (
+    <div className="w-full max-w-md mx-auto">
+      <div className="text-center mb-8">
+        <h1 className="text-3xl font-bold text-[#333333] mb-2">{t('auth.welcomeBack')}</h1>
+        <p className="text-[#718096]">{t('auth.loginTitle')}</p>
+      </div>
+
+      {error && (
+        <div className="mb-4 p-4 rounded-xl bg-red-50 border border-red-200 text-red-600 text-sm">
+          {error}
+        </div>
+      )}
+
+      <Tabs value={loginMethod} onValueChange={(v) => setLoginMethod(v as LoginMethod)} className="w-full">
+        <TabsList className="grid w-full grid-cols-3 mb-6">
+          <TabsTrigger value="email" className="gap-2">
+            <Mail className="w-4 h-4" />
+            <span className="hidden sm:inline">{t('auth.emailLogin')}</span>
+          </TabsTrigger>
+          <TabsTrigger value="phone" className="gap-2">
+            <Phone className="w-4 h-4" />
+            <span className="hidden sm:inline">{t('auth.phoneLogin')}</span>
+          </TabsTrigger>
+          <TabsTrigger value="wechat" className="gap-2">
+            <MessageCircle className="w-4 h-4" />
+            <span className="hidden sm:inline">{t('auth.wechatLogin')}</span>
+          </TabsTrigger>
+        </TabsList>
+
+        <TabsContent value="email">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="email">{t('auth.email')}</Label>
+              <div className="relative">
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#718096]" />
+                <Input
+                  id="email"
+                  type="email"
+                  placeholder="your@email.com"
+                  value={formData.email}
+                  onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                  className="pl-10 h-12 rounded-xl border-gray-200 focus:border-[#38B2AC] focus:ring-[#38B2AC]"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="password">{t('auth.password')}</Label>
+              <div className="relative">
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#718096]" />
+                <Input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  placeholder={t('auth.password')}
+                  value={formData.password}
+                  onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                  className="pl-10 pr-10 h-12 rounded-xl border-gray-200 focus:border-[#38B2AC] focus:ring-[#38B2AC]"
+                  required
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#718096] hover:text-[#333333]"
+                >
+                  {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
+                </button>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="remember"
+                  checked={formData.rememberMe}
+                  onCheckedChange={(checked) => 
+                    setFormData({ ...formData, rememberMe: checked as boolean })
+                  }
+                />
+                <Label htmlFor="remember" className="text-sm text-[#718096] cursor-pointer">
+                  {t('auth.rememberMe')}
+                </Label>
+              </div>
+              <Link 
+                to="/forgot-password" 
+                className="text-sm text-[#38B2AC] hover:text-[#2C9B95]"
+              >
+                {t('auth.forgotPassword')}
+              </Link>
+            </div>
+
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="w-full h-12 bg-[#38B2AC] hover:bg-[#2C9B95] text-white rounded-xl font-medium"
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                  {t('common.loading')}
+                </>
+              ) : (
+                t('nav.login')
+              )}
+            </Button>
+          </form>
+        </TabsContent>
+
+        <TabsContent value="phone">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="phone">{t('auth.phone')}</Label>
+              <div className="relative">
+                <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#718096]" />
+                <Input
+                  id="phone"
+                  type="tel"
+                  placeholder="13800138000"
+                  value={formData.phone}
+                  onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                  className="pl-10 h-12 rounded-xl border-gray-200 focus:border-[#38B2AC] focus:ring-[#38B2AC]"
+                  required
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="code">{t('auth.verificationCode')}</Label>
+              <div className="flex gap-2">
+                <Input
+                  id="code"
+                  type="text"
+                  placeholder="123456"
+                  value={formData.verificationCode}
+                  onChange={(e) => setFormData({ ...formData, verificationCode: e.target.value })}
+                  className="h-12 rounded-xl border-gray-200 focus:border-[#38B2AC] focus:ring-[#38B2AC]"
+                  required
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={handleSendCode}
+                  disabled={countdown > 0 || !formData.phone}
+                  className="h-12 px-4 whitespace-nowrap"
+                >
+                  {countdown > 0 ? `${countdown}s` : t('auth.sendCode')}
+                </Button>
+              </div>
+            </div>
+
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="w-full h-12 bg-[#38B2AC] hover:bg-[#2C9B95] text-white rounded-xl font-medium"
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                  {t('common.loading')}
+                </>
+              ) : (
+                t('nav.login')
+              )}
+            </Button>
+          </form>
+        </TabsContent>
+
+        <TabsContent value="wechat">
+          <div className="text-center py-8">
+            <div className="w-32 h-32 mx-auto mb-4 bg-[#07C160] rounded-2xl flex items-center justify-center">
+              <MessageCircle className="w-16 h-16 text-white" />
+            </div>
+            <p className="text-[#718096] mb-4">{t('auth.wechatLogin')}</p>
+            <Button
+              onClick={handleWechatLogin}
+              className="w-full h-12 bg-[#07C160] hover:bg-[#06AD56] text-white rounded-xl font-medium"
+            >
+              <MessageCircle className="w-5 h-5 mr-2" />
+              {t('auth.wechatLogin')}
+            </Button>
+          </div>
+        </TabsContent>
+      </Tabs>
+
+      <div className="mt-6">
+        <Separator className="my-4" />
+        <div className="grid grid-cols-2 gap-3">
+          <Button
+            type="button"
+            variant="outline"
+            onClick={handleDemoLogin}
+            disabled={isLoading}
+            className="h-12 rounded-xl border-[#38B2AC] text-[#38B2AC] hover:bg-[#E6F7F6]"
+          >
+            {t('auth.demoLogin')}
+          </Button>
+          <Button
+            type="button"
+            variant="outline"
+            onClick={handleGuestLogin}
+            disabled={isLoading}
+            className="h-12 rounded-xl"
+          >
+            <User className="w-4 h-4 mr-2" />
+            {t('auth.guestLogin')}
+          </Button>
+        </div>
+      </div>
+
+      <p className="mt-6 text-center text-sm text-[#718096]">
+        {t('auth.noAccount')}{' '}
+        <Link to="/register" className="text-[#38B2AC] hover:text-[#2C9B95] font-medium">
+          {t('auth.registerNow')}
+        </Link>
+      </p>
+    </div>
+  );
+}
+
+export default LoginForm;
