@@ -286,5 +286,33 @@
     "clearChat": "Clear Chat",
     "noMessages": "No messages",
     "startConversation": "Start a conversation with AI"
+  },
+  "knowledge": {
+    "title": "Fitness Knowledge",
+    "subtitle": "Professional fitness guidance and health knowledge",
+    "searchPlaceholder": "Search articles, tags or keywords...",
+    "categories": {
+      "label": "Categories",
+      "nutrition": "Nutrition",
+      "strength": "Strength",
+      "cardio": "Cardio",
+      "flexibility": "Flexibility",
+      "recovery": "Recovery",
+      "mental-health": "Mental Health",
+      "equipment": "Equipment",
+      "beginner-guide": "Beginner Guide"
+    },
+    "all": "All",
+    "readTime": "{{minutes}} min read",
+    "likes": "Likes",
+    "share": "Share",
+    "bookmark": "Bookmark",
+    "relatedArticles": "Related Articles",
+    "tags": "Tags",
+    "noArticles": "No articles found",
+    "tryOtherKeywords": "Try other keywords or filters",
+    "noArticlesInCategory": "No articles in this category",
+    "totalArticles": "Total {{count}} articles",
+    "clearFilters": "Clear Filters"
   }
 }

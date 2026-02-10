@@ -133,31 +133,6 @@
     "noEvents": "Aucun entraînement ce jour",
     "exerciseTypes": "Types d'exercice"
   },
-  "knowledge": {
-    "title": "Connaissances fitness",
-    "subtitle": "Conseils professionnels et astuces santé",
-    "searchPlaceholder": "Rechercher des articles, tags ou mots-clés...",
-    "categories": "Catégories",
-    "all": "Tout",
-    "readTime": "{{minutes}} min de lecture",
-    "likes": "J'aime",
-    "share": "Partager",
-    "bookmark": "Enregistrer",
-    "relatedArticles": "Articles connexes",
-    "tags": "Tags",
-    "noArticles": "Aucun article trouvé",
-    "tryOtherKeywords": "Essayez d'autres mots-clés ou filtres"
-  },
-  "knowledgeCategories": {
-    "nutrition": "Nutrition",
-    "strength": "Musculation",
-    "cardio": "Cardio",
-    "flexibility": "Flexibilité",
-    "recovery": "Récupération",
-    "mental-health": "Santé mentale",
-    "equipment": "Équipement",
-    "beginner-guide": "Guide débutant"
-  },
   "diet": {
     "title": "Régime alimentaire",
     "subtitle": "Alimentation saine, recettes délicieuses",
@@ -237,7 +212,35 @@
     "suggestions": "Suggestions",
     "clearChat": "Effacer la conversation",
     "noMessages": "Aucun message",
-    "startConversation": "Commencez une conversation avec l'IA"
+    "startConversation": "Commencer une conversation avec l'IA"
+  },
+  "knowledge": {
+    "title": "Connaissances Fitness",
+    "subtitle": "Conseils professionnels de fitness et de santé",
+    "searchPlaceholder": "Rechercher des articles, tags ou mots-clés...",
+    "categories": {
+      "label": "Catégories",
+      "nutrition": "Nutrition",
+      "strength": "Force",
+      "cardio": "Cardio",
+      "flexibility": "Flexibilité",
+      "recovery": "Récupération",
+      "mental-health": "Santé Mentale",
+      "equipment": "Équipement",
+      "beginner-guide": "Guide Débutant"
+    },
+    "all": "Tous",
+    "readTime": "{{minutes}} min de lecture",
+    "likes": "J'aime",
+    "share": "Partager",
+    "bookmark": "Sauvegarder",
+    "relatedArticles": "Articles Similaires",
+    "tags": "Tags",
+    "noArticles": "Aucun article trouvé",
+    "tryOtherKeywords": "Essayez d'autres mots-clés ou filtres",
+    "noArticlesInCategory": "Aucun article dans cette catégorie",
+    "totalArticles": "Total {{count}} articles",
+    "clearFilters": "Effacer les filtres"
   },
   "profile": {
     "title": "Profil",

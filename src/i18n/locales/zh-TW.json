@@ -135,7 +135,17 @@
     "title": "健身知識專欄",
     "subtitle": "專業的健身指導和健康知識",
     "searchPlaceholder": "搜索文章、標籤或關鍵詞...",
-    "categories": "分類",
+    "categories": {
+      "label": "分類",
+      "nutrition": "營養飲食",
+      "strength": "力量訓練",
+      "cardio": "有氧運動",
+      "flexibility": "柔韌拉伸",
+      "recovery": "休息恢復",
+      "mental-health": "心理健康",
+      "equipment": "運動裝備",
+      "beginner-guide": "新手指南"
+    },
     "all": "全部",
     "readTime": "{{minutes}} 分鐘閱讀",
     "likes": "點讚",
@@ -144,17 +154,10 @@
     "relatedArticles": "相關文章",
     "tags": "標籤",
     "noArticles": "沒有找到相關文章",
-    "tryOtherKeywords": "嘗試其他關鍵詞或篩選條件"
-  },
-  "knowledgeCategories": {
-    "nutrition": "營養",
-    "strength": "力量訓練",
-    "cardio": "有氧運動",
-    "flexibility": "柔韌性",
-    "recovery": "恢復",
-    "mental-health": "心理健康",
-    "equipment": "裝備",
-    "beginner-guide": "新手指南"
+    "tryOtherKeywords": "嘗試其他關鍵詞或篩選條件",
+    "noArticlesInCategory": "該分類下暫無文章",
+    "totalArticles": "共 {{count}} 篇文章",
+    "clearFilters": "清除篩選"
   },
   "diet": {
     "title": "飲食專欄",

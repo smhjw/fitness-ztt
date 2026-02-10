@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { Clock, Heart, Share2, ChevronRight } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { Clock, Heart, Share2, ChevronRight, ImageOff } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import type { KnowledgeArticle, KnowledgeCategory } from '@/types';
-import { categoryLabels, categoryColors } from '@/hooks/useArticles';
+import { categoryColors } from '@/hooks/useArticles';
 
 interface ArticleCardProps {
   article: KnowledgeArticle;
@@ -13,8 +14,10 @@ interface ArticleCardProps {
 }
 
 export function ArticleCard({ article, variant = 'default', onClick }: ArticleCardProps) {
+  const { t } = useTranslation();
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(article.likes);
+  const [imageError, setImageError] = useState(false);
 
   const handleLike = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -35,6 +38,24 @@ export function ArticleCard({ article, variant = 'default', onClick }: ArticleCa
     }
   };
 
+  const renderImage = (className: string) => {
+    if (!article.imageUrl || imageError) {
+      return (
+        <div className={`bg-gray-100 flex items-center justify-center ${className}`}>
+          <ImageOff className="w-8 h-8 text-gray-300" />
+        </div>
+      );
+    }
+    return (
+      <img 
+        src={article.imageUrl} 
+        alt={article.title}
+        className={className}
+        onError={() => setImageError(true)}
+      />
+    );
+  };
+
   if (variant === 'compact') {
     return (
       <Card 
@@ -43,15 +64,9 @@ export function ArticleCard({ article, variant = 'default', onClick }: ArticleCa
       >
         <CardContent className="p-4">
           <div className="flex items-start gap-3">
-            {article.imageUrl && (
-              <div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
-                <img 
-                  src={article.imageUrl} 
-                  alt={article.title}
-                  className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                />
-              </div>
-            )}
+            <div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+              {renderImage("w-full h-full object-cover group-hover:scale-110 transition-transform duration-300")}
+            </div>
             <div className="flex-1 min-w-0">
               <div className="flex flex-wrap gap-1 mb-2">
                 {article.category.slice(0, 2).map((cat) => (
@@ -60,7 +75,7 @@ export function ArticleCard({ article, variant = 'default', onClick }: ArticleCa
                     variant="outline" 
                     className={`text-xs ${categoryColors[cat]}`}
                   >
-                    {categoryLabels[cat]}
+                    {t(`knowledge.categories.${cat}`)}
                   </Badge>
                 ))}
               </div>
@@ -70,7 +85,7 @@ export function ArticleCard({ article, variant = 'default', onClick }: ArticleCa
               <div className="flex items-center gap-3 mt-2 text-xs text-[#718096]">
                 <span className="flex items-center gap-1">
                   <Clock className="w-3 h-3" />
-                  {article.readTime} 分钟
+                  {t('knowledge.readTime', { minutes: article.readTime })}
                 </span>
               </div>
             </div>
@@ -86,15 +101,9 @@ export function ArticleCard({ article, variant = 'default', onClick }: ArticleCa
         className="cursor-pointer hover:shadow-card-hover transition-all duration-300 overflow-hidden group"
         onClick={onClick}
       >
-        {article.imageUrl && (
-          <div className="h-48 overflow-hidden">
-            <img 
-              src={article.imageUrl} 
-              alt={article.title}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-            />
-          </div>
-        )}
+        <div className="h-48 overflow-hidden">
+          {renderImage("w-full h-full object-cover group-hover:scale-105 transition-transform duration-500")}
+        </div>
         <CardContent className="p-6">
           <div className="flex flex-wrap gap-2 mb-3">
             {article.category.map((cat) => (
@@ -103,7 +112,7 @@ export function ArticleCard({ article, variant = 'default', onClick }: ArticleCa
                 variant="outline" 
                 className={categoryColors[cat]}
               >
-                {categoryLabels[cat]}
+                {t(`knowledge.categories.${cat}`)}
               </Badge>
             ))}
           </div>
@@ -117,7 +126,7 @@ export function ArticleCard({ article, variant = 'default', onClick }: ArticleCa
             <div className="flex items-center gap-4 text-sm text-[#718096]">
               <span className="flex items-center gap-1">
                 <Clock className="w-4 h-4" />
-                {article.readTime} 分钟阅读
+                {t('knowledge.readTime', { minutes: article.readTime })}
               </span>
               <span>{article.author}</span>
             </div>
@@ -141,7 +150,7 @@ export function ArticleCard({ article, variant = 'default', onClick }: ArticleCa
               variant="outline" 
               className={categoryColors[cat]}
             >
-              {categoryLabels[cat]}
+              {t(`knowledge.categories.${cat}`)}
             </Badge>
           ))}
         </div>
@@ -155,7 +164,7 @@ export function ArticleCard({ article, variant = 'default', onClick }: ArticleCa
           <div className="flex items-center gap-3 text-xs text-[#718096]">
             <span className="flex items-center gap-1">
               <Clock className="w-3 h-3" />
-              {article.readTime} 分钟
+              {t('knowledge.readTime', { minutes: article.readTime })}
             </span>
             <span>{article.publishedAt}</span>
           </div>

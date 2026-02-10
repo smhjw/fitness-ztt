@@ -24,7 +24,15 @@ export function useArticles(): UseArticlesReturn {
 
   useEffect(() => {
     setIsLoading(true);
-    const loadedArticles = articlesStorage.getAll();
+    let loadedArticles = articlesStorage.getAll();
+    
+    // Check if articles need migration (missing imageUrl)
+    const needsMigration = loadedArticles.some(a => !a.imageUrl);
+    if (needsMigration) {
+      localStorage.removeItem('fittrack_articles');
+      loadedArticles = articlesStorage.getAll(); // Reloads defaults with images
+    }
+
     setArticles(loadedArticles);
     setIsLoading(false);
   }, []);
@@ -111,17 +119,6 @@ export function useArticles(): UseArticlesReturn {
     getRelatedArticles,
   };
 }
-
-export const categoryLabels: Record<KnowledgeCategory, string> = {
-  nutrition: 'Nutrition',
-  strength: 'Strength',
-  cardio: 'Cardio',
-  flexibility: 'Flexibility',
-  recovery: 'Recovery',
-  'mental-health': 'Mental Health',
-  equipment: 'Equipment',
-  'beginner-guide': 'Beginner',
-};
 
 export const categoryColors: Record<KnowledgeCategory, string> = {
   nutrition: 'bg-green-100 text-green-700 border-green-200',

@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Clock, Heart, Share2, Bookmark } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import type { KnowledgeArticle, KnowledgeCategory } from '@/types';
-import { categoryLabels, categoryColors } from '@/hooks/useArticles';
+import { categoryColors } from '@/hooks/useArticles';
 import ArticleCard from './ArticleCard';
 
 interface ArticleDetailProps {
@@ -15,6 +15,7 @@ interface ArticleDetailProps {
 }
 
 export function ArticleDetail({ article, relatedArticles, onBack }: ArticleDetailProps) {
+  const { t } = useTranslation();
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [likeCount, setLikeCount] = useState(article.likes);
@@ -108,7 +109,7 @@ export function ArticleDetail({ article, relatedArticles, onBack }: ArticleDetai
           className="gap-2"
         >
           <ArrowLeft className="w-4 h-4" />
-          返回
+          {t('common.back')}
         </Button>
       </div>
 
@@ -121,7 +122,7 @@ export function ArticleDetail({ article, relatedArticles, onBack }: ArticleDetai
               variant="outline" 
               className={categoryColors[cat]}
             >
-              {categoryLabels[cat]}
+              {t(`knowledge.categories.${cat}`)}
             </Badge>
           ))}
         </div>
@@ -133,7 +134,7 @@ export function ArticleDetail({ article, relatedArticles, onBack }: ArticleDetai
           <span>•</span>
           <span className="flex items-center gap-1">
             <Clock className="w-4 h-4" />
-            {article.readTime} 分钟阅读
+            {t('knowledge.readTime', { minutes: article.readTime })}
           </span>
           <span>•</span>
           <span>{article.publishedAt}</span>
@@ -167,7 +168,7 @@ export function ArticleDetail({ article, relatedArticles, onBack }: ArticleDetai
           className={`gap-2 ${isBookmarked ? 'text-[#38B2AC] border-[#38B2AC] bg-[#E6F7F6]' : ''}`}
         >
           <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-current' : ''}`} />
-          收藏
+          {t('knowledge.bookmark')}
         </Button>
         <Button
           variant="outline"
@@ -175,7 +176,7 @@ export function ArticleDetail({ article, relatedArticles, onBack }: ArticleDetai
           className="gap-2"
         >
           <Share2 className="w-4 h-4" />
-          分享
+          {t('knowledge.share')}
         </Button>
       </div>
 
@@ -192,7 +193,7 @@ export function ArticleDetail({ article, relatedArticles, onBack }: ArticleDetai
 
       {/* Tags */}
       <div className="mb-12">
-        <h3 className="text-sm font-medium text-[#718096] mb-3">标签</h3>
+        <h3 className="text-sm font-medium text-[#718096] mb-3">{t('knowledge.tags')}</h3>
         <div className="flex flex-wrap gap-2">
           {article.tags.map((tag) => (
             <Badge key={tag} variant="secondary" className="text-xs">
@@ -205,7 +206,7 @@ export function ArticleDetail({ article, relatedArticles, onBack }: ArticleDetai
       {/* Related Articles */}
       {relatedArticles.length > 0 && (
         <div>
-          <h3 className="text-xl font-bold text-[#333333] mb-4">相关文章</h3>
+          <h3 className="text-xl font-bold text-[#333333] mb-4">{t('knowledge.relatedArticles')}</h3>
           <div className="grid md:grid-cols-2 gap-4">
             {relatedArticles.map((relatedArticle) => (
               <ArticleCard

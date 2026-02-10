@@ -286,5 +286,33 @@
     "clearChat": "清空对话",
     "noMessages": "暂无消息",
     "startConversation": "开始与 AI 对话"
+  },
+  "knowledge": {
+    "title": "健身知识专栏",
+    "subtitle": "专业的健身指导和健康知识",
+    "searchPlaceholder": "搜索文章、标签或关键词...",
+    "categories": {
+      "label": "分类",
+      "nutrition": "营养饮食",
+      "strength": "力量训练",
+      "cardio": "有氧运动",
+      "flexibility": "柔韧拉伸",
+      "recovery": "休息恢复",
+      "mental-health": "心理健康",
+      "equipment": "运动装备",
+      "beginner-guide": "新手指南"
+    },
+    "all": "全部",
+    "readTime": "{{minutes}} 分钟阅读",
+    "likes": "点赞",
+    "share": "分享",
+    "bookmark": "收藏",
+    "relatedArticles": "相关文章",
+    "tags": "标签",
+    "noArticles": "没有找到相关文章",
+    "tryOtherKeywords": "尝试其他关键词或筛选条件",
+    "noArticlesInCategory": "该分类下暂无文章",
+    "totalArticles": "共 {{count}} 篇文章",
+    "clearFilters": "清除筛选"
   }
 }
