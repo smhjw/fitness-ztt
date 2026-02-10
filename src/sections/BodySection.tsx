@@ -101,7 +101,7 @@ export function BodySection() {
             {/* Weight Trend */}
             <BodyTrendChart
               title={t('body.weightTrend')}
-              data={weightChartData}
+              data={weightChartData.map(d => ({ date: d.date, value: d.weight }))}
               unit={t('common.kg')}
               color="#38B2AC"
             />
@@ -110,7 +110,7 @@ export function BodySection() {
             {bodyFatChartData.length > 0 && (
               <BodyTrendChart
                 title={t('body.bodyFatTrend')}
-                data={bodyFatChartData}
+                data={bodyFatChartData.map(d => ({ date: d.date, value: d.bodyFat }))}
                 unit="%"
                 color="#F59E0B"
               />
