@@ -1,19 +1,29 @@
+import { Suspense, lazy } from 'react';
 import { HashRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Toaster } from '@/components/ui/sonner';
 import { AuthProvider } from '@/hooks/useAuth';
 import Navbar from '@/components/navigation/Navbar';
 import Footer from '@/components/navigation/Footer';
-import HeroSection from '@/sections/HeroSection';
-import RecordsSection from '@/sections/RecordsSection';
-import StatisticsSection from '@/sections/StatisticsSection';
-import KnowledgeSection from '@/sections/KnowledgeSection';
-import DietSection from '@/sections/DietSection';
-import BodySection from '@/sections/BodySection';
-import AISection from '@/sections/AISection';
-import ProfileSection from '@/sections/ProfileSection';
-import LoginSection from '@/sections/LoginSection';
-import RegisterSection from '@/sections/RegisterSection';
 import useAuth from '@/hooks/useAuth';
+
+const HeroSection = lazy(() => import('@/sections/HeroSection'));
+const RecordsSection = lazy(() => import('@/sections/RecordsSection'));
+const StatisticsSection = lazy(() => import('@/sections/StatisticsSection'));
+const KnowledgeSection = lazy(() => import('@/sections/KnowledgeSection'));
+const DietSection = lazy(() => import('@/sections/DietSection'));
+const BodySection = lazy(() => import('@/sections/BodySection'));
+const AISection = lazy(() => import('@/sections/AISection'));
+const ProfileSection = lazy(() => import('@/sections/ProfileSection'));
+const LoginSection = lazy(() => import('@/sections/LoginSection'));
+const RegisterSection = lazy(() => import('@/sections/RegisterSection'));
+
+function PageLoader() {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#38B2AC]" />
+    </div>
+  );
+}
 
 // Protected Route Component
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -77,128 +87,130 @@ function AuthLayout({ children }: { children: React.ReactNode }) {
 
 function AppRoutes() {
   return (
-    <Routes>
-      {/* Public Routes */}
-      <Route
-        path="/login"
-        element={
-          <PublicRoute>
-            <AuthLayout>
-              <LoginSection />
-            </AuthLayout>
-          </PublicRoute>
-        }
-      />
-      <Route
-        path="/register"
-        element={
-          <PublicRoute>
-            <AuthLayout>
-              <RegisterSection />
-            </AuthLayout>
-          </PublicRoute>
-        }
-      />
+    <Suspense fallback={<PageLoader />}>
+      <Routes>
+        {/* Public Routes */}
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <AuthLayout>
+                <LoginSection />
+              </AuthLayout>
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/register"
+          element={
+            <PublicRoute>
+              <AuthLayout>
+                <RegisterSection />
+              </AuthLayout>
+            </PublicRoute>
+          }
+        />
 
-      {/* Protected Routes */}
-      <Route
-        path="/"
-        element={
-          <MainLayout>
-            <HeroSection />
-          </MainLayout>
-        }
-      />
-      <Route
-        path="/records"
-        element={
-          <MainLayout>
-            <ProtectedRoute>
-              <RecordsSection />
-            </ProtectedRoute>
-          </MainLayout>
-        }
-      />
-      <Route
-        path="/statistics"
-        element={
-          <MainLayout>
-            <ProtectedRoute>
-              <StatisticsSection />
-            </ProtectedRoute>
-          </MainLayout>
-        }
-      />
-      <Route
-        path="/calendar"
-        element={
-          <MainLayout>
-            <ProtectedRoute>
-              <RecordsSection />
-            </ProtectedRoute>
-          </MainLayout>
-        }
-      />
-      <Route
-        path="/knowledge"
-        element={
-          <MainLayout>
-            <KnowledgeSection />
-          </MainLayout>
-        }
-      />
-      <Route
-        path="/diet"
-        element={
-          <MainLayout>
-            <DietSection />
-          </MainLayout>
-        }
-      />
-      <Route
-        path="/body"
-        element={
-          <MainLayout>
-            <ProtectedRoute>
-              <BodySection />
-            </ProtectedRoute>
-          </MainLayout>
-        }
-      />
-      <Route
-        path="/ai"
-        element={
-          <MainLayout>
-            <ProtectedRoute>
-              <AISection />
-            </ProtectedRoute>
-          </MainLayout>
-        }
-      />
-      <Route
-        path="/profile"
-        element={
-          <MainLayout>
-            <ProtectedRoute>
-              <ProfileSection />
-            </ProtectedRoute>
-          </MainLayout>
-        }
-      />
-      <Route
-        path="/settings"
-        element={
-          <MainLayout>
-            <ProtectedRoute>
-              <ProfileSection />
-            </ProtectedRoute>
-          </MainLayout>
-        }
-      />
+        {/* Protected Routes */}
+        <Route
+          path="/"
+          element={
+            <MainLayout>
+              <HeroSection />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/records"
+          element={
+            <MainLayout>
+              <ProtectedRoute>
+                <RecordsSection />
+              </ProtectedRoute>
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/statistics"
+          element={
+            <MainLayout>
+              <ProtectedRoute>
+                <StatisticsSection />
+              </ProtectedRoute>
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/calendar"
+          element={
+            <MainLayout>
+              <ProtectedRoute>
+                <RecordsSection />
+              </ProtectedRoute>
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/knowledge"
+          element={
+            <MainLayout>
+              <KnowledgeSection />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/diet"
+          element={
+            <MainLayout>
+              <DietSection />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/body"
+          element={
+            <MainLayout>
+              <ProtectedRoute>
+                <BodySection />
+              </ProtectedRoute>
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/ai"
+          element={
+            <MainLayout>
+              <ProtectedRoute>
+                <AISection />
+              </ProtectedRoute>
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <MainLayout>
+              <ProtectedRoute>
+                <ProfileSection />
+              </ProtectedRoute>
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/settings"
+          element={
+            <MainLayout>
+              <ProtectedRoute>
+                <ProfileSection />
+              </ProtectedRoute>
+            </MainLayout>
+          }
+        />
 
-      {/* Fallback */}
-      <Route path="*" element={<Navigate to="/" replace />} />
-    </Routes>
+        {/* Fallback */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Suspense>
   );
 }
 

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=ZCOOL+QingKe+HuangYou&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -35,6 +35,9 @@
     --surface: #FFFFFF;
     --text: #333333;
     --gray: #718096;
+
+    --font-sans: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    --font-display: 'ZCOOL QingKe HuangYou', 'Noto Sans SC', sans-serif;
   }
 }
 
@@ -49,7 +52,18 @@
   
   body {
     @apply bg-background text-foreground antialiased;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-sans);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  .font-display {
+    font-family: var(--font-display);
+    letter-spacing: 0.2px;
   }
 }
 
@@ -163,7 +177,7 @@
 
 /* FullCalendar custom styles */
 .fc {
-  font-family: 'Inter', sans-serif !important;
+  font-family: var(--font-sans) !important;
 }
 
 .fc .fc-button-primary {
@@ -182,14 +196,4 @@
 .fc-event {
   background-color: var(--teal) !important;
   border-color: var(--teal) !important;
-}
-
-/* ECharts tooltip custom style */
-.echarts-tooltip {
-  background: rgba(255, 255, 255, 0.95) !important;
-  backdrop-filter: blur(10px);
-  border-radius: 8px !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
-  border: none !important;
-  padding: 12px !important;
 }
