@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Send, Bot, User, Trash2, Sparkles, Dumbbell, Apple, Heart, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -14,7 +13,6 @@ const suggestions = [
 ];
 
 export function AIChat() {
-  const { t } = useTranslation();
   const { messages, isLoading, sendMessage, clearMessages } = useAIChat();
   const [input, setInput] = useState('');
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -39,7 +37,7 @@ export function AIChat() {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-200px)] max-h-[800px] bg-white rounded-2xl shadow-card overflow-hidden">
+    <div className="flex flex-col h-[70dvh] min-h-[420px] max-h-[720px] md:h-[calc(100vh-200px)] md:max-h-[800px] bg-white rounded-2xl shadow-card overflow-hidden">
       {/* Header */}
       <div className="p-4 border-b border-gray-100 flex items-center justify-between bg-gradient-to-r from-[#38B2AC] to-[#2C9B95]">
         <div className="flex items-center gap-3">
@@ -47,8 +45,8 @@ export function AIChat() {
             <Bot className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h3 className="font-semibold text-white">FitTrack AI</h3>
-            <p className="text-xs text-white/80">{t('ai.subtitle')}</p>
+            <h3 className="font-semibold text-white">FitTrack 智能助手</h3>
+            <p className="text-xs text-white/80">训练、饮食、恢复一问即得</p>
           </div>
         </div>
         <Button
@@ -62,7 +60,7 @@ export function AIChat() {
       </div>
 
       {/* Messages */}
-      <ScrollArea ref={scrollRef} className="flex-1 p-4">
+      <ScrollArea viewportRef={scrollRef} className="flex-1 p-4">
         <div className="space-y-4">
           {messages.map((message) => (
             <div
@@ -101,7 +99,7 @@ export function AIChat() {
               <div className="bg-gray-100 p-3 rounded-2xl rounded-tl-none">
                 <div className="flex items-center gap-2 text-sm text-[#718096]">
                   <Sparkles className="w-4 h-4 animate-pulse" />
-                  {t('ai.thinking')}
+                  正在思考...
                 </div>
               </div>
             </div>
@@ -111,7 +109,7 @@ export function AIChat() {
         {/* Suggestions */}
         {messages.length <= 1 && (
           <div className="mt-6">
-            <p className="text-sm text-[#718096] mb-3">{t('ai.suggestions')}</p>
+            <p className="text-sm text-[#718096] mb-3">推荐问题</p>
             <div className="flex flex-wrap gap-2">
               {suggestions.map((suggestion, index) => (
                 <button
@@ -134,7 +132,7 @@ export function AIChat() {
           <Input
             value={input}
             onChange={(e) => setInput(e.target.value)}
-            placeholder={t('ai.placeholder')}
+            placeholder="输入你的问题..."
             className="flex-1 h-12 rounded-full"
             disabled={isLoading}
           />

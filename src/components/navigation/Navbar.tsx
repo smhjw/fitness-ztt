@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
   Activity, 
@@ -18,12 +18,9 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useTranslation } from 'react-i18next';
 import useAuth from '@/hooks/useAuth';
-import LanguageSwitcher from '@/components/common/LanguageSwitcher';
 
 export function Navbar() {
-  const { t } = useTranslation();
   const { user, isAuthenticated, logout } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
@@ -52,15 +49,40 @@ export function Navbar() {
   };
 
   const navLinks = [
-    { label: t('nav.home'), href: '/' },
-    { label: t('nav.records'), href: '/records' },
-    { label: t('nav.statistics'), href: '/statistics' },
-    { label: t('nav.calendar'), href: '/calendar' },
-    { label: t('nav.knowledge'), href: '/knowledge' },
-    { label: t('nav.diet'), href: '/diet' },
-    { label: t('nav.body'), href: '/body' },
-    { label: t('nav.ai'), href: '/ai' },
+    { label: '首页', href: '/' },
+    { label: '运动记录', href: '/records' },
+    { label: '数据统计', href: '/statistics' },
+    { label: '日历', href: '/calendar' },
+    { label: '知识库', href: '/knowledge' },
+    { label: '饮食', href: '/diet' },
+    { label: '身体数据', href: '/body' },
+    { label: 'AI 助手', href: '/ai' },
   ];
+
+  const localizedUserName = useMemo(() => {
+    if (!user) {
+      return '';
+    }
+
+    if (user.loginType === 'guest') {
+      return '游客用户';
+    }
+
+    if (user.id === 'demo-user-001' || user.email === 'demo@fittrack.com') {
+      return '演示用户';
+    }
+
+    if (user.loginType === 'phone' && user.phone) {
+      const suffix = user.phone.slice(-4);
+      const phoneName = `用户${suffix}`;
+      const legacyPhoneNames = new Set([`User${suffix}`, `用户${suffix}`, phoneName]);
+      if (!user.name || legacyPhoneNames.has(user.name)) {
+        return phoneName;
+      }
+    }
+
+    return user.name || user.email?.split('@')[0] || '用户';
+  }, [user]);
 
   return (
     <header
@@ -123,9 +145,6 @@ export function Navbar() {
 
           {/* Auth Buttons / User Menu */}
           <div className="flex items-center gap-2">
-            {/* Language Switcher */}
-            <LanguageSwitcher />
-
             {isAuthenticated ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -136,11 +155,11 @@ export function Navbar() {
                     <Avatar className="w-8 h-8 border-2 border-[#38B2AC]">
                       <AvatarImage src={user?.avatar} />
                       <AvatarFallback className="bg-[#E6F7F6] text-[#38B2AC] text-sm">
-                        {user?.name?.charAt(0) || user?.email?.charAt(0) || 'U'}
+                        {localizedUserName?.charAt(0) || user?.email?.charAt(0) || 'U'}
                       </AvatarFallback>
                     </Avatar>
                     <span className="hidden sm:block text-sm font-medium text-[#333333]">
-                      {user?.name || user?.email?.split('@')[0]}
+                      {localizedUserName}
                     </span>
                     <ChevronDown className="w-4 h-4 text-[#718096]" />
                   </Button>
@@ -148,16 +167,16 @@ export function Navbar() {
                 <DropdownMenuContent align="end" className="w-48">
                   <DropdownMenuItem onClick={() => navigate('/profile')}>
                     <User className="w-4 h-4 mr-2" />
-                    {t('nav.profile')}
+                    个人资料
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => navigate('/settings')}>
                     <Settings className="w-4 h-4 mr-2" />
-                    {t('nav.settings')}
+                    设置
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleLogout} className="text-red-600">
                     <LogOut className="w-4 h-4 mr-2" />
-                    {t('nav.logout')}
+                    退出登录
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -168,13 +187,13 @@ export function Navbar() {
                   onClick={() => navigate('/login')}
                   className="hidden sm:flex text-[#718096] hover:text-[#333333] hover:bg-[#E6F7F6]"
                 >
-                  {t('nav.login')}
+                  登录
                 </Button>
                 <Button
                   onClick={() => navigate('/register')}
                   className="bg-[#38B2AC] hover:bg-[#2C9B95] text-white rounded-full px-4"
                 >
-                  {t('nav.register')}
+                  注册
                 </Button>
               </div>
             )}
@@ -198,7 +217,7 @@ export function Navbar() {
 
       {/* Mobile Menu */}
       <div
-        className={`md:hidden fixed inset-x-0 top-[72px] bg-white/95 backdrop-blur-xl border-b border-gray-100 transition-all duration-300 ${
+        className={`md:hidden fixed inset-x-0 top-[64px] sm:top-[72px] bg-white/95 backdrop-blur-xl border-b border-gray-100 transition-all duration-300 ${
           isMobileMenuOpen
             ? 'opacity-100 translate-y-0'
             : 'opacity-0 -translate-y-4 pointer-events-none'
@@ -227,7 +246,7 @@ export function Navbar() {
                 onClick={() => setIsMobileMenuOpen(false)}
                 className="block px-4 py-3 rounded-xl text-sm font-medium text-[#718096] hover:bg-gray-50"
               >
-                {t('nav.login')}
+                登录
               </Link>
             </>
           )}

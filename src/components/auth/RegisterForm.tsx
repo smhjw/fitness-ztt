@@ -97,7 +97,7 @@ export function RegisterForm() {
             <Input
               id="email"
               type="email"
-              placeholder="your@email.com"
+              placeholder="请输入邮箱"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               className="pl-10 h-12 rounded-xl border-gray-200 focus:border-[#38B2AC] focus:ring-[#38B2AC]"

@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import { Eye, EyeOff, Mail, Lock, Loader2, Phone, MessageCircle, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -13,7 +12,6 @@ import useAuth from '@/hooks/useAuth';
 type LoginMethod = 'email' | 'phone' | 'wechat';
 
 export function LoginForm() {
-  const { t } = useTranslation();
   const navigate = useNavigate();
   const { login, demoLogin, guestLogin } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
@@ -64,7 +62,7 @@ export function LoginForm() {
       }
       navigate('/');
     } catch (err: any) {
-      setError(err.message || t('auth.invalidCredentials'));
+      setError(err.message || '账号或密码不正确');
     } finally {
       setIsLoading(false);
     }
@@ -77,7 +75,7 @@ export function LoginForm() {
       await demoLogin();
       navigate('/');
     } catch (err: any) {
-      setError(err.message || t('auth.invalidCredentials'));
+      setError(err.message || '账号或密码不正确');
     } finally {
       setIsLoading(false);
     }
@@ -90,21 +88,21 @@ export function LoginForm() {
       await guestLogin();
       navigate('/');
     } catch (err: any) {
-      setError(err.message || t('auth.invalidCredentials'));
+      setError(err.message || '账号或密码不正确');
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleWechatLogin = () => {
-    setError(t('auth.comingSoon') || '微信登录即将上线');
+    setError('微信登录即将上线');
   };
 
   return (
     <div className="w-full max-w-md mx-auto">
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-[#333333] mb-2">{t('auth.welcomeBack')}</h1>
-        <p className="text-[#718096]">{t('auth.loginTitle')}</p>
+        <h1 className="text-3xl font-bold text-[#333333] mb-2">欢迎回来</h1>
+        <p className="text-[#718096]">登录后继续记录你的训练</p>
       </div>
 
       {error && (
@@ -117,28 +115,28 @@ export function LoginForm() {
         <TabsList className="grid w-full grid-cols-3 mb-6">
           <TabsTrigger value="email" className="gap-2">
             <Mail className="w-4 h-4" />
-            <span className="hidden sm:inline">{t('auth.emailLogin')}</span>
+            <span className="hidden sm:inline">邮箱登录</span>
           </TabsTrigger>
           <TabsTrigger value="phone" className="gap-2">
             <Phone className="w-4 h-4" />
-            <span className="hidden sm:inline">{t('auth.phoneLogin')}</span>
+            <span className="hidden sm:inline">手机登录</span>
           </TabsTrigger>
           <TabsTrigger value="wechat" className="gap-2">
             <MessageCircle className="w-4 h-4" />
-            <span className="hidden sm:inline">{t('auth.wechatLogin')}</span>
+            <span className="hidden sm:inline">微信登录</span>
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="email">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">{t('auth.email')}</Label>
+              <Label htmlFor="email">邮箱</Label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#718096]" />
                 <Input
                   id="email"
                   type="email"
-                  placeholder="your@email.com"
+                  placeholder="请输入邮箱"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="pl-10 h-12 rounded-xl border-gray-200 focus:border-[#38B2AC] focus:ring-[#38B2AC]"
@@ -148,13 +146,13 @@ export function LoginForm() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="password">{t('auth.password')}</Label>
+              <Label htmlFor="password">密码</Label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#718096]" />
                 <Input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
-                  placeholder={t('auth.password')}
+                  placeholder="请输入密码"
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   className="pl-10 pr-10 h-12 rounded-xl border-gray-200 focus:border-[#38B2AC] focus:ring-[#38B2AC]"
@@ -180,14 +178,14 @@ export function LoginForm() {
                   }
                 />
                 <Label htmlFor="remember" className="text-sm text-[#718096] cursor-pointer">
-                  {t('auth.rememberMe')}
+                  记住我
                 </Label>
               </div>
               <Link 
                 to="/forgot-password" 
                 className="text-sm text-[#38B2AC] hover:text-[#2C9B95]"
               >
-                {t('auth.forgotPassword')}
+                忘记密码
               </Link>
             </div>
 
@@ -199,10 +197,10 @@ export function LoginForm() {
               {isLoading ? (
                 <>
                   <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                  {t('common.loading')}
+                  加载中...
                 </>
               ) : (
-                t('nav.login')
+                '登录'
               )}
             </Button>
           </form>
@@ -211,7 +209,7 @@ export function LoginForm() {
         <TabsContent value="phone">
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="phone">{t('auth.phone')}</Label>
+              <Label htmlFor="phone">手机号</Label>
               <div className="relative">
                 <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#718096]" />
                 <Input
@@ -227,7 +225,7 @@ export function LoginForm() {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="code">{t('auth.verificationCode')}</Label>
+              <Label htmlFor="code">验证码</Label>
               <div className="flex gap-2">
                 <Input
                   id="code"
@@ -245,7 +243,7 @@ export function LoginForm() {
                   disabled={countdown > 0 || !formData.phone}
                   className="h-12 px-4 whitespace-nowrap"
                 >
-                  {countdown > 0 ? `${countdown}s` : t('auth.sendCode')}
+                  {countdown > 0 ? `${countdown}s` : '发送验证码'}
                 </Button>
               </div>
             </div>
@@ -258,10 +256,10 @@ export function LoginForm() {
               {isLoading ? (
                 <>
                   <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                  {t('common.loading')}
+                  加载中...
                 </>
               ) : (
-                t('nav.login')
+                '登录'
               )}
             </Button>
           </form>
@@ -272,13 +270,13 @@ export function LoginForm() {
             <div className="w-32 h-32 mx-auto mb-4 bg-[#07C160] rounded-2xl flex items-center justify-center">
               <MessageCircle className="w-16 h-16 text-white" />
             </div>
-            <p className="text-[#718096] mb-4">{t('auth.wechatLogin')}</p>
+            <p className="text-[#718096] mb-4">微信登录</p>
             <Button
               onClick={handleWechatLogin}
               className="w-full h-12 bg-[#07C160] hover:bg-[#06AD56] text-white rounded-xl font-medium"
             >
               <MessageCircle className="w-5 h-5 mr-2" />
-              {t('auth.wechatLogin')}
+              微信登录
             </Button>
           </div>
         </TabsContent>
@@ -294,7 +292,7 @@ export function LoginForm() {
             disabled={isLoading}
             className="h-12 rounded-xl border-[#38B2AC] text-[#38B2AC] hover:bg-[#E6F7F6]"
           >
-            {t('auth.demoLogin')}
+            体验账号
           </Button>
           <Button
             type="button"
@@ -304,15 +302,15 @@ export function LoginForm() {
             className="h-12 rounded-xl"
           >
             <User className="w-4 h-4 mr-2" />
-            {t('auth.guestLogin')}
+            游客体验
           </Button>
         </div>
       </div>
 
       <p className="mt-6 text-center text-sm text-[#718096]">
-        {t('auth.noAccount')}{' '}
+        还没有账号？{' '}
         <Link to="/register" className="text-[#38B2AC] hover:text-[#2C9B95] font-medium">
-          {t('auth.registerNow')}
+          立即注册
         </Link>
       </p>
     </div>
