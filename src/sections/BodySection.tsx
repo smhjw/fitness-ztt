@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Plus, Scale, TrendingUp, History } from 'lucide-react';
+import { Plus, TrendingUp, History } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import {
@@ -17,13 +16,11 @@ import BodyStatsCards from '@/components/body/BodyStatsCards';
 import BodyTrendChart from '@/components/body/BodyTrendChart';
 
 export function BodySection() {
-  const { t } = useTranslation();
   const { toast } = useToast();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   
   const {
     measurements,
-    isLoading,
     stats,
     weightChartData,
     bodyFatChartData,
@@ -37,27 +34,27 @@ export function BodySection() {
     try {
       await createMeasurement(data);
       setIsDialogOpen(false);
-      toast.success(t('profile.saveSuccess'));
+      toast.success('保存成功');
     } catch (error) {
-      toast.error(t('common.error'));
+      toast.error('操作失败，请稍后重试');
     }
   };
 
   const handleUpdateMeasurement = async (id: string, data: any) => {
     try {
       await updateMeasurement(id, data);
-      toast.success(t('profile.saveSuccess'));
+      toast.success('保存成功');
     } catch (error) {
-      toast.error(t('common.error'));
+      toast.error('操作失败，请稍后重试');
     }
   };
 
   const handleDeleteMeasurement = async (id: string) => {
     try {
       await deleteMeasurement(id);
-      toast.success(t('profile.saveSuccess'));
+      toast.success('保存成功');
     } catch (error) {
-      toast.error(t('common.error'));
+      toast.error('操作失败，请稍后重试');
     }
   };
 
@@ -67,15 +64,15 @@ export function BodySection() {
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-[#333333]">{t('body.title')}</h1>
-            <p className="text-[#718096] mt-1">{t('body.subtitle')}</p>
+            <h1 className="text-3xl font-bold text-[#333333]">身体数据</h1>
+            <p className="text-[#718096] mt-1">记录并追踪身体变化</p>
           </div>
           <Button 
             onClick={() => setIsDialogOpen(true)}
             className="bg-[#38B2AC] hover:bg-[#2C9B95] text-white rounded-full gap-2"
           >
             <Plus className="w-4 h-4" />
-            {t('body.addRecord')}
+            新增记录
           </Button>
         </div>
 
@@ -86,30 +83,30 @@ export function BodySection() {
 
         {/* Tabs */}
         <Tabs defaultValue="trends" className="space-y-6">
-          <TabsList className="bg-white border border-gray-200 p-1 rounded-full">
+          <TabsList className="bg-white border border-gray-200 p-1 rounded-full overflow-x-auto flex-nowrap max-w-full justify-start md:justify-center">
             <TabsTrigger value="trends" className="rounded-full data-[state=active]:bg-[#38B2AC] data-[state=active]:text-white gap-2">
               <TrendingUp className="w-4 h-4" />
-              {t('body.trend')}
+              趋势
             </TabsTrigger>
             <TabsTrigger value="history" className="rounded-full data-[state=active]:bg-[#38B2AC] data-[state=active]:text-white gap-2">
               <History className="w-4 h-4" />
-              {t('body.history')}
+              历史记录
             </TabsTrigger>
           </TabsList>
 
           <TabsContent value="trends" className="space-y-6">
             {/* Weight Trend */}
             <BodyTrendChart
-              title={t('body.weightTrend')}
+              title="体重趋势"
               data={weightChartData.map(d => ({ date: d.date, value: d.weight }))}
-              unit={t('common.kg')}
+              unit="kg"
               color="#38B2AC"
             />
 
             {/* Body Fat Trend */}
             {bodyFatChartData.length > 0 && (
               <BodyTrendChart
-                title={t('body.bodyFatTrend')}
+                title="体脂率趋势"
                 data={bodyFatChartData.map(d => ({ date: d.date, value: d.bodyFat }))}
                 unit="%"
                 color="#F59E0B"
@@ -120,36 +117,36 @@ export function BodySection() {
             <div className="grid md:grid-cols-2 gap-6">
               {measurementChartData('waist').length > 0 && (
                 <BodyTrendChart
-                  title={t('body.waist')}
+                  title="腰围"
                   data={measurementChartData('waist')}
-                  unit={t('common.cm')}
+                  unit="cm"
                   color="#6D28D9"
                   height={250}
                 />
               )}
               {measurementChartData('chest').length > 0 && (
                 <BodyTrendChart
-                  title={t('body.chest')}
+                  title="胸围"
                   data={measurementChartData('chest')}
-                  unit={t('common.cm')}
+                  unit="cm"
                   color="#EF4444"
                   height={250}
                 />
               )}
               {measurementChartData('hips').length > 0 && (
                 <BodyTrendChart
-                  title={t('body.hips')}
+                  title="臀围"
                   data={measurementChartData('hips')}
-                  unit={t('common.cm')}
+                  unit="cm"
                   color="#EC4899"
                   height={250}
                 />
               )}
               {measurementChartData('arms').length > 0 && (
                 <BodyTrendChart
-                  title={t('body.arms')}
+                  title="臂围"
                   data={measurementChartData('arms')}
-                  unit={t('common.cm')}
+                  unit="cm"
                   color="#10B981"
                   height={250}
                 />
@@ -171,7 +168,7 @@ export function BodySection() {
       <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
         <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>{t('body.addRecord')}</DialogTitle>
+            <DialogTitle>新增记录</DialogTitle>
           </DialogHeader>
           <BodyMeasurementForm
             onSubmit={handleCreateMeasurement}

@@ -1,6 +1,5 @@
 import { useState, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
-import { User, Mail, Camera, Save, Loader2, Globe } from 'lucide-react';
+import { User, Mail, Camera, Save, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -16,10 +15,8 @@ import {
 } from '@/components/ui/select';
 import { useToast } from '@/components/ui/sonner';
 import useAuth from '@/hooks/useAuth';
-import { supportedLanguages, type LanguageCode } from '@/i18n';
 
 export function ProfileSection() {
-  const { t, i18n } = useTranslation();
   const { toast } = useToast();
   const { user, updateProfile, updateAvatar, updatePreferences } = useAuth();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -31,14 +28,12 @@ export function ProfileSection() {
     dateFormat: 'YYYY-MM-DD' | 'DD/MM/YYYY' | 'MM/DD/YYYY';
     unitSystem: 'metric' | 'imperial';
     defaultView: 'dashboard' | 'calendar' | 'records';
-    language: LanguageCode;
   }>({
     name: user?.name || '',
     email: user?.email || '',
     dateFormat: user?.preferences.dateFormat || 'YYYY-MM-DD',
     unitSystem: user?.preferences.unitSystem || 'metric',
     defaultView: user?.preferences.defaultView || 'dashboard',
-    language: (user?.preferences.language as LanguageCode) || 'zh-CN',
   });
 
   const handleAvatarClick = () => {
@@ -50,7 +45,7 @@ export function ProfileSection() {
     if (!file) return;
 
     if (file.size > 2 * 1024 * 1024) {
-      toast.error(t('profile.avatarHint'));
+      toast.error('头像大小不能超过 2MB');
       return;
     }
 
@@ -60,20 +55,14 @@ export function ProfileSection() {
       try {
         setIsLoading(true);
         await updateAvatar(base64);
-        toast.success(t('profile.saveSuccess'));
+        toast.success('保存成功');
       } catch (error) {
-        toast.error(t('common.error'));
+        toast.error('操作失败，请稍后重试');
       } finally {
         setIsLoading(false);
       }
     };
     reader.readAsDataURL(file);
-  };
-
-  const handleLanguageChange = (lang: LanguageCode) => {
-    setFormData(prev => ({ ...prev, language: lang }));
-    i18n.changeLanguage(lang);
-    localStorage.setItem('i18nextLng', lang);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -86,11 +75,10 @@ export function ProfileSection() {
         dateFormat: formData.dateFormat,
         unitSystem: formData.unitSystem,
         defaultView: formData.defaultView,
-        language: formData.language,
       });
-      toast.success(t('profile.saveSuccess'));
+      toast.success('保存成功');
     } catch (error) {
-      toast.error(t('common.error'));
+      toast.error('操作失败，请稍后重试');
     } finally {
       setIsLoading(false);
     }
@@ -99,7 +87,7 @@ export function ProfileSection() {
   if (!user) {
     return (
       <div className="py-12 text-center">
-        <p className="text-[#718096]">{t('auth.loginTitle')}</p>
+        <p className="text-[#718096]">请先登录</p>
       </div>
     );
   }
@@ -109,15 +97,15 @@ export function ProfileSection() {
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-[#333333]">{t('profile.title')}</h1>
-          <p className="text-[#718096] mt-1">{t('profile.subtitle')}</p>
+          <h1 className="text-3xl font-bold text-[#333333]">个人资料</h1>
+          <p className="text-[#718096] mt-1">管理你的基本信息与偏好</p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Avatar Section */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">{t('profile.avatar')}</CardTitle>
+              <CardTitle className="text-lg">头像</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex items-center gap-6">
@@ -144,7 +132,7 @@ export function ProfileSection() {
                   />
                 </div>
                 <div>
-                  <p className="text-sm text-[#718096]">{t('profile.avatarHint')}</p>
+                  <p className="text-sm text-[#718096]">建议尺寸 400x400，大小不超过 2MB</p>
                   <Button
                     type="button"
                     variant="outline"
@@ -152,7 +140,7 @@ export function ProfileSection() {
                     onClick={handleAvatarClick}
                     className="mt-2"
                   >
-                    {t('profile.changeAvatar')}
+                    更换头像
                   </Button>
                 </div>
               </div>
@@ -162,11 +150,11 @@ export function ProfileSection() {
           {/* Basic Info */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">{t('profile.basicInfo')}</CardTitle>
+              <CardTitle className="text-lg">基本信息</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
               <div className="space-y-2">
-                <Label htmlFor="name">{t('auth.name')}</Label>
+                <Label htmlFor="name">昵称</Label>
                 <div className="relative">
                   <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#718096]" />
                   <Input
@@ -174,13 +162,13 @@ export function ProfileSection() {
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     className="pl-10 h-12"
-                    placeholder={t('auth.name')}
+                    placeholder="请输入昵称"
                   />
                 </div>
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="email">{t('auth.email')}</Label>
+                <Label htmlFor="email">邮箱</Label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#718096]" />
                   <Input
@@ -191,7 +179,7 @@ export function ProfileSection() {
                     className="pl-10 h-12 bg-gray-50"
                   />
                 </div>
-                <p className="text-xs text-[#718096]">{t('auth.email')}</p>
+                <p className="text-xs text-[#718096]">邮箱不可修改</p>
               </div>
             </CardContent>
           </Card>
@@ -199,37 +187,11 @@ export function ProfileSection() {
           {/* Preferences */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg">{t('profile.preferences')}</CardTitle>
+              <CardTitle className="text-lg">偏好设置</CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
-              {/* Language */}
               <div className="space-y-2">
-                <Label className="flex items-center gap-2">
-                  <Globe className="w-4 h-4" />
-                  {t('profile.language')}
-                </Label>
-                <Select
-                  value={formData.language}
-                  onValueChange={(value) => handleLanguageChange(value as LanguageCode)}
-                >
-                  <SelectTrigger className="h-12">
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {supportedLanguages.map((lang) => (
-                      <SelectItem key={lang.code} value={lang.code}>
-                        <span className="flex items-center gap-2">
-                          <span>{lang.flag}</span>
-                          <span>{lang.name}</span>
-                        </span>
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div className="space-y-2">
-                <Label>{t('profile.dateFormat')}</Label>
+                <Label>日期格式</Label>
                 <Select
                   value={formData.dateFormat}
                   onValueChange={(value) => setFormData({ ...formData, dateFormat: value as any })}
@@ -246,7 +208,7 @@ export function ProfileSection() {
               </div>
 
               <div className="space-y-2">
-                <Label>{t('profile.unitSystem')}</Label>
+                <Label>单位系统</Label>
                 <Select
                   value={formData.unitSystem}
                   onValueChange={(value) => setFormData({ ...formData, unitSystem: value as any })}
@@ -255,14 +217,14 @@ export function ProfileSection() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="metric">{t('profile.metric')}</SelectItem>
-                    <SelectItem value="imperial">{t('profile.imperial')}</SelectItem>
+                    <SelectItem value="metric">公制</SelectItem>
+                    <SelectItem value="imperial">英制</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
               <div className="space-y-2">
-                <Label>{t('profile.defaultView')}</Label>
+                <Label>默认页面</Label>
                 <Select
                   value={formData.defaultView}
                   onValueChange={(value) => setFormData({ ...formData, defaultView: value as any })}
@@ -271,9 +233,9 @@ export function ProfileSection() {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="dashboard">{t('profile.dashboard')}</SelectItem>
-                    <SelectItem value="records">{t('nav.records')}</SelectItem>
-                    <SelectItem value="calendar">{t('nav.calendar')}</SelectItem>
+                    <SelectItem value="dashboard">概览</SelectItem>
+                    <SelectItem value="records">运动记录</SelectItem>
+                    <SelectItem value="calendar">日历</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -290,12 +252,12 @@ export function ProfileSection() {
               {isLoading ? (
                 <>
                   <Loader2 className="w-5 h-5 animate-spin" />
-                  {t('profile.saving')}
+                  保存中...
                 </>
               ) : (
                 <>
                   <Save className="w-5 h-5" />
-                  {t('profile.saveChanges')}
+                  保存修改
                 </>
               )}
             </Button>
@@ -307,17 +269,17 @@ export function ProfileSection() {
         {/* Account Info */}
         <Card>
           <CardHeader>
-            <CardTitle className="text-lg">{t('profile.accountInfo')}</CardTitle>
+          <CardTitle className="text-lg">账号信息</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex justify-between items-center py-2">
-              <span className="text-[#718096]">{t('profile.registerDate')}</span>
+              <span className="text-[#718096]">注册时间</span>
               <span className="text-[#333333]">
                 {new Date(user.createdAt).toLocaleDateString()}
               </span>
             </div>
             <div className="flex justify-between items-center py-2">
-              <span className="text-[#718096]">{t('profile.userId')}</span>
+              <span className="text-[#718096]">用户 ID</span>
               <span className="text-[#333333] font-mono text-sm">{user.id}</span>
             </div>
           </CardContent>

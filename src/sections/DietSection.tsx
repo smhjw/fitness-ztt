@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Search, Plus, BookOpen, Heart, ChefHat } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -17,7 +16,6 @@ const categories: RecipeCategory[] = [
 ];
 
 export function DietSection() {
-  const { t } = useTranslation();
   const { user } = useAuth();
   const [selectedRecipeId, setSelectedRecipeId] = useState<string | null>(null);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
@@ -78,15 +76,15 @@ export function DietSection() {
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-[#333333]">{t('diet.title')}</h1>
-            <p className="text-[#718096] mt-1">{t('diet.subtitle')}</p>
+            <h1 className="text-3xl font-bold text-[#333333]">饮食</h1>
+            <p className="text-[#718096] mt-1">高质量菜谱与营养建议</p>
           </div>
           <Button 
             onClick={() => setIsUploadOpen(true)}
             className="bg-[#38B2AC] hover:bg-[#2C9B95] text-white rounded-full gap-2"
           >
             <Plus className="w-4 h-4" />
-            {t('diet.uploadRecipe')}
+            上传菜谱
           </Button>
         </div>
 
@@ -96,7 +94,7 @@ export function DietSection() {
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#718096]" />
             <Input
               type="text"
-              placeholder={t('diet.searchPlaceholder')}
+              placeholder="搜索菜谱、食材或营养关键词"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-12 pr-4 h-14 rounded-full text-base"
@@ -124,25 +122,25 @@ export function DietSection() {
               onClick={clearFilters}
               className="px-4 py-2 rounded-full text-sm font-medium text-[#718096] hover:bg-gray-100"
             >
-              {t('records.clearFilters')}
+              清除筛选
             </button>
           )}
         </div>
 
         {/* Tabs */}
         <Tabs defaultValue="all" className="space-y-6">
-          <TabsList className="bg-white border border-gray-200 p-1 rounded-full">
+          <TabsList className="bg-white border border-gray-200 p-1 rounded-full overflow-x-auto flex-nowrap max-w-full justify-start md:justify-center">
             <TabsTrigger value="all" className="rounded-full data-[state=active]:bg-[#38B2AC] data-[state=active]:text-white gap-2">
               <BookOpen className="w-4 h-4" />
-              {t('diet.recommended')}
+              推荐
             </TabsTrigger>
             <TabsTrigger value="favorites" className="rounded-full data-[state=active]:bg-[#38B2AC] data-[state=active]:text-white gap-2">
               <Heart className="w-4 h-4" />
-              {t('diet.favorites')}
+              收藏
             </TabsTrigger>
             <TabsTrigger value="my" className="rounded-full data-[state=active]:bg-[#38B2AC] data-[state=active]:text-white gap-2">
               <ChefHat className="w-4 h-4" />
-              {t('diet.myRecipes')}
+              我的
             </TabsTrigger>
           </TabsList>
 
@@ -162,7 +160,7 @@ export function DietSection() {
             {filteredRecipes.length === 0 && (
               <div className="text-center py-12">
                 <ChefHat className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-                <p className="text-[#718096]">{t('knowledge.noArticles')}</p>
+                <p className="text-[#718096]">暂无内容</p>
               </div>
             )}
           </TabsContent>
@@ -183,7 +181,7 @@ export function DietSection() {
             {favoriteRecipes.length === 0 && (
               <div className="text-center py-12">
                 <Heart className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-                <p className="text-[#718096]">{t('diet.noFavorites') || '暂无收藏'}</p>
+                <p className="text-[#718096]">暂无收藏</p>
               </div>
             )}
           </TabsContent>
@@ -204,7 +202,7 @@ export function DietSection() {
             {myRecipes.length === 0 && (
               <div className="text-center py-12">
                 <ChefHat className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-                <p className="text-[#718096]">{t('diet.noMyRecipes') || '暂无我的菜谱'}</p>
+                <p className="text-[#718096]">暂无我的菜谱</p>
               </div>
             )}
           </TabsContent>
