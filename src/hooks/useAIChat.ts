@@ -5,10 +5,7 @@ import type { ChatMessage } from '@/types';
 const aiResponses: Record<string, string[]> = {
   greeting: [
     '你好！我是你的健身AI助手，有什么可以帮助你的吗？',
-    'Hello! I\'m your fitness AI assistant. How can I help you today?',
-    'Bonjour ! Je suis votre assistant fitness IA. Comment puis-je vous aider ?',
-    'こんにちは！フィットネスAIアシスタントです。何かお手伝いできることはありますか？',
-    '안녕하세요! 피트니스 AI 어시스턴트입니다. 무엇을 도와드릴까요?',
+    '欢迎回来！我可以帮你制定训练计划、饮食建议或恢复方案。',
   ],
   workout: [
     '对于初学者，我建议从每周3次、每次30分钟的有氧运动开始，比如快走或慢跑。随着体能提升，可以逐渐增加强度和时间。',
@@ -51,37 +48,37 @@ function getAIResponse(message: string): string {
   const lowerMessage = message.toLowerCase();
   
   // Check for greetings
-  if (/^(你好|hello|bonjour|こんにちは|안녕|hi|hey)/i.test(lowerMessage)) {
+  if (/(你好|您好|hello|hi|hey)/i.test(lowerMessage)) {
     return aiResponses.greeting[0];
   }
   
   // Check for workout-related questions
-  if (/训练|锻炼|运动|健身|workout|exercise|training|entraînement|トレーニング|울동/i.test(lowerMessage)) {
+  if (/训练|锻炼|运动|健身|workout|exercise|training/i.test(lowerMessage)) {
     return aiResponses.workout[Math.floor(Math.random() * aiResponses.workout.length)];
   }
   
   // Check for diet-related questions
-  if (/饮食|食物|营养|吃|diet|nutrition|food|alimentation|régime|栄養|食事|식단|음식/i.test(lowerMessage)) {
+  if (/饮食|食物|营养|吃|diet|nutrition|food/i.test(lowerMessage)) {
     return aiResponses.diet[Math.floor(Math.random() * aiResponses.diet.length)];
   }
   
   // Check for weight loss questions
-  if (/减肥|减重|瘦身|减脂|weight loss|lose weight|perdre du poids|ダイエット|減量|체중 감량/i.test(lowerMessage)) {
+  if (/减肥|减重|瘦身|减脂|weight loss|lose weight/i.test(lowerMessage)) {
     return aiResponses.weightLoss[Math.floor(Math.random() * aiResponses.weightLoss.length)];
   }
   
   // Check for muscle gain questions
-  if (/增肌|增重|肌肉|muscle gain|build muscle|gain weight|prise de masse|筋肉|増量|근육/i.test(lowerMessage)) {
+  if (/增肌|增重|肌肉|muscle gain|build muscle|gain weight/i.test(lowerMessage)) {
     return aiResponses.muscleGain[Math.floor(Math.random() * aiResponses.muscleGain.length)];
   }
   
   // Check for recovery questions
-  if (/恢复|休息|放松|拉伸|recovery|rest|relax|stretch|récupération|repos|回復|休み|회복/i.test(lowerMessage)) {
+  if (/恢复|休息|放松|拉伸|recovery|rest|relax|stretch/i.test(lowerMessage)) {
     return aiResponses.recovery[Math.floor(Math.random() * aiResponses.recovery.length)];
   }
   
   // Check for supplement questions
-  if (/补剂|蛋白粉|肌酸|supplement|protein|creatine|complément|サプリメント|プロテイン|보충제/i.test(lowerMessage)) {
+  if (/补剂|蛋白粉|肌酸|supplement|protein|creatine/i.test(lowerMessage)) {
     return aiResponses.supplement[Math.floor(Math.random() * aiResponses.supplement.length)];
   }
   

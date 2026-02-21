@@ -327,7 +327,7 @@ export const dietStorage = {
   addComment: (recipeId: string, comment: Omit<RecipeComment, 'id' | 'createdAt'>): RecipeComment => {
     const recipes = dietStorage.getAllRecipes();
     const index = recipes.findIndex(r => r.id === recipeId);
-    if (index === -1) throw new Error('Recipe not found');
+    if (index === -1) throw new Error('未找到该食谱');
     
     const newComment: RecipeComment = {
       ...comment,

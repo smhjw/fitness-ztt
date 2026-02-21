@@ -76,7 +76,7 @@ export function useRecords(): UseRecordsReturn {
   }, [records, filter]);
 
   const createRecord = useCallback(async (data: ExerciseFormData): Promise<ExerciseRecord> => {
-    if (!user) throw new Error('User not logged in');
+    if (!user) throw new Error('请先登录');
 
     const newRecord = recordsStorage.create({
       ...data,
@@ -177,7 +177,7 @@ export function useRecords(): UseRecordsReturn {
   const getCalendarEvents = useCallback(() => {
     return records.map(r => ({
       id: r.id,
-      title: `${getExerciseTypeLabel(r.type)} - ${r.duration}min`,
+      title: `${getExerciseTypeLabel(r.type)} - ${r.duration}分钟`,
       date: r.date,
       type: r.type,
       duration: r.duration,
@@ -206,8 +206,8 @@ function calculateStreak(records: ExerciseRecord[]): number {
   const sortedDates = [...new Set(records.map(r => r.date))].sort().reverse();
   
   let streak = 0;
-  const today = new Date().toISOString().split('T')[0];
-  const yesterday = new Date(Date.now() - 86400000).toISOString().split('T')[0];
+  const today = toLocalDateString(new Date());
+  const yesterday = toLocalDateString(new Date(Date.now() - 86400000));
   
   if (sortedDates[0] !== today && sortedDates[0] !== yesterday) {
     return 0;
@@ -234,19 +234,26 @@ function calculateStreak(records: ExerciseRecord[]): number {
 
 function getExerciseTypeLabel(type: ExerciseType): string {
   const labels: Record<ExerciseType, string> = {
-    running: 'Running',
-    walking: 'Walking',
-    cycling: 'Cycling',
-    swimming: 'Swimming',
-    weightlifting: 'Weights',
-    yoga: 'Yoga',
-    pilates: 'Pilates',
+    running: '跑步',
+    walking: '步行',
+    cycling: '骑行',
+    swimming: '游泳',
+    weightlifting: '力量训练',
+    yoga: '瑜伽',
+    pilates: '普拉提',
     hiit: 'HIIT',
-    cardio: 'Cardio',
-    sports: 'Sports',
-    other: 'Other',
+    cardio: '有氧',
+    sports: '球类运动',
+    other: '其他',
   };
   return labels[type] || type;
+}
+
+function toLocalDateString(date: Date): string {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
 }
 
 export default useRecords;

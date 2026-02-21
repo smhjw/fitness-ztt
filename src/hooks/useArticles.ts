@@ -131,4 +131,15 @@ export const categoryColors: Record<KnowledgeCategory, string> = {
   'beginner-guide': 'bg-teal-100 text-teal-700 border-teal-200',
 };
 
+export const categoryLabels: Record<KnowledgeCategory, string> = {
+  nutrition: '营养',
+  strength: '力量',
+  cardio: '有氧',
+  flexibility: '柔韧',
+  recovery: '恢复',
+  'mental-health': '心理',
+  equipment: '器械',
+  'beginner-guide': '入门',
+};
+
 export default useArticles;

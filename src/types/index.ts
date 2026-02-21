@@ -14,7 +14,7 @@ export interface UserPreferences {
   dateFormat: 'YYYY-MM-DD' | 'DD/MM/YYYY' | 'MM/DD/YYYY';
   unitSystem: 'metric' | 'imperial';
   defaultView: 'dashboard' | 'calendar' | 'records';
-  language: 'zh-CN' | 'zh-TW' | 'en' | 'ko' | 'ja' | 'fr';
+  language: 'zh-CN';
 }
 
 // Exercise Record Types

@@ -77,7 +77,7 @@ export function useBodyMeasurements(): UseBodyMeasurementsReturn {
   const createMeasurement = useCallback(async (
     data: Omit<BodyMeasurement, 'id' | 'userId' | 'createdAt'>
   ): Promise<BodyMeasurement> => {
-    if (!user) throw new Error('User not logged in');
+    if (!user) throw new Error('请先登录');
     
     const newMeasurement = bodyStorage.create(user.id, data);
     setMeasurements(prev => [newMeasurement, ...prev]);
@@ -93,7 +93,7 @@ export function useBodyMeasurements(): UseBodyMeasurementsReturn {
     id: string, 
     data: Partial<BodyMeasurement>
   ): Promise<BodyMeasurement | null> => {
-    if (!user) throw new Error('User not logged in');
+    if (!user) throw new Error('请先登录');
     
     const updated = bodyStorage.update(user.id, id, data);
     if (updated) {
@@ -109,7 +109,7 @@ export function useBodyMeasurements(): UseBodyMeasurementsReturn {
   }, [user]);
 
   const deleteMeasurement = useCallback(async (id: string): Promise<boolean> => {
-    if (!user) throw new Error('User not logged in');
+    if (!user) throw new Error('请先登录');
     
     const success = bodyStorage.delete(user.id, id);
     if (success) {

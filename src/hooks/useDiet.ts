@@ -135,7 +135,7 @@ export function useDiet(): UseDietReturn {
   }, [favorites]);
 
   const addComment = useCallback((recipeId: string, content: string): RecipeComment => {
-    if (!user) throw new Error('User not logged in');
+    if (!user) throw new Error('请先登录');
     
     const comment = dietStorage.addComment(recipeId, {
       userId: user.id,
