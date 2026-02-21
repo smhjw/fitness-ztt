@@ -1,6 +1,5 @@
-import { useEffect, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
-import * as echarts from 'echarts';
+import { useMemo } from 'react';
+import { Area, AreaChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface BodyTrendChartProps {
@@ -12,106 +11,19 @@ interface BodyTrendChartProps {
 }
 
 export function BodyTrendChart({ title, data, unit, color = '#38B2AC', height = 300 }: BodyTrendChartProps) {
-  const { t } = useTranslation();
-  const chartRef = useRef<HTMLDivElement>(null);
-  const chartInstance = useRef<echarts.ECharts | null>(null);
+  const chartData = useMemo(
+    () =>
+      data.map((item) => {
+        const date = new Date(item.date);
+        return {
+          ...item,
+          label: `${date.getMonth() + 1}/${date.getDate()}`,
+        };
+      }),
+    [data]
+  );
 
-  useEffect(() => {
-    if (!chartRef.current) return;
-
-    chartInstance.current = echarts.init(chartRef.current);
-
-    const handleResize = () => {
-      chartInstance.current?.resize();
-    };
-
-    window.addEventListener('resize', handleResize);
-
-    return () => {
-      window.removeEventListener('resize', handleResize);
-      chartInstance.current?.dispose();
-    };
-  }, []);
-
-  useEffect(() => {
-    if (!chartInstance.current || data.length === 0) return;
-
-    const dates = data.map(d => {
-      const date = new Date(d.date);
-      return `${date.getMonth() + 1}/${date.getDate()}`;
-    });
-    const values = data.map(d => d.value);
-
-    const option: echarts.EChartsOption = {
-      tooltip: {
-        trigger: 'axis',
-        backgroundColor: 'rgba(255, 255, 255, 0.95)',
-        borderColor: '#E5E7EB',
-        borderWidth: 1,
-        textStyle: { color: '#333333' },
-        formatter: (params: any) => {
-          return `
-            <div style="padding: 8px;">
-              <div style="font-weight: 600; margin-bottom: 4px;">${params[0].axisValue}</div>
-              <div style="color: ${color};">${title}: ${params[0].value} ${unit}</div>
-            </div>
-          `;
-        },
-      },
-      grid: {
-        left: '3%',
-        right: '4%',
-        bottom: '10%',
-        top: '10%',
-        containLabel: true,
-      },
-      xAxis: {
-        type: 'category',
-        data: dates,
-        axisLine: { lineStyle: { color: '#E5E7EB' } },
-        axisLabel: { color: '#718096' },
-      },
-      yAxis: {
-        type: 'value',
-        name: unit,
-        axisLine: { show: false },
-        axisLabel: { color: '#718096' },
-        splitLine: { lineStyle: { color: '#F3F4F6' } },
-      },
-      series: [
-        {
-          name: title,
-          type: 'line',
-          data: values,
-          smooth: true,
-          symbol: 'circle',
-          symbolSize: 8,
-          lineStyle: {
-            color: color,
-            width: 3,
-            shadowColor: color + '40',
-            shadowBlur: 10,
-            shadowOffsetY: 5,
-          },
-          itemStyle: {
-            color: color,
-            borderWidth: 2,
-            borderColor: '#fff',
-          },
-          areaStyle: {
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: color + '40' },
-              { offset: 1, color: color + '05' },
-            ]),
-          },
-        },
-      ],
-    };
-
-    chartInstance.current.setOption(option);
-  }, [data, title, unit, color]);
-
-  if (data.length === 0) {
+  if (chartData.length === 0) {
     return (
       <Card>
         <CardHeader>
@@ -119,7 +31,7 @@ export function BodyTrendChart({ title, data, unit, color = '#38B2AC', height = 
         </CardHeader>
         <CardContent>
           <div className="h-[300px] flex items-center justify-center text-[#718096]">
-            <p>{t('body.noRecords')}</p>
+            <p>暂无记录</p>
           </div>
         </CardContent>
       </Card>
@@ -132,7 +44,31 @@ export function BodyTrendChart({ title, data, unit, color = '#38B2AC', height = 
         <CardTitle className="text-lg">{title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <div ref={chartRef} style={{ height: `${height}px` }} />
+        <div style={{ height: `${height}px` }}>
+          <ResponsiveContainer width="100%" height="100%">
+            <AreaChart data={chartData} margin={{ top: 8, right: 8, left: 8, bottom: 8 }}>
+              <defs>
+                <linearGradient id={`grad-${title}`} x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stopColor={color} stopOpacity={0.3} />
+                  <stop offset="100%" stopColor={color} stopOpacity={0.03} />
+                </linearGradient>
+              </defs>
+              <CartesianGrid stroke="#F3F4F6" strokeDasharray="3 3" vertical={false} />
+              <XAxis dataKey="label" tick={{ fill: '#718096', fontSize: 12 }} axisLine={{ stroke: '#E5E7EB' }} tickLine={false} />
+              <YAxis tick={{ fill: '#718096', fontSize: 12 }} axisLine={false} tickLine={false} width={40} />
+              <Tooltip
+                formatter={(value) => [`${value} ${unit}`, title]}
+                contentStyle={{
+                  background: 'rgba(255, 255, 255, 0.95)',
+                  borderColor: '#E5E7EB',
+                  borderRadius: '10px',
+                  fontSize: '12px',
+                }}
+              />
+              <Area type="monotone" dataKey="value" stroke={color} strokeWidth={3} fill={`url(#grad-${title})`} />
+            </AreaChart>
+          </ResponsiveContainer>
+        </div>
       </CardContent>
     </Card>
   );

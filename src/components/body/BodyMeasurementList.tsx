@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { Edit2, Trash2, Calendar, Scale, Ruler, ChevronDown, ChevronUp } from 'lucide-react';
+import { Edit2, Trash2, Calendar, Scale, ChevronDown, ChevronUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {
@@ -20,7 +19,6 @@ interface BodyMeasurementListProps {
 }
 
 export function BodyMeasurementList({ measurements, onUpdate, onDelete }: BodyMeasurementListProps) {
-  const { t } = useTranslation();
   const [editingMeasurement, setEditingMeasurement] = useState<BodyMeasurement | null>(null);
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
   const [expandedId, setExpandedId] = useState<string | null>(null);
@@ -43,8 +41,8 @@ export function BodyMeasurementList({ measurements, onUpdate, onDelete }: BodyMe
         <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#E6F7F6] flex items-center justify-center">
           <Scale className="w-8 h-8 text-[#38B2AC]" />
         </div>
-        <h3 className="text-lg font-medium text-[#333333] mb-1">{t('body.noRecords')}</h3>
-        <p className="text-[#718096]">{t('body.startRecording')}</p>
+        <h3 className="text-lg font-medium text-[#333333] mb-1">暂无记录</h3>
+        <p className="text-[#718096]">开始记录你的身体数据吧</p>
       </div>
     );
   }
@@ -68,11 +66,11 @@ export function BodyMeasurementList({ measurements, onUpdate, onDelete }: BodyMe
                 <div className="flex items-center gap-3 mt-1 text-sm text-[#718096]">
                   <span className="flex items-center gap-1">
                     <Scale className="w-3 h-3" />
-                    {measurement.weight} {t('common.kg')}
+                    {measurement.weight} kg
                   </span>
                   {measurement.bodyFat && (
                     <Badge variant="outline" className="text-xs">
-                      {t('body.bodyFat')}: {measurement.bodyFat}%
+                      体脂率: {measurement.bodyFat}%
                     </Badge>
                   )}
                 </div>
@@ -117,44 +115,44 @@ export function BodyMeasurementList({ measurements, onUpdate, onDelete }: BodyMe
               <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
                 {measurement.height && (
                   <div className="p-2 bg-gray-50 rounded-lg">
-                    <p className="text-xs text-[#718096]">{t('body.height')}</p>
-                    <p className="font-medium text-[#333333]">{measurement.height} {t('common.cm')}</p>
+                    <p className="text-xs text-[#718096]">身高</p>
+                    <p className="font-medium text-[#333333]">{measurement.height} cm</p>
                   </div>
                 )}
                 {measurement.chest && (
                   <div className="p-2 bg-gray-50 rounded-lg">
-                    <p className="text-xs text-[#718096]">{t('body.chest')}</p>
-                    <p className="font-medium text-[#333333]">{measurement.chest} {t('common.cm')}</p>
+                    <p className="text-xs text-[#718096]">胸围</p>
+                    <p className="font-medium text-[#333333]">{measurement.chest} cm</p>
                   </div>
                 )}
                 {measurement.waist && (
                   <div className="p-2 bg-gray-50 rounded-lg">
-                    <p className="text-xs text-[#718096]">{t('body.waist')}</p>
-                    <p className="font-medium text-[#333333]">{measurement.waist} {t('common.cm')}</p>
+                    <p className="text-xs text-[#718096]">腰围</p>
+                    <p className="font-medium text-[#333333]">{measurement.waist} cm</p>
                   </div>
                 )}
                 {measurement.hips && (
                   <div className="p-2 bg-gray-50 rounded-lg">
-                    <p className="text-xs text-[#718096]">{t('body.hips')}</p>
-                    <p className="font-medium text-[#333333]">{measurement.hips} {t('common.cm')}</p>
+                    <p className="text-xs text-[#718096]">臀围</p>
+                    <p className="font-medium text-[#333333]">{measurement.hips} cm</p>
                   </div>
                 )}
                 {measurement.arms && (
                   <div className="p-2 bg-gray-50 rounded-lg">
-                    <p className="text-xs text-[#718096]">{t('body.arms')}</p>
-                    <p className="font-medium text-[#333333]">{measurement.arms} {t('common.cm')}</p>
+                    <p className="text-xs text-[#718096]">臂围</p>
+                    <p className="font-medium text-[#333333]">{measurement.arms} cm</p>
                   </div>
                 )}
                 {measurement.thighs && (
                   <div className="p-2 bg-gray-50 rounded-lg">
-                    <p className="text-xs text-[#718096]">{t('body.thighs')}</p>
-                    <p className="font-medium text-[#333333]">{measurement.thighs} {t('common.cm')}</p>
+                    <p className="text-xs text-[#718096]">大腿围</p>
+                    <p className="font-medium text-[#333333]">{measurement.thighs} cm</p>
                   </div>
                 )}
               </div>
               {measurement.notes && (
                 <div className="mt-3 p-2 bg-gray-50 rounded-lg">
-                  <p className="text-xs text-[#718096]">{t('body.notes')}</p>
+                  <p className="text-xs text-[#718096]">备注</p>
                   <p className="text-sm text-[#333333]">{measurement.notes}</p>
                 </div>
               )}
@@ -167,7 +165,7 @@ export function BodyMeasurementList({ measurements, onUpdate, onDelete }: BodyMe
       <Dialog open={!!editingMeasurement} onOpenChange={() => setEditingMeasurement(null)}>
         <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto">
           <DialogHeader>
-            <DialogTitle>{t('body.editRecord')}</DialogTitle>
+            <DialogTitle>编辑记录</DialogTitle>
           </DialogHeader>
           {editingMeasurement && (
             <BodyMeasurementForm
@@ -183,17 +181,17 @@ export function BodyMeasurementList({ measurements, onUpdate, onDelete }: BodyMe
       <Dialog open={!!deleteConfirmId} onOpenChange={() => setDeleteConfirmId(null)}>
         <DialogContent className="max-w-sm">
           <DialogHeader>
-            <DialogTitle>{t('records.confirmDelete')}</DialogTitle>
+            <DialogTitle>确认删除</DialogTitle>
           </DialogHeader>
           <p className="text-[#718096] mb-4">
-            {t('records.confirmDelete')}
+            确认删除这条记录吗？此操作无法撤销。
           </p>
           <div className="flex gap-3">
             <Button variant="outline" onClick={() => setDeleteConfirmId(null)} className="flex-1">
-              {t('common.cancel')}
+              取消
             </Button>
             <Button variant="destructive" onClick={() => deleteConfirmId && handleDelete(deleteConfirmId)} className="flex-1">
-              {t('common.delete')}
+              删除
             </Button>
           </div>
         </DialogContent>

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Calendar, Ruler, Weight, Percent, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -26,8 +25,6 @@ interface BodyMeasurementFormProps {
 }
 
 export function BodyMeasurementForm({ initialData, onSubmit, onCancel, isSubmitting }: BodyMeasurementFormProps) {
-  const { t } = useTranslation();
-  
   const [formData, setFormData] = useState({
     date: initialData?.date || new Date().toISOString().split('T')[0],
     height: initialData?.height || '',
@@ -61,7 +58,7 @@ export function BodyMeasurementForm({ initialData, onSubmit, onCancel, isSubmitt
     <form onSubmit={handleSubmit} className="space-y-4">
       {/* Date */}
       <div className="space-y-2">
-        <Label>{t('body.date')}</Label>
+        <Label>日期</Label>
         <div className="relative">
           <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#718096]" />
           <Input
@@ -75,11 +72,11 @@ export function BodyMeasurementForm({ initialData, onSubmit, onCancel, isSubmitt
       </div>
 
       {/* Basic Measurements */}
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label className="flex items-center gap-2">
             <Ruler className="w-4 h-4" />
-            {t('body.height')} ({t('common.cm')})
+            身高 (cm)
           </Label>
           <Input
             type="number"
@@ -93,7 +90,7 @@ export function BodyMeasurementForm({ initialData, onSubmit, onCancel, isSubmitt
         <div className="space-y-2">
           <Label className="flex items-center gap-2">
             <Weight className="w-4 h-4" />
-            {t('body.weight')} ({t('common.kg')})
+            体重 (kg)
           </Label>
           <Input
             type="number"
@@ -111,7 +108,7 @@ export function BodyMeasurementForm({ initialData, onSubmit, onCancel, isSubmitt
       <div className="space-y-2">
         <Label className="flex items-center gap-2">
           <Percent className="w-4 h-4" />
-          {t('body.bodyFat')} (%)
+          体脂率 (%)
         </Label>
         <Input
           type="number"
@@ -127,10 +124,10 @@ export function BodyMeasurementForm({ initialData, onSubmit, onCancel, isSubmitt
 
       {/* Body Measurements */}
       <div className="space-y-2">
-        <Label className="text-sm font-medium text-[#718096]">{t('body.measurementTrend')}</Label>
-        <div className="grid grid-cols-2 gap-4">
+        <Label className="text-sm font-medium text-[#718096]">围度</Label>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
-            <Label className="text-xs">{t('body.chest')} ({t('common.cm')})</Label>
+            <Label className="text-xs">胸围 (cm)</Label>
             <Input
               type="number"
               step="0.1"
@@ -141,7 +138,7 @@ export function BodyMeasurementForm({ initialData, onSubmit, onCancel, isSubmitt
             />
           </div>
           <div>
-            <Label className="text-xs">{t('body.waist')} ({t('common.cm')})</Label>
+            <Label className="text-xs">腰围 (cm)</Label>
             <Input
               type="number"
               step="0.1"
@@ -152,7 +149,7 @@ export function BodyMeasurementForm({ initialData, onSubmit, onCancel, isSubmitt
             />
           </div>
           <div>
-            <Label className="text-xs">{t('body.hips')} ({t('common.cm')})</Label>
+            <Label className="text-xs">臀围 (cm)</Label>
             <Input
               type="number"
               step="0.1"
@@ -163,7 +160,7 @@ export function BodyMeasurementForm({ initialData, onSubmit, onCancel, isSubmitt
             />
           </div>
           <div>
-            <Label className="text-xs">{t('body.arms')} ({t('common.cm')})</Label>
+            <Label className="text-xs">臂围 (cm)</Label>
             <Input
               type="number"
               step="0.1"
@@ -174,7 +171,7 @@ export function BodyMeasurementForm({ initialData, onSubmit, onCancel, isSubmitt
             />
           </div>
           <div>
-            <Label className="text-xs">{t('body.thighs')} ({t('common.cm')})</Label>
+            <Label className="text-xs">大腿围 (cm)</Label>
             <Input
               type="number"
               step="0.1"
@@ -191,12 +188,12 @@ export function BodyMeasurementForm({ initialData, onSubmit, onCancel, isSubmitt
       <div className="space-y-2">
         <Label className="flex items-center gap-2">
           <FileText className="w-4 h-4" />
-          {t('body.notes')} ({t('records.optional')})
+          备注（可选）
         </Label>
         <Textarea
           value={formData.notes}
           onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-          placeholder={t('body.notes')}
+          placeholder="记录身体状态或变化"
           className="min-h-[80px] rounded-xl resize-none"
         />
       </div>
@@ -210,7 +207,7 @@ export function BodyMeasurementForm({ initialData, onSubmit, onCancel, isSubmitt
             onClick={onCancel}
             className="flex-1 h-12 rounded-xl"
           >
-            {t('common.cancel')}
+            取消
           </Button>
         )}
         <Button
@@ -218,7 +215,7 @@ export function BodyMeasurementForm({ initialData, onSubmit, onCancel, isSubmitt
           disabled={isSubmitting}
           className="flex-1 h-12 bg-[#38B2AC] hover:bg-[#2C9B95] text-white rounded-xl font-medium"
         >
-          {isSubmitting ? t('common.loading') : initialData ? t('body.editRecord') : t('body.addRecord')}
+          {isSubmitting ? '加载中...' : initialData ? '更新记录' : '新增记录'}
         </Button>
       </div>
     </form>

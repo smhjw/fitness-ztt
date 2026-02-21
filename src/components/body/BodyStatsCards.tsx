@@ -1,4 +1,3 @@
-import { useTranslation } from 'react-i18next';
 import { TrendingDown, TrendingUp, Minus, Scale, Ruler, Percent, Activity } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import type { BodyStats } from '@/types';
@@ -8,13 +7,11 @@ interface BodyStatsCardsProps {
 }
 
 export function BodyStatsCards({ stats }: BodyStatsCardsProps) {
-  const { t } = useTranslation();
-
   const cards = [
     {
-      title: t('body.currentWeight'),
+      title: '当前体重',
       value: stats.currentWeight.toFixed(1),
-      unit: t('common.kg'),
+      unit: 'kg',
       change: stats.weightChange,
       changePercent: stats.weightChangePercent,
       icon: <Scale className="w-5 h-5" />,
@@ -23,7 +20,7 @@ export function BodyStatsCards({ stats }: BodyStatsCardsProps) {
       textColor: 'text-[#38B2AC]',
     },
     {
-      title: t('body.bmi'),
+      title: 'BMI',
       value: stats.bmi.toFixed(1),
       unit: '',
       subtitle: stats.bmiCategory,
@@ -33,7 +30,7 @@ export function BodyStatsCards({ stats }: BodyStatsCardsProps) {
       textColor: 'text-[#6D28D9]',
     },
     {
-      title: t('body.bodyFat'),
+      title: '体脂率',
       value: stats.currentBodyFat?.toFixed(1) || '-',
       unit: '%',
       change: stats.bodyFatChange,
@@ -43,10 +40,10 @@ export function BodyStatsCards({ stats }: BodyStatsCardsProps) {
       textColor: 'text-orange-600',
     },
     {
-      title: t('body.average'),
+      title: '平均体重',
       value: stats.avgWeight.toFixed(1),
-      unit: t('common.kg'),
-      extra: `${t('body.highest')}: ${stats.maxWeight.toFixed(1)} / ${t('body.lowest')}: ${stats.minWeight.toFixed(1)}`,
+      unit: 'kg',
+      extra: `最高: ${stats.maxWeight.toFixed(1)} / 最低: ${stats.minWeight.toFixed(1)}`,
       icon: <Ruler className="w-5 h-5" />,
       color: 'from-blue-500 to-blue-600',
       bgColor: 'bg-blue-50',
@@ -67,7 +64,7 @@ export function BodyStatsCards({ stats }: BodyStatsCardsProps) {
   };
 
   return (
-    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       {cards.map((card, index) => (
         <Card key={index} className="overflow-hidden hover:shadow-card-hover transition-shadow duration-300">
           <CardContent className="p-5">
