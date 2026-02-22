@@ -1,14 +1,14 @@
 import type { User, LoginCredentials, RegisterCredentials, UserPreferences } from '@/types';
 import { userStorage, tokenStorage } from './storage';
 
-const LEGACY_GUEST_NAMES = new Set(['游客用户', 'Guest User']);
-const LEGACY_DEMO_NAMES = new Set(['Demo 用户', 'Demo User']);
+const LEGACY_GUEST_NAMES = new Set(['游客', 'Guest User']);
+const LEGACY_DEMO_NAMES = new Set(['演示账号', 'Demo User']);
 
 const AUTH_ERROR_MESSAGES = {
   invalidCredentials: '账号或密码错误',
-  emailExists: '邮箱已注册',
+  emailExists: '该邮箱已注册',
   passwordMismatch: '两次密码不一致',
-  invalidOldPassword: '原密码错误',
+  invalidOldPassword: '原密码不正确',
 } as const;
 
 const AUTH_FALLBACK_MESSAGES = {
@@ -16,15 +16,15 @@ const AUTH_FALLBACK_MESSAGES = {
 };
 
 function getPhoneUserName(phone: string): string {
-  return `用户${phone.slice(-4)}`;
+  return `手机尾号${phone.slice(-4)}`;
 }
 
 function getGuestUserName(): string {
-  return '游客用户';
+  return '游客';
 }
 
 function getDemoUserName(): string {
-  return '演示用户';
+  return '演示账号';
 }
 
 function isDemoUser(user: User): boolean {
@@ -40,6 +40,7 @@ function isLegacyPhoneGeneratedName(user: User): boolean {
   const expectedNames = new Set([
     `User${suffix}`,
     `用户${suffix}`,
+    `手机尾号${suffix}`,
     getPhoneUserName(user.phone),
   ]);
 

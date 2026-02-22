@@ -1,13 +1,13 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { 
-  Activity, 
-  Menu, 
-  X, 
-  User, 
-  LogOut, 
+import {
+  Activity,
+  Menu,
+  X,
+  User,
+  LogOut,
   Settings,
-  ChevronDown 
+  ChevronDown,
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -50,12 +50,12 @@ export function Navbar() {
 
   const navLinks = [
     { label: '首页', href: '/' },
-    { label: '运动记录', href: '/records' },
-    { label: '数据统计', href: '/statistics' },
+    { label: '记录', href: '/records' },
+    { label: '统计', href: '/statistics' },
     { label: '日历', href: '/calendar' },
-    { label: '知识库', href: '/knowledge' },
+    { label: '知识', href: '/knowledge' },
     { label: '饮食', href: '/diet' },
-    { label: '身体数据', href: '/body' },
+    { label: '身体', href: '/body' },
     { label: 'AI 助手', href: '/ai' },
   ];
 
@@ -65,7 +65,7 @@ export function Navbar() {
     }
 
     if (user.loginType === 'guest') {
-      return '游客用户';
+      return '游客';
     }
 
     if (user.id === 'demo-user-001' || user.email === 'demo@fittrack.com') {
@@ -74,8 +74,8 @@ export function Navbar() {
 
     if (user.loginType === 'phone' && user.phone) {
       const suffix = user.phone.slice(-4);
-      const phoneName = `用户${suffix}`;
-      const legacyPhoneNames = new Set([`User${suffix}`, `用户${suffix}`, phoneName]);
+      const phoneName = `手机尾号${suffix}`;
+      const legacyPhoneNames = new Set([`User${suffix}`, `手机尾号${suffix}`, `用户${suffix}`, phoneName]);
       if (!user.name || legacyPhoneNames.has(user.name)) {
         return phoneName;
       }
@@ -107,8 +107,8 @@ export function Navbar() {
           }`}
         >
           {/* Logo */}
-          <Link 
-            to="/" 
+          <Link
+            to="/"
             className="flex items-center gap-2 group"
           >
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#38B2AC] to-[#2C9B95] flex items-center justify-center shadow-glow group-hover:scale-110 transition-transform duration-300">

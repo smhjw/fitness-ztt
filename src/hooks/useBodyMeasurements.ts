@@ -43,11 +43,11 @@ export function useBodyMeasurements(): UseBodyMeasurementsReturn {
     setIsLoading(true);
     const userMeasurements = bodyStorage.getAll(user.id);
     setMeasurements(userMeasurements);
-    
+
     const latest = bodyStorage.getLatest(user.id);
     const userStats = bodyStorage.getStats(user.id, latest?.height);
     setStats(userStats);
-    
+
     setIsLoading(false);
   }, [user]);
 
@@ -78,49 +78,49 @@ export function useBodyMeasurements(): UseBodyMeasurementsReturn {
     data: Omit<BodyMeasurement, 'id' | 'userId' | 'createdAt'>
   ): Promise<BodyMeasurement> => {
     if (!user) throw new Error('请先登录');
-    
+
     const newMeasurement = bodyStorage.create(user.id, data);
     setMeasurements(prev => [newMeasurement, ...prev]);
-    
+
     // Update stats
     const updatedStats = bodyStorage.getStats(user.id, newMeasurement.height);
     setStats(updatedStats);
-    
+
     return newMeasurement;
   }, [user]);
 
   const updateMeasurement = useCallback(async (
-    id: string, 
+    id: string,
     data: Partial<BodyMeasurement>
   ): Promise<BodyMeasurement | null> => {
     if (!user) throw new Error('请先登录');
-    
+
     const updated = bodyStorage.update(user.id, id, data);
     if (updated) {
       setMeasurements(prev => prev.map(m => m.id === id ? updated : m));
-      
+
       // Update stats
       const latest = bodyStorage.getLatest(user.id);
       const updatedStats = bodyStorage.getStats(user.id, latest?.height);
       setStats(updatedStats);
     }
-    
+
     return updated;
   }, [user]);
 
   const deleteMeasurement = useCallback(async (id: string): Promise<boolean> => {
     if (!user) throw new Error('请先登录');
-    
+
     const success = bodyStorage.delete(user.id, id);
     if (success) {
       setMeasurements(prev => prev.filter(m => m.id !== id));
-      
+
       // Update stats
       const latest = bodyStorage.getLatest(user.id);
       const updatedStats = bodyStorage.getStats(user.id, latest?.height);
       setStats(updatedStats);
     }
-    
+
     return success;
   }, [user]);
 

@@ -1,11 +1,11 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
-import type { 
-  ExerciseRecord, 
-  ExerciseFormData, 
+import type {
+  ExerciseRecord,
+  ExerciseFormData,
   RecordFilter,
   ExerciseType,
   MoodLevel,
-  IntensityLevel 
+  IntensityLevel,
 } from '@/types';
 import { recordsStorage } from '@/services/storage';
 import useAuth from './useAuth';
@@ -55,7 +55,7 @@ export function useRecords(): UseRecordsReturn {
     let result = [...records];
 
     if (filter.dateRange) {
-      result = result.filter(r => 
+      result = result.filter(r =>
         r.date >= filter.dateRange!.start && r.date <= filter.dateRange!.end
       );
     }
@@ -118,14 +118,15 @@ export function useRecords(): UseRecordsReturn {
     records.forEach(r => {
       typeCounts[r.type] = (typeCounts[r.type] || 0) + 1;
     });
-    const favoriteType = Object.entries(typeCounts)
-      .sort((a, b) => b[1] - a[1])[0]?.[0] as ExerciseType | null;
 
-    const now = new Date();
-    const weekStart = new Date(now.getFullYear(), now.getMonth(), now.getDate() - now.getDay());
-    const thisWeekRecords = records.filter(r => new Date(r.date) >= weekStart);
-    const thisWeekWorkouts = thisWeekRecords.length;
-    const thisWeekDuration = thisWeekRecords.reduce((sum, r) => sum + r.duration, 0);
+    const favoriteType = Object.keys(typeCounts).reduce((a, b) =>
+      typeCounts[a] > typeCounts[b] ? a : b,
+      Object.keys(typeCounts)[0] || null
+    ) as ExerciseType | null;
+
+    const thisWeek = getThisWeekRecords(records);
+    const thisWeekWorkouts = thisWeek.length;
+    const thisWeekDuration = thisWeek.reduce((sum, r) => sum + r.duration, 0);
 
     return {
       totalWorkouts,
@@ -139,45 +140,15 @@ export function useRecords(): UseRecordsReturn {
   }, [records]);
 
   const getChartData = useCallback((granularity: 'day' | 'week' | 'month') => {
-    const sortedRecords = [...records].sort((a, b) => 
-      new Date(a.date).getTime() - new Date(b.date).getTime()
-    );
-
-    const dataMap = new Map<string, { duration: number; count: number }>();
-
-    sortedRecords.forEach(record => {
-      const date = new Date(record.date);
-      let key: string;
-
-      if (granularity === 'day') {
-        key = record.date;
-      } else if (granularity === 'week') {
-        const weekStart = new Date(date.getFullYear(), date.getMonth(), date.getDate() - date.getDay());
-        key = weekStart.toISOString().split('T')[0];
-      } else {
-        key = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
-      }
-
-      const existing = dataMap.get(key) || { duration: 0, count: 0 };
-      dataMap.set(key, {
-        duration: existing.duration + record.duration,
-        count: existing.count + 1,
-      });
-    });
-
-    return Array.from(dataMap.entries())
-      .map(([date, stats]) => ({
-        date,
-        duration: stats.duration,
-        count: stats.count,
-      }))
-      .sort((a, b) => a.date.localeCompare(b.date));
+    if (granularity === 'day') return getDailyData(records);
+    if (granularity === 'week') return getWeeklyData(records);
+    return getMonthlyData(records);
   }, [records]);
 
   const getCalendarEvents = useCallback(() => {
-    return records.map(r => ({
+    return records.map((r) => ({
       id: r.id,
-      title: `${getExerciseTypeLabel(r.type)} - ${r.duration}分钟`,
+      title: r.type,
       date: r.date,
       type: r.type,
       duration: r.duration,
@@ -203,57 +174,81 @@ export function useRecords(): UseRecordsReturn {
 function calculateStreak(records: ExerciseRecord[]): number {
   if (records.length === 0) return 0;
 
-  const sortedDates = [...new Set(records.map(r => r.date))].sort().reverse();
-  
+  const sortedDates = [...new Set(records.map(r => r.date))].sort((a, b) => b.localeCompare(a));
   let streak = 0;
-  const today = toLocalDateString(new Date());
-  const yesterday = toLocalDateString(new Date(Date.now() - 86400000));
-  
-  if (sortedDates[0] !== today && sortedDates[0] !== yesterday) {
-    return 0;
-  }
+  let currentDate = new Date(sortedDates[0]);
 
-  for (let i = 0; i < sortedDates.length; i++) {
-    if (i === 0) {
-      streak = 1;
+  for (const dateStr of sortedDates) {
+    const date = new Date(dateStr);
+    const diffDays = Math.floor((currentDate.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
+
+    if (diffDays === 0 || diffDays === 1) {
+      streak++;
+      currentDate = date;
     } else {
-      const prevDate = new Date(sortedDates[i - 1]);
-      const currDate = new Date(sortedDates[i]);
-      const diffDays = (prevDate.getTime() - currDate.getTime()) / (1000 * 60 * 60 * 24);
-      
-      if (diffDays === 1) {
-        streak++;
-      } else {
-        break;
-      }
+      break;
     }
   }
 
   return streak;
 }
 
-function getExerciseTypeLabel(type: ExerciseType): string {
-  const labels: Record<ExerciseType, string> = {
-    running: '跑步',
-    walking: '步行',
-    cycling: '骑行',
-    swimming: '游泳',
-    weightlifting: '力量训练',
-    yoga: '瑜伽',
-    pilates: '普拉提',
-    hiit: 'HIIT',
-    cardio: '有氧',
-    sports: '球类运动',
-    other: '其他',
-  };
-  return labels[type] || type;
+function getThisWeekRecords(records: ExerciseRecord[]): ExerciseRecord[] {
+  const now = new Date();
+  const startOfWeek = new Date(now);
+  startOfWeek.setDate(now.getDate() - now.getDay());
+
+  return records.filter(r => new Date(r.date) >= startOfWeek);
 }
 
-function toLocalDateString(date: Date): string {
-  const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, '0');
-  const day = String(date.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
+function getDailyData(records: ExerciseRecord[]) {
+  const dataMap: Record<string, { duration: number; count: number }> = {};
+  records.forEach((r) => {
+    if (!dataMap[r.date]) {
+      dataMap[r.date] = { duration: 0, count: 0 };
+    }
+    dataMap[r.date].duration += r.duration;
+    dataMap[r.date].count += 1;
+  });
+
+  return Object.entries(dataMap)
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .map(([date, value]) => ({ date, ...value }));
+}
+
+function getWeeklyData(records: ExerciseRecord[]) {
+  const dataMap: Record<string, { duration: number; count: number }> = {};
+  records.forEach((r) => {
+    const date = new Date(r.date);
+    const start = new Date(date);
+    start.setDate(date.getDate() - date.getDay());
+    const key = start.toISOString().split('T')[0];
+    if (!dataMap[key]) {
+      dataMap[key] = { duration: 0, count: 0 };
+    }
+    dataMap[key].duration += r.duration;
+    dataMap[key].count += 1;
+  });
+
+  return Object.entries(dataMap)
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .map(([date, value]) => ({ date, ...value }));
+}
+
+function getMonthlyData(records: ExerciseRecord[]) {
+  const dataMap: Record<string, { duration: number; count: number }> = {};
+  records.forEach((r) => {
+    const key = r.date.substring(0, 7);
+    if (!dataMap[key]) {
+      dataMap[key] = { duration: 0, count: 0 };
+    }
+    dataMap[key].duration += r.duration;
+    dataMap[key].count += 1;
+  });
+
+  return Object.entries(dataMap)
+    .sort((a, b) => a[0].localeCompare(b[0]))
+    .map(([date, value]) => ({ date, ...value }));
 }
 
 export default useRecords;
