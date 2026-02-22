@@ -24,10 +24,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - name: Clean dependencies
-        run: rm -rf node_modules package-lock.json
       - name: Install dependencies
-        run: npm install --no-audit --no-fund --include=optional
+        run: npm install
       - name: Build
         run: npm run build
       - name: Upload artifact
