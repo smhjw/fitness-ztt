@@ -31,6 +31,7 @@ jobs:
             npm cache clean --force &&
             npm install --include=optional
           )
+          npm ls @rollup/rollup-linux-x64-gnu || npm install --no-save @rollup/rollup-linux-x64-gnu
       - name: Build
         run: npm run build
       - name: Upload artifact
