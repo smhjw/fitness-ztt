@@ -19,7 +19,7 @@ export function LoginForm() {
   const [error, setError] = useState('');
   const [loginMethod, setLoginMethod] = useState<LoginMethod>('email');
   const [countdown, setCountdown] = useState(0);
-  
+
   const [formData, setFormData] = useState({
     email: '',
     phone: '',
@@ -30,7 +30,7 @@ export function LoginForm() {
 
   const handleSendCode = async () => {
     if (!formData.phone || countdown > 0) return;
-    
+
     setCountdown(60);
     const timer = setInterval(() => {
       setCountdown(prev => {
@@ -62,7 +62,7 @@ export function LoginForm() {
       }
       navigate('/');
     } catch (err: any) {
-      setError(err.message || '账号或密码不正确');
+      setError(err.message || '登录失败，请稍后再试');
     } finally {
       setIsLoading(false);
     }
@@ -75,7 +75,7 @@ export function LoginForm() {
       await demoLogin();
       navigate('/');
     } catch (err: any) {
-      setError(err.message || '账号或密码不正确');
+      setError(err.message || '登录失败，请稍后再试');
     } finally {
       setIsLoading(false);
     }
@@ -88,21 +88,21 @@ export function LoginForm() {
       await guestLogin();
       navigate('/');
     } catch (err: any) {
-      setError(err.message || '账号或密码不正确');
+      setError(err.message || '登录失败，请稍后再试');
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleWechatLogin = () => {
-    setError('微信登录即将上线');
+    setError('微信登录暂未开放');
   };
 
   return (
     <div className="w-full max-w-md mx-auto">
       <div className="text-center mb-8">
         <h1 className="text-3xl font-bold text-[#333333] mb-2">欢迎回来</h1>
-        <p className="text-[#718096]">登录后继续记录你的训练</p>
+        <p className="text-[#718096]">继续你的训练记录与健康管理</p>
       </div>
 
       {error && (
@@ -115,15 +115,15 @@ export function LoginForm() {
         <TabsList className="grid w-full grid-cols-3 mb-6">
           <TabsTrigger value="email" className="gap-2">
             <Mail className="w-4 h-4" />
-            <span className="hidden sm:inline">邮箱登录</span>
+            邮箱
           </TabsTrigger>
           <TabsTrigger value="phone" className="gap-2">
             <Phone className="w-4 h-4" />
-            <span className="hidden sm:inline">手机登录</span>
+            手机号
           </TabsTrigger>
           <TabsTrigger value="wechat" className="gap-2">
             <MessageCircle className="w-4 h-4" />
-            <span className="hidden sm:inline">微信登录</span>
+            微信
           </TabsTrigger>
         </TabsList>
 
@@ -140,6 +140,7 @@ export function LoginForm() {
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                   className="pl-10 h-12 rounded-xl border-gray-200 focus:border-[#38B2AC] focus:ring-[#38B2AC]"
+                  autoComplete="email"
                   required
                 />
               </div>
@@ -156,6 +157,7 @@ export function LoginForm() {
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                   className="pl-10 pr-10 h-12 rounded-xl border-gray-200 focus:border-[#38B2AC] focus:ring-[#38B2AC]"
+                  autoComplete="current-password"
                   required
                 />
                 <button
@@ -173,7 +175,7 @@ export function LoginForm() {
                 <Checkbox
                   id="remember"
                   checked={formData.rememberMe}
-                  onCheckedChange={(checked) => 
+                  onCheckedChange={(checked) =>
                     setFormData({ ...formData, rememberMe: checked as boolean })
                   }
                 />
@@ -181,8 +183,8 @@ export function LoginForm() {
                   记住我
                 </Label>
               </div>
-              <Link 
-                to="/forgot-password" 
+              <Link
+                to="/forgot-password"
                 className="text-sm text-[#38B2AC] hover:text-[#2C9B95]"
               >
                 忘记密码
@@ -197,7 +199,7 @@ export function LoginForm() {
               {isLoading ? (
                 <>
                   <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                  加载中...
+                  登录中...
                 </>
               ) : (
                 '登录'
@@ -219,6 +221,8 @@ export function LoginForm() {
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   className="pl-10 h-12 rounded-xl border-gray-200 focus:border-[#38B2AC] focus:ring-[#38B2AC]"
+                  autoComplete="tel"
+                  inputMode="numeric"
                   required
                 />
               </div>
@@ -234,6 +238,8 @@ export function LoginForm() {
                   value={formData.verificationCode}
                   onChange={(e) => setFormData({ ...formData, verificationCode: e.target.value })}
                   className="h-12 rounded-xl border-gray-200 focus:border-[#38B2AC] focus:ring-[#38B2AC]"
+                  inputMode="numeric"
+                  autoComplete="one-time-code"
                   required
                 />
                 <Button
@@ -256,7 +262,7 @@ export function LoginForm() {
               {isLoading ? (
                 <>
                   <Loader2 className="w-5 h-5 mr-2 animate-spin" />
-                  加载中...
+                  登录中...
                 </>
               ) : (
                 '登录'
@@ -270,7 +276,7 @@ export function LoginForm() {
             <div className="w-32 h-32 mx-auto mb-4 bg-[#07C160] rounded-2xl flex items-center justify-center">
               <MessageCircle className="w-16 h-16 text-white" />
             </div>
-            <p className="text-[#718096] mb-4">微信登录</p>
+            <p className="text-[#718096] mb-4">微信登录功能即将上线</p>
             <Button
               onClick={handleWechatLogin}
               className="w-full h-12 bg-[#07C160] hover:bg-[#06AD56] text-white rounded-xl font-medium"
@@ -302,7 +308,7 @@ export function LoginForm() {
             className="h-12 rounded-xl"
           >
             <User className="w-4 h-4 mr-2" />
-            游客体验
+            游客登录
           </Button>
         </div>
       </div>

@@ -24,15 +24,15 @@ export function RegisterForm() {
 
   const validateForm = (): boolean => {
     if (formData.password.length < 6) {
-      setError('密码至少需要6个字符');
+      setError('密码至少 6 位');
       return false;
     }
     if (formData.password !== formData.confirmPassword) {
-      setError('两次输入的密码不一致');
+      setError('两次密码不一致');
       return false;
     }
     if (!formData.agreeTerms) {
-      setError('请同意服务条款和隐私政策');
+      setError('请同意服务条款与隐私政策');
       return false;
     }
     return true;
@@ -54,7 +54,7 @@ export function RegisterForm() {
       });
       navigate('/');
     } catch (err: any) {
-      setError(err.message || '注册失败，请稍后重试');
+      setError(err.message || '注册失败，请稍后再试');
     } finally {
       setIsLoading(false);
     }
@@ -63,8 +63,8 @@ export function RegisterForm() {
   return (
     <div className="w-full max-w-md mx-auto">
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-[#333333] mb-2">创建账户</h1>
-        <p className="text-[#718096]">开始你的健身追踪之旅</p>
+        <h1 className="text-3xl font-bold text-[#333333] mb-2">创建账号</h1>
+        <p className="text-[#718096]">开始你的健身记录之旅</p>
       </div>
 
       {error && (
@@ -75,23 +75,24 @@ export function RegisterForm() {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="name">姓名</Label>
+          <Label htmlFor="name">昵称</Label>
           <div className="relative">
             <User className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#718096]" />
             <Input
               id="name"
               type="text"
-              placeholder="你的名字"
+              placeholder="请输入昵称"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               className="pl-10 h-12 rounded-xl border-gray-200 focus:border-[#38B2AC] focus:ring-[#38B2AC]"
+              autoComplete="name"
               required
             />
           </div>
         </div>
 
         <div className="space-y-2">
-          <Label htmlFor="email">邮箱地址</Label>
+          <Label htmlFor="email">邮箱</Label>
           <div className="relative">
             <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#718096]" />
             <Input
@@ -101,6 +102,7 @@ export function RegisterForm() {
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               className="pl-10 h-12 rounded-xl border-gray-200 focus:border-[#38B2AC] focus:ring-[#38B2AC]"
+              autoComplete="email"
               required
             />
           </div>
@@ -113,10 +115,11 @@ export function RegisterForm() {
             <Input
               id="password"
               type={showPassword ? 'text' : 'password'}
-              placeholder="创建密码（至少6个字符）"
+              placeholder="请输入密码（至少 6 位）"
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
               className="pl-10 pr-10 h-12 rounded-xl border-gray-200 focus:border-[#38B2AC] focus:ring-[#38B2AC]"
+              autoComplete="new-password"
               required
               minLength={6}
             />
@@ -141,6 +144,7 @@ export function RegisterForm() {
               value={formData.confirmPassword}
               onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
               className="pl-10 pr-10 h-12 rounded-xl border-gray-200 focus:border-[#38B2AC] focus:ring-[#38B2AC]"
+              autoComplete="new-password"
               required
             />
             <button
@@ -157,7 +161,7 @@ export function RegisterForm() {
           <Checkbox
             id="terms"
             checked={formData.agreeTerms}
-            onCheckedChange={(checked) => 
+            onCheckedChange={(checked) =>
               setFormData({ ...formData, agreeTerms: checked as boolean })
             }
             className="mt-1"
@@ -167,7 +171,7 @@ export function RegisterForm() {
             <Link to="/terms" className="text-[#38B2AC] hover:text-[#2C9B95]">
               服务条款
             </Link>
-            {' '}和{' '}
+            {' '}与{' '}
             <Link to="/privacy" className="text-[#38B2AC] hover:text-[#2C9B95]">
               隐私政策
             </Link>
@@ -185,15 +189,15 @@ export function RegisterForm() {
               注册中...
             </>
           ) : (
-            '创建账户'
+            '注册'
           )}
         </Button>
       </form>
 
       <p className="mt-6 text-center text-sm text-[#718096]">
-        已有账户？{' '}
+        已有账号？{' '}
         <Link to="/login" className="text-[#38B2AC] hover:text-[#2C9B95] font-medium">
-          立即登录
+          去登录
         </Link>
       </p>
     </div>
