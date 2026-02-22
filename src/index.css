@@ -1,5 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700&family=ZCOOL+QingKe+HuangYou&display=swap');
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -36,8 +34,8 @@
     --text: #333333;
     --gray: #718096;
 
-    --font-sans: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
-    --font-display: 'ZCOOL QingKe HuangYou', 'Noto Sans SC', sans-serif;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Source Han Sans SC", Arial, sans-serif;
+    --font-display: var(--font-sans);
   }
 }
 
