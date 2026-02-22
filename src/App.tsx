@@ -22,7 +22,7 @@ const StaticPage = lazy(() => import('@/sections/StaticPage'));
 function PageLoader() {
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#38B2AC]" />
+      <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF6A3D]" />
     </div>
   );
 }
@@ -34,7 +34,7 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#38B2AC]" />
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF6A3D]" />
       </div>
     );
   }
@@ -53,7 +53,7 @@ function PublicRoute({ children }: { children: React.ReactNode }) {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#38B2AC]" />
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#FF6A3D]" />
       </div>
     );
   }
@@ -238,7 +238,7 @@ function AppRoutes() {
                   {
                     title: '运动记录',
                     content: '快速录入每一次训练，自动生成统计图表。',
-                    items: ['多类型运动支持', '日历视图回顾', '训练强度与心情记录'],
+                    items: ['多类型运动支持', '日历视图回看', '训练强度与心情记录'],
                   },
                   {
                     title: '饮食管理',
@@ -262,7 +262,7 @@ function AppRoutes() {
             <MainLayout>
               <StaticPage
                 title="帮助中心"
-                description="常见问题与使用指引，帮你快速上手。"
+                description="常见问题与使用指南，帮你快速上手。"
                 sections={[
                   {
                     title: '常见问题',
@@ -273,7 +273,7 @@ function AppRoutes() {
                     content: '建议每天记录训练与饮食，持续 2-4 周即可看到趋势变化。',
                   },
                 ]}
-                cta={{ label: '联系客服', href: '/contact' }}
+                cta={{ label: '联系客户', href: '/contact' }}
               />
             </MainLayout>
           }
@@ -284,18 +284,18 @@ function AppRoutes() {
             <MainLayout>
               <StaticPage
                 title="联系我们"
-                description="有任何建议或合作意向，欢迎联系。"
+                description="有任何问题或合作意向，欢迎随时联系。"
                 sections={[
                   {
                     title: '邮箱',
-                    content: 'support@fittrack.com（工作日 24 小时内回复）',
+                    content: 'support@fittrack.app',
                   },
                   {
-                    title: '商务合作',
-                    content: 'biz@fittrack.com',
+                    title: '社交媒体',
+                    content: '关注 FitTrack 获取最新动态。',
                   },
                 ]}
-                cta={{ label: '反馈建议', href: '/feedback' }}
+                cta={{ label: '返回首页', href: '/' }}
               />
             </MainLayout>
           }
@@ -306,18 +306,18 @@ function AppRoutes() {
             <MainLayout>
               <StaticPage
                 title="反馈建议"
-                description="你的想法会直接影响我们下一次更新。"
+                description="你的意见对我们很重要。"
                 sections={[
                   {
-                    title: '反馈方式',
-                    items: ['应用内意见反馈', '发送邮件至 feedback@fittrack.com'],
+                    title: '提交方式',
+                    content: '发送邮件至 feedback@fittrack.app 或在 AI 助手中留言。',
                   },
                   {
-                    title: '我们会做什么',
-                    content: '收到反馈后 3 个工作日内回复，并在更新日志中同步进展。',
+                    title: '处理时间',
+                    content: '我们会在 2 个工作日内回复。',
                   },
                 ]}
-                cta={{ label: '查看功能介绍', href: '/features' }}
+                cta={{ label: '去 AI 助手', href: '/ai' }}
               />
             </MainLayout>
           }
@@ -328,17 +328,18 @@ function AppRoutes() {
             <MainLayout>
               <StaticPage
                 title="隐私政策"
-                description="我们重视你的数据安全与隐私保护。"
+                description="我们非常重视你的隐私安全。"
                 sections={[
                   {
-                    title: '数据收集',
-                    content: '仅用于提供训练记录、统计分析与个性化建议。',
+                    title: '数据存储',
+                    content: '训练与饮食数据保存在本地浏览器，不会上传到服务器。',
                   },
                   {
-                    title: '数据保护',
-                    content: '所有数据均本地存储或经加密处理，未经授权不会分享。',
+                    title: '第三方服务',
+                    content: '仅在必要时使用统计与分析服务，用于优化体验。',
                   },
                 ]}
+                cta={{ label: '返回首页', href: '/' }}
               />
             </MainLayout>
           }
@@ -349,37 +350,20 @@ function AppRoutes() {
             <MainLayout>
               <StaticPage
                 title="服务条款"
-                description="使用 FitTrack 即表示你同意以下条款。"
+                description="使用 FitTrack 前请阅读以下条款。"
                 sections={[
                   {
                     title: '使用范围',
-                    content: '仅供个人健康管理使用，不作为医疗建议。',
+                    content: '本产品仅用于健身记录与健康管理，不构成医疗建议。',
                   },
                   {
-                    title: '责任说明',
-                    content: '请在专业人士指导下进行训练与饮食调整。',
+                    title: '责任限制',
+                    content: '请在专业人士指导下进行训练，注意运动安全。',
                   },
                 ]}
+                cta={{ label: '返回首页', href: '/' }}
               />
             </MainLayout>
-          }
-        />
-        <Route
-          path="/forgot-password"
-          element={
-            <AuthLayout>
-              <StaticPage
-                title="找回密码"
-                description="找回功能正在完善中。"
-                sections={[
-                  {
-                    title: '临时方案',
-                    content: '请发送邮件至 support@fittrack.com，我们将协助重置。',
-                  },
-                ]}
-                backTo="/login"
-              />
-            </AuthLayout>
           }
         />
 
@@ -395,17 +379,7 @@ function App() {
     <AuthProvider>
       <Router>
         <AppRoutes />
-        <Toaster 
-          position="top-right"
-          toastOptions={{
-            style: {
-              background: 'white',
-              border: '1px solid #E5E7EB',
-              borderRadius: '12px',
-              padding: '16px',
-            },
-          }}
-        />
+        <Toaster />
       </Router>
     </AuthProvider>
   );
