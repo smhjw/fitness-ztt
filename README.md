@@ -1,6 +1,15 @@
 # FitTrack 健身记录器
 
+[![Deploy to GitHub Pages](https://github.com/smhjw/fitness-ztt/actions/workflows/deploy.yml/badge.svg)](https://github.com/smhjw/fitness-ztt/actions/workflows/deploy.yml)
+![Vite](https://img.shields.io/badge/Vite-7.2-646CFF?logo=vite&logoColor=white)
+![React](https://img.shields.io/badge/React-19-149ECA?logo=react&logoColor=white)
+
 一个纯前端的健身记录与健康管理应用，覆盖训练记录、数据统计、饮食与知识库、身体数据追踪和 AI 助手。项目默认简体中文，并针对移动端做了深入适配与交互动效优化。
+
+## 界面截图
+![首页](docs/screenshots/home.svg)
+![运动记录](docs/screenshots/records.svg)
+![饮食](docs/screenshots/diet.svg)
 
 ## 功能概览
 - 运动记录：新增/编辑/删除、心情/强度/备注/图片，列表与日历双视图
