@@ -84,8 +84,8 @@ export function StatisticsSection() {
     <section className="py-8">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-[#333333]">数据统计</h1>
-          <p className="text-[#718096] mt-1">查看训练趋势与结构</p>
+          <h1 className="text-3xl font-bold text-[#333333]">训练统计</h1>
+          <p className="text-[#718096] mt-1">跟踪训练趋势与运动结构</p>
         </div>
 
         <div className="mb-8">
@@ -101,7 +101,7 @@ export function StatisticsSection() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-lg">
                 <Activity className="w-5 h-5 text-[#38B2AC]" />
-                类型分布
+                运动类型分布
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -125,7 +125,7 @@ export function StatisticsSection() {
               ) : (
                 <div className="text-center py-8 text-[#718096]">
                   <Activity className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-                  <p>暂无记录</p>
+                  <p>暂无数据</p>
                 </div>
               )}
             </CardContent>
@@ -135,7 +135,7 @@ export function StatisticsSection() {
             <CardHeader>
               <CardTitle className="flex items-center gap-2 text-lg">
                 <Calendar className="w-5 h-5 text-[#38B2AC]" />
-                月度概览
+                月度训练
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -145,7 +145,7 @@ export function StatisticsSection() {
                     <div key={month} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                       <span className="font-medium text-[#333333]">{month}</span>
                       <div className="text-right">
-                        <p className="text-sm text-[#333333]">{data.count}</p>
+                        <p className="text-sm text-[#333333]">{data.count} 次</p>
                         <p className="text-xs text-[#718096]">
                           {data.duration} 分钟
                         </p>
@@ -156,7 +156,7 @@ export function StatisticsSection() {
               ) : (
                 <div className="text-center py-8 text-[#718096]">
                   <Calendar className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-                  <p>暂无记录</p>
+                  <p>暂无数据</p>
                 </div>
               )}
             </CardContent>
@@ -167,7 +167,7 @@ export function StatisticsSection() {
           <CardHeader>
             <CardTitle className="flex items-center gap-2 text-lg">
               <TrendingUp className="w-5 h-5 text-[#38B2AC]" />
-              近 7 天
+              近 7 日训练
             </CardTitle>
           </CardHeader>
           <CardContent>

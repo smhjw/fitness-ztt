@@ -1,10 +1,10 @@
-import { 
-  Flame, 
-  Clock, 
-  TrendingUp, 
-  Calendar, 
+import {
+  Flame,
+  Clock,
+  TrendingUp,
+  Calendar,
   Trophy,
-  Activity
+  Activity,
 } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import type { ExerciseType } from '@/types';
@@ -38,7 +38,7 @@ const exerciseTypeLabels: Record<ExerciseType, string> = {
 export function StatisticsCards({ stats }: StatisticsCardsProps) {
   const cards = [
     {
-      title: '总运动次数',
+      title: '总训练次数',
       value: stats.totalWorkouts,
       unit: '次',
       icon: <Activity className="w-5 h-5" />,
@@ -47,7 +47,7 @@ export function StatisticsCards({ stats }: StatisticsCardsProps) {
       textColor: 'text-[#38B2AC]',
     },
     {
-      title: '总运动时长',
+      title: '总训练时长',
       value: stats.totalDuration,
       unit: '分钟',
       icon: <Clock className="w-5 h-5" />,
@@ -74,7 +74,7 @@ export function StatisticsCards({ stats }: StatisticsCardsProps) {
       textColor: 'text-orange-600',
     },
     {
-      title: '本周运动',
+      title: '本周训练',
       value: `${stats.thisWeekWorkouts}次 / ${stats.thisWeekDuration}分钟`,
       unit: '',
       icon: <Calendar className="w-5 h-5" />,
@@ -84,7 +84,7 @@ export function StatisticsCards({ stats }: StatisticsCardsProps) {
       isText: true,
     },
     {
-      title: '最爱运动',
+      title: '常练项目',
       value: stats.favoriteType ? exerciseTypeLabels[stats.favoriteType] : '暂无',
       unit: '',
       icon: <Trophy className="w-5 h-5" />,
@@ -98,8 +98,8 @@ export function StatisticsCards({ stats }: StatisticsCardsProps) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       {cards.map((card, index) => (
-        <Card 
-          key={index} 
+        <Card
+          key={index}
           className="overflow-hidden hover:shadow-card-hover transition-shadow duration-300"
         >
           <CardContent className="p-5">
@@ -111,7 +111,9 @@ export function StatisticsCards({ stats }: StatisticsCardsProps) {
             <div className="mt-4">
               <p className="text-sm text-[#718096]">{card.title}</p>
               <p className="mt-1 text-2xl font-bold text-[#333333]">
-                {card.isText ? card.value : (
+                {card.isText ? (
+                  card.value
+                ) : (
                   <>
                     {card.value}
                     <span className="text-sm font-normal text-[#718096] ml-1">

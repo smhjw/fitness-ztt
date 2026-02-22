@@ -33,7 +33,7 @@ export function StatisticsChart({ data, granularity, onGranularityChange }: Stat
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
           <CardTitle className="flex items-center gap-2 text-lg">
             <TrendingUp className="w-5 h-5 text-[#38B2AC]" />
-            趋势分析
+            训练趋势
           </CardTitle>
           <div className="flex gap-2 flex-wrap">
             <Button
@@ -43,7 +43,7 @@ export function StatisticsChart({ data, granularity, onGranularityChange }: Stat
               className={granularity === 'day' ? 'bg-[#38B2AC] hover:bg-[#2C9B95]' : ''}
             >
               <Calendar className="w-4 h-4 mr-1" />
-              天
+              日
             </Button>
             <Button
               variant={granularity === 'week' ? 'default' : 'outline'}
@@ -84,12 +84,12 @@ export function StatisticsChart({ data, granularity, onGranularityChange }: Stat
                   }}
                 />
                 <Legend wrapperStyle={{ fontSize: '12px' }} />
-                <Bar yAxisId="count" dataKey="count" name="总次数" fill="#6D28D9" radius={[4, 4, 0, 0]} maxBarSize={28} />
+                <Bar yAxisId="count" dataKey="count" name="次数" fill="#6D28D9" radius={[4, 4, 0, 0]} maxBarSize={28} />
                 <Line
                   yAxisId="duration"
                   type="monotone"
                   dataKey="duration"
-                  name="总时长"
+                  name="时长"
                   stroke="#38B2AC"
                   strokeWidth={3}
                   dot={{ r: 3 }}
@@ -102,7 +102,7 @@ export function StatisticsChart({ data, granularity, onGranularityChange }: Stat
           <div className="h-[280px] sm:h-[320px] lg:h-[360px] flex items-center justify-center text-[#718096]">
             <div className="text-center">
               <Activity className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-              <p>暂无记录</p>
+              <p>暂无数据</p>
             </div>
           </div>
         )}
