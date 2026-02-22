@@ -101,10 +101,27 @@
   }
 
   .card-pop {
+    --tilt-x: 0deg;
+    --tilt-y: 0deg;
+    --glow-x: 50%;
+    --glow-y: 50%;
+    --reveal-delay: 0ms;
     position: relative;
+    transform-style: preserve-3d;
+    transform: perspective(1200px) translateY(0) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
     transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-    transform: translateZ(0);
     will-change: transform;
+  }
+
+  .card-pop::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3'/></filter><rect width='120' height='120' filter='url(%23n)' opacity='0.5'/></svg>");
+    opacity: 0.05;
+    mix-blend-mode: soft-light;
+    pointer-events: none;
   }
 
   .card-pop::after {
@@ -112,15 +129,20 @@
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    background: radial-gradient(120% 120% at 80% 0%, rgba(56, 178, 172, 0.18), rgba(255, 255, 255, 0) 60%);
+    background: radial-gradient(280px 280px at var(--glow-x) var(--glow-y), rgba(56, 178, 172, 0.28), rgba(255, 255, 255, 0) 60%);
     opacity: 0;
     transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1);
     pointer-events: none;
   }
 
+  .card-pop[data-revealed="true"] {
+    animation: pop-reveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+    animation-delay: var(--reveal-delay);
+  }
+
   @media (hover: hover) and (pointer: fine) {
     .card-pop:hover {
-      transform: translateY(-6px) scale(1.01);
+      transform: perspective(1200px) translateY(-6px) scale(1.01) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
       box-shadow: 0 18px 45px rgba(15, 23, 42, 0.18), 0 8px 20px rgba(56, 178, 172, 0.12);
     }
 
@@ -130,12 +152,16 @@
   }
 
   .card-pop:active {
-    transform: translateY(-2px) scale(0.995);
+    transform: perspective(1200px) translateY(-2px) scale(0.995) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
   }
 
   @media (prefers-reduced-motion: reduce) {
     .card-pop {
       transition: none;
+    }
+
+    .card-pop[data-revealed="true"] {
+      animation: none;
     }
 
     .card-pop:hover {
@@ -199,6 +225,17 @@
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes pop-reveal {
+  from {
+    opacity: 0;
+    transform: perspective(1200px) translateY(18px) scale(0.98) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
+  }
+  to {
+    opacity: 1;
+    transform: perspective(1200px) translateY(0) scale(1) rotateX(var(--tilt-x)) rotateY(var(--tilt-y));
   }
 }
 
