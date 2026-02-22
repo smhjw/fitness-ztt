@@ -1,6 +1,5 @@
 import { useState, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
-import { X, Plus, Upload, Image as ImageIcon } from 'lucide-react';
+import { X, Plus, Image as ImageIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -14,7 +13,6 @@ import {
 import { Badge } from '@/components/ui/badge';
 import type { RecipeCategory, Ingredient } from '@/types';
 import { recipeCategoryLabels, recipeCategoryColors } from '@/hooks/useDiet';
-import useAuth from '@/hooks/useAuth';
 
 interface UploadRecipeDialogProps {
   open: boolean;
@@ -39,8 +37,6 @@ const categories: RecipeCategory[] = [
 ];
 
 export function UploadRecipeDialog({ open, onClose, onSubmit }: UploadRecipeDialogProps) {
-  const { t } = useTranslation();
-  const { user } = useAuth();
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const [formData, setFormData] = useState({
@@ -175,13 +171,13 @@ export function UploadRecipeDialog({ open, onClose, onSubmit }: UploadRecipeDial
     <Dialog open={open} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>{t('diet.uploadRecipe')}</DialogTitle>
+          <DialogTitle>上传菜谱</DialogTitle>
         </DialogHeader>
         
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Images */}
           <div className="space-y-2">
-            <Label>{t('diet.uploadImage')}</Label>
+            <Label>上传图片</Label>
             <div className="flex flex-wrap gap-2">
               {formData.images.map((img, index) => (
                 <div key={index} className="relative w-20 h-20">
@@ -218,28 +214,28 @@ export function UploadRecipeDialog({ open, onClose, onSubmit }: UploadRecipeDial
 
           {/* Basic Info */}
           <div className="space-y-2">
-            <Label>{t('diet.recipeName')}</Label>
+            <Label>菜谱名称</Label>
             <Input
               value={formData.name}
               onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-              placeholder={t('diet.recipeName')}
+              placeholder="例如：低脂鸡胸沙拉"
               required
             />
           </div>
 
           <div className="space-y-2">
-            <Label>{t('diet.description')}</Label>
+            <Label>菜谱描述</Label>
             <Textarea
               value={formData.description}
               onChange={(e) => setFormData(prev => ({ ...prev, description: e.target.value }))}
-              placeholder={t('diet.description')}
+              placeholder="一句话说明亮点或口味"
               rows={2}
             />
           </div>
 
           {/* Categories */}
           <div className="space-y-2">
-            <Label>{t('diet.categories')}</Label>
+            <Label>分类</Label>
             <div className="flex flex-wrap gap-2">
               {categories.map((cat) => (
                 <button
@@ -259,9 +255,9 @@ export function UploadRecipeDialog({ open, onClose, onSubmit }: UploadRecipeDial
           </div>
 
           {/* Time & Servings */}
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="space-y-2">
-              <Label>{t('diet.cookingTime')} ({t('common.minutes')})</Label>
+              <Label>烹饪时间（分钟）</Label>
               <Input
                 type="number"
                 value={formData.cookingTime}
@@ -270,7 +266,7 @@ export function UploadRecipeDialog({ open, onClose, onSubmit }: UploadRecipeDial
               />
             </div>
             <div className="space-y-2">
-              <Label>{t('diet.servings')}</Label>
+              <Label>份数</Label>
               <Input
                 type="number"
                 value={formData.servings}
@@ -279,7 +275,7 @@ export function UploadRecipeDialog({ open, onClose, onSubmit }: UploadRecipeDial
               />
             </div>
             <div className="space-y-2">
-              <Label>{t('diet.calories')}</Label>
+              <Label>热量（千卡）</Label>
               <Input
                 type="number"
                 value={formData.calories}
@@ -291,10 +287,10 @@ export function UploadRecipeDialog({ open, onClose, onSubmit }: UploadRecipeDial
 
           {/* Nutrition */}
           <div className="space-y-2">
-            <Label>{t('diet.nutrition')}</Label>
-            <div className="grid grid-cols-3 gap-4">
+            <Label>营养信息</Label>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
               <div>
-                <Label className="text-xs">{t('diet.protein')} (g)</Label>
+                <Label className="text-xs">蛋白质 (g)</Label>
                 <Input
                   type="number"
                   value={formData.protein}
@@ -303,7 +299,7 @@ export function UploadRecipeDialog({ open, onClose, onSubmit }: UploadRecipeDial
                 />
               </div>
               <div>
-                <Label className="text-xs">{t('diet.carbs')} (g)</Label>
+                <Label className="text-xs">碳水 (g)</Label>
                 <Input
                   type="number"
                   value={formData.carbs}
@@ -312,7 +308,7 @@ export function UploadRecipeDialog({ open, onClose, onSubmit }: UploadRecipeDial
                 />
               </div>
               <div>
-                <Label className="text-xs">{t('diet.fat')} (g)</Label>
+                <Label className="text-xs">脂肪 (g)</Label>
                 <Input
                   type="number"
                   value={formData.fat}
@@ -326,10 +322,10 @@ export function UploadRecipeDialog({ open, onClose, onSubmit }: UploadRecipeDial
           {/* Ingredients */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <Label>{t('diet.ingredients')}</Label>
+              <Label>食材</Label>
               <Button type="button" variant="outline" size="sm" onClick={addIngredient}>
                 <Plus className="w-4 h-4 mr-1" />
-                {t('common.add')}
+                添加
               </Button>
             </div>
             {formData.ingredients.map((ing, index) => (
@@ -364,10 +360,10 @@ export function UploadRecipeDialog({ open, onClose, onSubmit }: UploadRecipeDial
           {/* Steps */}
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <Label>{t('diet.steps')}</Label>
+              <Label>步骤</Label>
               <Button type="button" variant="outline" size="sm" onClick={addStep}>
                 <Plus className="w-4 h-4 mr-1" />
-                {t('common.add')}
+                添加
               </Button>
             </div>
             {formData.steps.map((step, index) => (
@@ -393,14 +389,14 @@ export function UploadRecipeDialog({ open, onClose, onSubmit }: UploadRecipeDial
           {/* Submit */}
           <div className="flex gap-3 pt-4">
             <Button type="button" variant="outline" onClick={onClose} className="flex-1">
-              {t('common.cancel')}
+              取消
             </Button>
             <Button 
               type="submit" 
               className="flex-1 bg-[#38B2AC] hover:bg-[#2C9B95]"
               disabled={!formData.name.trim() || formData.category.length === 0}
             >
-              {t('common.submit')}
+              提交
             </Button>
           </div>
         </form>

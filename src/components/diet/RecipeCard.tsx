@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Clock, Flame, Heart, Bookmark, User } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -24,7 +23,6 @@ export function RecipeCard({
   onToggleFavorite,
   onToggleLike,
 }: RecipeCardProps) {
-  const { t } = useTranslation();
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(recipe.likes);
 
@@ -74,11 +72,11 @@ export function RecipeCard({
             <div className="flex items-center gap-2 mt-1 text-xs text-[#718096]">
               <span className="flex items-center gap-1">
                 <Clock className="w-3 h-3" />
-                {recipe.cookingTime}{t('common.minutes')}
+                {recipe.cookingTime}分钟
               </span>
               <span className="flex items-center gap-1">
                 <Flame className="w-3 h-3" />
-                {recipe.calories}
+                {recipe.calories} 千卡
               </span>
             </div>
           </CardContent>
@@ -135,11 +133,11 @@ export function RecipeCard({
           <div className="flex items-center gap-3 text-xs text-[#718096]">
             <span className="flex items-center gap-1">
               <Clock className="w-3 h-3" />
-              {recipe.cookingTime}{t('common.minutes')}
+              {recipe.cookingTime}分钟
             </span>
             <span className="flex items-center gap-1">
               <Flame className="w-3 h-3" />
-              {recipe.calories}
+              {recipe.calories} 千卡
             </span>
           </div>
           <div className="flex items-center gap-1">

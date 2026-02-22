@@ -1,11 +1,10 @@
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Clock, Heart, Share2, ChevronRight, ImageOff } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import type { KnowledgeArticle, KnowledgeCategory } from '@/types';
-import { categoryColors } from '@/hooks/useArticles';
+import type { KnowledgeArticle } from '@/types';
+import { categoryColors, categoryLabels } from '@/hooks/useArticles';
 
 interface ArticleCardProps {
   article: KnowledgeArticle;
@@ -14,7 +13,6 @@ interface ArticleCardProps {
 }
 
 export function ArticleCard({ article, variant = 'default', onClick }: ArticleCardProps) {
-  const { t } = useTranslation();
   const [isLiked, setIsLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(article.likes);
   const [imageError, setImageError] = useState(false);
@@ -75,7 +73,7 @@ export function ArticleCard({ article, variant = 'default', onClick }: ArticleCa
                     variant="outline" 
                     className={`text-xs ${categoryColors[cat]}`}
                   >
-                    {t(`knowledge.categories.${cat}`)}
+                    {categoryLabels[cat]}
                   </Badge>
                 ))}
               </div>
@@ -85,7 +83,7 @@ export function ArticleCard({ article, variant = 'default', onClick }: ArticleCa
               <div className="flex items-center gap-3 mt-2 text-xs text-[#718096]">
                 <span className="flex items-center gap-1">
                   <Clock className="w-3 h-3" />
-                  {t('knowledge.readTime', { minutes: article.readTime })}
+                  {article.readTime} 分钟阅读
                 </span>
               </div>
             </div>
@@ -112,7 +110,7 @@ export function ArticleCard({ article, variant = 'default', onClick }: ArticleCa
                 variant="outline" 
                 className={categoryColors[cat]}
               >
-                {t(`knowledge.categories.${cat}`)}
+                {categoryLabels[cat]}
               </Badge>
             ))}
           </div>
@@ -126,7 +124,7 @@ export function ArticleCard({ article, variant = 'default', onClick }: ArticleCa
             <div className="flex items-center gap-4 text-sm text-[#718096]">
               <span className="flex items-center gap-1">
                 <Clock className="w-4 h-4" />
-                {t('knowledge.readTime', { minutes: article.readTime })}
+                {article.readTime} 分钟阅读
               </span>
               <span>{article.author}</span>
             </div>
@@ -150,7 +148,7 @@ export function ArticleCard({ article, variant = 'default', onClick }: ArticleCa
               variant="outline" 
               className={categoryColors[cat]}
             >
-              {t(`knowledge.categories.${cat}`)}
+              {categoryLabels[cat]}
             </Badge>
           ))}
         </div>
@@ -164,7 +162,7 @@ export function ArticleCard({ article, variant = 'default', onClick }: ArticleCa
           <div className="flex items-center gap-3 text-xs text-[#718096]">
             <span className="flex items-center gap-1">
               <Clock className="w-3 h-3" />
-              {t('knowledge.readTime', { minutes: article.readTime })}
+              {article.readTime} 分钟阅读
             </span>
             <span>{article.publishedAt}</span>
           </div>

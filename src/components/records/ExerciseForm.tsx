@@ -1,5 +1,4 @@
 import { useState, useRef } from 'react';
-import { useTranslation } from 'react-i18next';
 import { Calendar, Clock, Dumbbell, Smile, Frown, Meh, Laugh, Annoyed, Flame, Zap, Activity, Image as ImageIcon, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -23,7 +22,6 @@ interface ExerciseFormProps {
 }
 
 export function ExerciseForm({ initialData, onSubmit, onCancel, isSubmitting }: ExerciseFormProps) {
-  const { t } = useTranslation();
   const fileInputRef = useRef<HTMLInputElement>(null);
   
   const [formData, setFormData] = useState<ExerciseFormData>({
@@ -37,32 +35,32 @@ export function ExerciseForm({ initialData, onSubmit, onCancel, isSubmitting }: 
   });
 
   const exerciseTypes: { value: ExerciseType; label: string; icon: React.ReactNode }[] = [
-    { value: 'running', label: t('exerciseTypes.running'), icon: <Activity className="w-4 h-4" /> },
-    { value: 'walking', label: t('exerciseTypes.walking'), icon: <Activity className="w-4 h-4" /> },
-    { value: 'cycling', label: t('exerciseTypes.cycling'), icon: <Activity className="w-4 h-4" /> },
-    { value: 'swimming', label: t('exerciseTypes.swimming'), icon: <Activity className="w-4 h-4" /> },
-    { value: 'weightlifting', label: t('exerciseTypes.weightlifting'), icon: <Dumbbell className="w-4 h-4" /> },
-    { value: 'yoga', label: t('exerciseTypes.yoga'), icon: <Activity className="w-4 h-4" /> },
-    { value: 'pilates', label: t('exerciseTypes.pilates'), icon: <Activity className="w-4 h-4" /> },
-    { value: 'hiit', label: t('exerciseTypes.hiit'), icon: <Zap className="w-4 h-4" /> },
-    { value: 'cardio', label: t('exerciseTypes.cardio'), icon: <Flame className="w-4 h-4" /> },
-    { value: 'sports', label: t('exerciseTypes.sports'), icon: <Activity className="w-4 h-4" /> },
-    { value: 'other', label: t('exerciseTypes.other'), icon: <Activity className="w-4 h-4" /> },
+    { value: 'running', label: '跑步', icon: <Activity className="w-4 h-4" /> },
+    { value: 'walking', label: '步行', icon: <Activity className="w-4 h-4" /> },
+    { value: 'cycling', label: '骑行', icon: <Activity className="w-4 h-4" /> },
+    { value: 'swimming', label: '游泳', icon: <Activity className="w-4 h-4" /> },
+    { value: 'weightlifting', label: '力量训练', icon: <Dumbbell className="w-4 h-4" /> },
+    { value: 'yoga', label: '瑜伽', icon: <Activity className="w-4 h-4" /> },
+    { value: 'pilates', label: '普拉提', icon: <Activity className="w-4 h-4" /> },
+    { value: 'hiit', label: 'HIIT', icon: <Zap className="w-4 h-4" /> },
+    { value: 'cardio', label: '有氧', icon: <Flame className="w-4 h-4" /> },
+    { value: 'sports', label: '球类运动', icon: <Activity className="w-4 h-4" /> },
+    { value: 'other', label: '其他', icon: <Activity className="w-4 h-4" /> },
   ];
 
   const moodOptions: { value: MoodLevel; label: string; icon: React.ReactNode; color: string }[] = [
-    { value: 1, label: t('mood.1'), icon: <Frown className="w-6 h-6" />, color: 'text-red-500' },
-    { value: 2, label: t('mood.2'), icon: <Annoyed className="w-6 h-6" />, color: 'text-orange-500' },
-    { value: 3, label: t('mood.3'), icon: <Meh className="w-6 h-6" />, color: 'text-yellow-500' },
-    { value: 4, label: t('mood.4'), icon: <Smile className="w-6 h-6" />, color: 'text-lime-500' },
-    { value: 5, label: t('mood.5'), icon: <Laugh className="w-6 h-6" />, color: 'text-green-500' },
+    { value: 1, label: '很差', icon: <Frown className="w-6 h-6" />, color: 'text-red-500' },
+    { value: 2, label: '较差', icon: <Annoyed className="w-6 h-6" />, color: 'text-orange-500' },
+    { value: 3, label: '一般', icon: <Meh className="w-6 h-6" />, color: 'text-yellow-500' },
+    { value: 4, label: '不错', icon: <Smile className="w-6 h-6" />, color: 'text-lime-500' },
+    { value: 5, label: '很棒', icon: <Laugh className="w-6 h-6" />, color: 'text-green-500' },
   ];
 
   const intensityOptions: { value: IntensityLevel; label: string; color: string }[] = [
-    { value: 'low', label: t('intensity.low'), color: 'bg-green-100 text-green-700 border-green-200' },
-    { value: 'medium', label: t('intensity.medium'), color: 'bg-yellow-100 text-yellow-700 border-yellow-200' },
-    { value: 'high', label: t('intensity.high'), color: 'bg-orange-100 text-orange-700 border-orange-200' },
-    { value: 'very-high', label: t('intensity.very-high'), color: 'bg-red-100 text-red-700 border-red-200' },
+    { value: 'low', label: '低强度', color: 'bg-green-100 text-green-700 border-green-200' },
+    { value: 'medium', label: '中等强度', color: 'bg-yellow-100 text-yellow-700 border-yellow-200' },
+    { value: 'high', label: '高强度', color: 'bg-orange-100 text-orange-700 border-orange-200' },
+    { value: 'very-high', label: '极高强度', color: 'bg-red-100 text-red-700 border-red-200' },
   ];
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -102,13 +100,13 @@ export function ExerciseForm({ initialData, onSubmit, onCancel, isSubmitting }: 
     <form onSubmit={handleSubmit} className="space-y-6">
       {/* Exercise Type */}
       <div className="space-y-2">
-        <Label>{t('records.exerciseType')}</Label>
+        <Label>运动类型</Label>
         <Select
           value={formData.type}
           onValueChange={(value) => setFormData({ ...formData, type: value as ExerciseType })}
         >
           <SelectTrigger className="h-12 rounded-xl">
-            <SelectValue placeholder={t('records.exerciseType')} />
+            <SelectValue placeholder="运动类型" />
           </SelectTrigger>
           <SelectContent>
             {exerciseTypes.map((type) => (
@@ -125,7 +123,7 @@ export function ExerciseForm({ initialData, onSubmit, onCancel, isSubmitting }: 
 
       {/* Duration */}
       <div className="space-y-2">
-        <Label>{t('records.duration')}</Label>
+        <Label>时长</Label>
         <div className="flex items-center gap-4">
           <Clock className="w-5 h-5 text-[#718096]" />
           <Slider
@@ -137,14 +135,14 @@ export function ExerciseForm({ initialData, onSubmit, onCancel, isSubmitting }: 
             className="flex-1"
           />
           <span className="w-16 text-right font-medium text-[#333333]">
-            {formData.duration} {t('common.minutes')}
+            {formData.duration} 分钟
           </span>
         </div>
       </div>
 
       {/* Date */}
       <div className="space-y-2">
-        <Label>{t('records.date')}</Label>
+        <Label>日期</Label>
         <div className="relative">
           <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-[#718096]" />
           <Input
@@ -159,7 +157,7 @@ export function ExerciseForm({ initialData, onSubmit, onCancel, isSubmitting }: 
 
       {/* Intensity */}
       <div className="space-y-2">
-        <Label>{t('records.intensity')}</Label>
+        <Label>强度</Label>
         <div className="grid grid-cols-2 gap-2">
           {intensityOptions.map((option) => (
             <button
@@ -180,7 +178,7 @@ export function ExerciseForm({ initialData, onSubmit, onCancel, isSubmitting }: 
 
       {/* Mood */}
       <div className="space-y-2">
-        <Label>{t('records.mood')}</Label>
+        <Label>心情</Label>
         <div className="flex justify-between gap-2">
           {moodOptions.map((option) => (
             <button
@@ -202,7 +200,7 @@ export function ExerciseForm({ initialData, onSubmit, onCancel, isSubmitting }: 
 
       {/* Images */}
       <div className="space-y-2">
-        <Label>{t('records.uploadImage')}</Label>
+        <Label>上传图片</Label>
         <div className="flex flex-wrap gap-2">
           {formData.images?.map((img, index) => (
             <div key={index} className="relative w-20 h-20">
@@ -236,11 +234,11 @@ export function ExerciseForm({ initialData, onSubmit, onCancel, isSubmitting }: 
 
       {/* Notes */}
       <div className="space-y-2">
-        <Label>{t('records.notes')} ({t('records.optional')})</Label>
+        <Label>备注（可选）</Label>
         <Textarea
           value={formData.notes}
           onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-          placeholder={t('records.notes')}
+          placeholder="写点感受或训练要点"
           className="min-h-[100px] rounded-xl resize-none"
         />
       </div>
@@ -254,7 +252,7 @@ export function ExerciseForm({ initialData, onSubmit, onCancel, isSubmitting }: 
             onClick={onCancel}
             className="flex-1 h-12 rounded-xl"
           >
-            {t('common.cancel')}
+            取消
           </Button>
         )}
         <Button
@@ -262,7 +260,7 @@ export function ExerciseForm({ initialData, onSubmit, onCancel, isSubmitting }: 
           disabled={isSubmitting}
           className="flex-1 h-12 bg-[#38B2AC] hover:bg-[#2C9B95] text-white rounded-xl font-medium"
         >
-          {isSubmitting ? t('common.loading') : initialData ? t('records.updateRecord') : t('records.saveRecord')}
+          {isSubmitting ? '加载中...' : initialData ? '更新记录' : '保存记录'}
         </Button>
       </div>
     </form>

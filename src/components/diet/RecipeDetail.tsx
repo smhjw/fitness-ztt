@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { 
   ArrowLeft, 
   Clock, 
@@ -18,7 +17,6 @@ import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import type { Recipe } from '@/types';
 import { recipeCategoryLabels, recipeCategoryColors } from '@/hooks/useDiet';
@@ -43,7 +41,6 @@ export function RecipeDetail({
   onToggleLike,
   onAddComment,
 }: RecipeDetailProps) {
-  const { t } = useTranslation();
   const { user } = useAuth();
   const [liked, setLiked] = useState(false);
   const [likeCount, setLikeCount] = useState(recipe.likes);
@@ -79,7 +76,7 @@ export function RecipeDetail({
       <div className="flex items-center gap-4 mb-6">
         <Button variant="outline" size="sm" onClick={onBack} className="gap-2">
           <ArrowLeft className="w-4 h-4" />
-          {t('common.back')}
+          返回
         </Button>
       </div>
 
@@ -99,15 +96,15 @@ export function RecipeDetail({
         <div className="flex items-center gap-4 text-sm text-[#718096]">
           <span className="flex items-center gap-1">
             <Clock className="w-4 h-4" />
-            {recipe.cookingTime}{t('common.minutes')}
+            {recipe.cookingTime}分钟
           </span>
           <span className="flex items-center gap-1">
             <Flame className="w-4 h-4" />
-            {recipe.calories} {t('diet.calories')}
+            {recipe.calories} 千卡
           </span>
           <span className="flex items-center gap-1">
             <UtensilsCrossed className="w-4 h-4" />
-            {recipe.servings}{t('diet.servings')}
+            {recipe.servings} 份
           </span>
         </div>
       </div>
@@ -135,37 +132,37 @@ export function RecipeDetail({
           className={`gap-2 ${isFavorite ? 'text-[#38B2AC] border-[#38B2AC] bg-[#E6F7F6]' : ''}`}
         >
           <Bookmark className={`w-4 h-4 ${isFavorite ? 'fill-current' : ''}`} />
-          {isFavorite ? t('diet.collect') : t('diet.collect')}
+          收藏
         </Button>
         <Button variant="outline" onClick={handleShare} className="gap-2">
           <Share2 className="w-4 h-4" />
-          {t('diet.share')}
+          分享
         </Button>
       </div>
 
       {/* Content Tabs */}
       <Tabs defaultValue="ingredients" className="space-y-6">
-        <TabsList className="bg-white border border-gray-200 p-1 rounded-full">
+        <TabsList className="bg-white border border-gray-200 p-1 rounded-full overflow-x-auto flex-nowrap max-w-full justify-start md:justify-center">
           <TabsTrigger value="ingredients" className="rounded-full data-[state=active]:bg-[#38B2AC] data-[state=active]:text-white gap-2">
             <ChefHat className="w-4 h-4" />
-            {t('diet.ingredients')}
+            食材
           </TabsTrigger>
           <TabsTrigger value="steps" className="rounded-full data-[state=active]:bg-[#38B2AC] data-[state=active]:text-white gap-2">
             <UtensilsCrossed className="w-4 h-4" />
-            {t('diet.steps')}
+            步骤
           </TabsTrigger>
           <TabsTrigger value="nutrition" className="rounded-full data-[state=active]:bg-[#38B2AC] data-[state=active]:text-white gap-2">
             <Flame className="w-4 h-4" />
-            {t('diet.calories')}
+            营养
           </TabsTrigger>
           <TabsTrigger value="comments" className="rounded-full data-[state=active]:bg-[#38B2AC] data-[state=active]:text-white gap-2">
             <MessageCircle className="w-4 h-4" />
-            {t('diet.comments')} ({recipe.comments.length})
+            评论 ({recipe.comments.length})
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="ingredients" className="space-y-4">
-          <h3 className="text-xl font-semibold text-[#333333]">{t('diet.ingredients')}</h3>
+          <h3 className="text-xl font-semibold text-[#333333]">食材</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
             {recipe.ingredients.map((ingredient, index) => (
               <div key={index} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
@@ -177,7 +174,7 @@ export function RecipeDetail({
         </TabsContent>
 
         <TabsContent value="steps" className="space-y-4">
-          <h3 className="text-xl font-semibold text-[#333333]">{t('diet.steps')}</h3>
+          <h3 className="text-xl font-semibold text-[#333333]">步骤</h3>
           <div className="space-y-4">
             {recipe.steps.map((step, index) => (
               <div key={index} className="flex gap-4">
@@ -191,29 +188,29 @@ export function RecipeDetail({
         </TabsContent>
 
         <TabsContent value="nutrition" className="space-y-4">
-          <h3 className="text-xl font-semibold text-[#333333]">{t('diet.calories')}</h3>
+          <h3 className="text-xl font-semibold text-[#333333]">营养信息</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div className="p-4 bg-gray-50 rounded-xl text-center">
               <p className="text-2xl font-bold text-[#38B2AC]">{recipe.nutrition.calories}</p>
-              <p className="text-sm text-[#718096]">{t('diet.calories')}</p>
+              <p className="text-sm text-[#718096]">热量</p>
             </div>
             <div className="p-4 bg-gray-50 rounded-xl text-center">
               <p className="text-2xl font-bold text-[#6D28D9]">{recipe.nutrition.protein}g</p>
-              <p className="text-sm text-[#718096]">{t('diet.protein')}</p>
+              <p className="text-sm text-[#718096]">蛋白质</p>
             </div>
             <div className="p-4 bg-gray-50 rounded-xl text-center">
               <p className="text-2xl font-bold text-[#F59E0B]">{recipe.nutrition.carbs}g</p>
-              <p className="text-sm text-[#718096]">{t('diet.carbs')}</p>
+              <p className="text-sm text-[#718096]">碳水</p>
             </div>
             <div className="p-4 bg-gray-50 rounded-xl text-center">
               <p className="text-2xl font-bold text-[#EF4444]">{recipe.nutrition.fat}g</p>
-              <p className="text-sm text-[#718096]">{t('diet.fat')}</p>
+              <p className="text-sm text-[#718096]">脂肪</p>
             </div>
           </div>
         </TabsContent>
 
         <TabsContent value="comments" className="space-y-4">
-          <h3 className="text-xl font-semibold text-[#333333]">{t('diet.comments')}</h3>
+          <h3 className="text-xl font-semibold text-[#333333]">评论</h3>
           
           {/* Add Comment */}
           {user && (
@@ -221,7 +218,7 @@ export function RecipeDetail({
               <Textarea
                 value={commentText}
                 onChange={(e) => setCommentText(e.target.value)}
-                placeholder={t('diet.addComment')}
+                placeholder="写下你的评论..."
                 className="flex-1 min-h-[80px]"
               />
               <Button 
@@ -260,8 +257,8 @@ export function RecipeDetail({
             ) : (
               <div className="text-center py-8 text-[#718096]">
                 <MessageCircle className="w-12 h-12 mx-auto mb-3 text-gray-300" />
-                <p>{t('diet.noComments')}</p>
-                <p className="text-sm">{t('diet.beFirstToComment')}</p>
+                <p>暂无评论</p>
+                <p className="text-sm">成为第一个评论的人吧</p>
               </div>
             )}
           </div>
@@ -271,7 +268,7 @@ export function RecipeDetail({
       {/* Related Recipes */}
       {relatedRecipes.length > 0 && (
         <div className="mt-12">
-          <h3 className="text-xl font-bold text-[#333333] mb-4">{t('knowledge.relatedArticles')}</h3>
+          <h3 className="text-xl font-bold text-[#333333] mb-4">相关菜谱</h3>
           <div className="grid md:grid-cols-2 gap-4">
             {relatedRecipes.map((relatedRecipe) => (
               <div 

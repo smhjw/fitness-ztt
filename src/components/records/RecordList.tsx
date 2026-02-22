@@ -4,7 +4,6 @@ import {
   Trash2, 
   Calendar, 
   Clock, 
-  Flame, 
   Smile, 
   Frown, 
   Meh, 
@@ -211,7 +210,7 @@ export function RecordList({ records, onUpdate, onDelete, filter, setFilter }: R
       )}
 
       {/* Records List */}
-      <ScrollArea className="h-[500px]">
+      <ScrollArea className="h-auto max-h-[60vh] md:max-h-[500px]">
         <div className="space-y-3">
           {records.map((record) => (
             <div
@@ -261,7 +260,7 @@ export function RecordList({ records, onUpdate, onDelete, filter, setFilter }: R
               )}
 
               {/* Actions */}
-              <div className="mt-3 pt-3 border-t border-gray-100 flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+              <div className="mt-3 pt-3 border-t border-gray-100 flex justify-end gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
                 <Button
                   variant="ghost"
                   size="sm"

@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { ArrowLeft, Clock, Heart, Share2, Bookmark } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
-import type { KnowledgeArticle, KnowledgeCategory } from '@/types';
-import { categoryColors } from '@/hooks/useArticles';
+import type { KnowledgeArticle } from '@/types';
+import { categoryColors, categoryLabels } from '@/hooks/useArticles';
 import ArticleCard from './ArticleCard';
 
 interface ArticleDetailProps {
@@ -15,7 +14,6 @@ interface ArticleDetailProps {
 }
 
 export function ArticleDetail({ article, relatedArticles, onBack }: ArticleDetailProps) {
-  const { t } = useTranslation();
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [likeCount, setLikeCount] = useState(article.likes);
@@ -109,20 +107,20 @@ export function ArticleDetail({ article, relatedArticles, onBack }: ArticleDetai
           className="gap-2"
         >
           <ArrowLeft className="w-4 h-4" />
-          {t('common.back')}
+          返回
         </Button>
       </div>
 
       {/* Article Header */}
       <div className="mb-8">
         <div className="flex flex-wrap gap-2 mb-4">
-          {article.category.map((cat: KnowledgeCategory) => (
+          {article.category.map((cat) => (
             <Badge 
               key={cat} 
               variant="outline" 
               className={categoryColors[cat]}
             >
-              {t(`knowledge.categories.${cat}`)}
+              {categoryLabels[cat]}
             </Badge>
           ))}
         </div>
@@ -134,7 +132,7 @@ export function ArticleDetail({ article, relatedArticles, onBack }: ArticleDetai
           <span>•</span>
           <span className="flex items-center gap-1">
             <Clock className="w-4 h-4" />
-            {t('knowledge.readTime', { minutes: article.readTime })}
+            {article.readTime} 分钟阅读
           </span>
           <span>•</span>
           <span>{article.publishedAt}</span>
@@ -168,7 +166,7 @@ export function ArticleDetail({ article, relatedArticles, onBack }: ArticleDetai
           className={`gap-2 ${isBookmarked ? 'text-[#38B2AC] border-[#38B2AC] bg-[#E6F7F6]' : ''}`}
         >
           <Bookmark className={`w-4 h-4 ${isBookmarked ? 'fill-current' : ''}`} />
-          {t('knowledge.bookmark')}
+          收藏
         </Button>
         <Button
           variant="outline"
@@ -176,7 +174,7 @@ export function ArticleDetail({ article, relatedArticles, onBack }: ArticleDetai
           className="gap-2"
         >
           <Share2 className="w-4 h-4" />
-          {t('knowledge.share')}
+          分享
         </Button>
       </div>
 
@@ -193,7 +191,7 @@ export function ArticleDetail({ article, relatedArticles, onBack }: ArticleDetai
 
       {/* Tags */}
       <div className="mb-12">
-        <h3 className="text-sm font-medium text-[#718096] mb-3">{t('knowledge.tags')}</h3>
+        <h3 className="text-sm font-medium text-[#718096] mb-3">标签</h3>
         <div className="flex flex-wrap gap-2">
           {article.tags.map((tag) => (
             <Badge key={tag} variant="secondary" className="text-xs">
@@ -206,7 +204,7 @@ export function ArticleDetail({ article, relatedArticles, onBack }: ArticleDetai
       {/* Related Articles */}
       {relatedArticles.length > 0 && (
         <div>
-          <h3 className="text-xl font-bold text-[#333333] mb-4">{t('knowledge.relatedArticles')}</h3>
+          <h3 className="text-xl font-bold text-[#333333] mb-4">相关文章</h3>
           <div className="grid md:grid-cols-2 gap-4">
             {relatedArticles.map((relatedArticle) => (
               <ArticleCard
