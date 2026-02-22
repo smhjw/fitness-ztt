@@ -75,7 +75,7 @@ export function HeroSection() {
   ];
 
   return (
-    <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+    <section className="relative min-h-screen flex items-center pt-12 md:pt-20 overflow-hidden">
       <canvas ref={canvasRef} className="absolute inset-0 w-full h-full pointer-events-none" />
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#F5F7FA] pointer-events-none" />
 
@@ -93,12 +93,12 @@ export function HeroSection() {
 
             <p className="text-lg text-[#718096] max-w-lg">记录训练、追踪进度、保持动力</p>
 
-            <div className="flex flex-wrap gap-4">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-4">
               {isAuthenticated ? (
                 <Button
                   size="lg"
                   onClick={() => navigate('/records')}
-                  className="bg-[#38B2AC] hover:bg-[#2C9B95] text-white rounded-full px-8 h-14 text-base gap-2"
+                  className="bg-[#38B2AC] hover:bg-[#2C9B95] text-white rounded-full px-8 h-14 text-base gap-2 w-full sm:w-auto"
                 >
                   新增记录
                   <ArrowRight className="w-5 h-5" />
@@ -107,7 +107,7 @@ export function HeroSection() {
                 <Button
                   size="lg"
                   onClick={() => navigate('/register')}
-                  className="bg-[#38B2AC] hover:bg-[#2C9B95] text-white rounded-full px-8 h-14 text-base gap-2"
+                  className="bg-[#38B2AC] hover:bg-[#2C9B95] text-white rounded-full px-8 h-14 text-base gap-2 w-full sm:w-auto"
                 >
                   立即注册
                   <ArrowRight className="w-5 h-5" />
@@ -117,13 +117,13 @@ export function HeroSection() {
                 size="lg"
                 variant="outline"
                 onClick={() => navigate('/knowledge')}
-                className="rounded-full px-8 h-14 text-base border-[#38B2AC] text-[#38B2AC] hover:bg-[#E6F7F6]"
+                className="rounded-full px-8 h-14 text-base border-[#38B2AC] text-[#38B2AC] hover:bg-[#E6F7F6] w-full sm:w-auto"
               >
                 知识库
               </Button>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 pt-8">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-8">
               {features.map((feature, index) => (
                 <button
                   key={index}

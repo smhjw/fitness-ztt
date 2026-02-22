@@ -24,9 +24,9 @@ export function Footer() {
 
   return (
     <footer className="bg-white border-t border-gray-100">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-          <div className="col-span-2 md:col-span-1">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 pb-[calc(88px+env(safe-area-inset-bottom))] sm:pb-12">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-8">
+          <div className="col-span-2 sm:col-span-1">
             <Link to="/" className="flex items-center gap-2 mb-4">
               <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-[#38B2AC] to-[#2C9B95] flex items-center justify-center">
                 <Activity className="w-5 h-5 text-white" />
@@ -36,9 +36,10 @@ export function Footer() {
             <p className="text-sm text-[#718096] mb-4">记录你的健身日常，实现健康目标。</p>
             <div className="flex items-center gap-3">
               <a
-                href="https://github.com"
+                href="https://github.com/smhjw/fitness-ztt"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="GitHub"
                 className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-[#718096] hover:bg-[#E6F7F6] hover:text-[#38B2AC] transition-colors"
               >
                 <Github className="w-4 h-4" />
@@ -47,6 +48,7 @@ export function Footer() {
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
+                aria-label="Twitter"
                 className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-[#718096] hover:bg-[#E6F7F6] hover:text-[#38B2AC] transition-colors"
               >
                 <Twitter className="w-4 h-4" />
@@ -94,8 +96,8 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 pt-8 border-t border-gray-100 flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="text-sm text-[#718096]">© {currentYear} FitTrack. 保留所有权利。</p>
+        <div className="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+          <p className="text-sm text-[#718096]">(c) {currentYear} FitTrack. 保留所有权利。</p>
           <p className="text-sm text-[#718096] flex items-center gap-1">
             用
             <Heart className="w-4 h-4 text-red-500 fill-current" />

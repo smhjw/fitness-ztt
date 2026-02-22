@@ -108,7 +108,7 @@ export function ProfileSection() {
               <CardTitle className="text-lg">头像</CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="flex items-center gap-6">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-6">
                 <div className="relative">
                   <Avatar className="w-24 h-24 border-4 border-[#E6F7F6]">
                     <AvatarImage src={user.avatar} />
@@ -131,14 +131,14 @@ export function ProfileSection() {
                     className="hidden"
                   />
                 </div>
-                <div>
-                  <p className="text-sm text-[#718096]">建议尺寸 400x400，大小不超过 2MB</p>
+                <div className="text-sm text-[#718096]">
+                  <p>建议尺寸 400x400，大小不超过 2MB</p>
                   <Button
                     type="button"
                     variant="outline"
                     size="sm"
                     onClick={handleAvatarClick}
-                    className="mt-2"
+                    className="mt-2 w-full sm:w-auto"
                   >
                     更换头像
                   </Button>
@@ -243,11 +243,11 @@ export function ProfileSection() {
           </Card>
 
           {/* Submit Button */}
-          <div className="flex justify-end">
+          <div className="flex flex-col sm:flex-row sm:justify-end">
             <Button
               type="submit"
               disabled={isLoading}
-              className="bg-[#38B2AC] hover:bg-[#2C9B95] text-white rounded-full px-8 h-12 gap-2"
+              className="bg-[#38B2AC] hover:bg-[#2C9B95] text-white rounded-full px-8 h-12 gap-2 w-full sm:w-auto"
             >
               {isLoading ? (
                 <>

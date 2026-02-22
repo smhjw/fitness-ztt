@@ -155,7 +155,7 @@ export function RecordList({ records, onUpdate, onDelete, filter, setFilter }: R
                 setFilter({ ...filter, types: value === 'all' ? undefined : [value as ExerciseType] })
               }
             >
-              <SelectTrigger className="h-10">
+              <SelectTrigger className="h-11">
                 <SelectValue placeholder="运动类型" />
               </SelectTrigger>
               <SelectContent>
@@ -174,7 +174,7 @@ export function RecordList({ records, onUpdate, onDelete, filter, setFilter }: R
                 setFilter({ ...filter, intensity: value === 'all' ? undefined : [value as IntensityLevel] })
               }
             >
-              <SelectTrigger className="h-10">
+              <SelectTrigger className="h-11">
                 <SelectValue placeholder="运动强度" />
               </SelectTrigger>
               <SelectContent>
@@ -193,7 +193,7 @@ export function RecordList({ records, onUpdate, onDelete, filter, setFilter }: R
                 setFilter({ ...filter, moods: value === 'all' ? undefined : [parseInt(value) as MoodLevel] })
               }
             >
-              <SelectTrigger className="h-10">
+              <SelectTrigger className="h-11">
                 <SelectValue placeholder="心情" />
               </SelectTrigger>
               <SelectContent>
@@ -232,7 +232,7 @@ export function RecordList({ records, onUpdate, onDelete, filter, setFilter }: R
                     <h4 className="font-medium text-[#333333]">
                       {exerciseTypeLabels[record.type]}
                     </h4>
-                    <div className="flex items-center gap-3 mt-1 text-sm text-[#718096]">
+                    <div className="flex flex-wrap items-center gap-3 mt-1 text-sm text-[#718096]">
                       <span className="flex items-center gap-1">
                         <Calendar className="w-3 h-3" />
                         {record.date}
@@ -260,7 +260,7 @@ export function RecordList({ records, onUpdate, onDelete, filter, setFilter }: R
               )}
 
               {/* Actions */}
-              <div className="mt-3 pt-3 border-t border-gray-100 flex justify-end gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
+              <div className="mt-3 pt-3 border-t border-gray-100 flex flex-wrap justify-end gap-2 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity">
                 <Button
                   variant="ghost"
                   size="sm"

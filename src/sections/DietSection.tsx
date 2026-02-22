@@ -98,7 +98,7 @@ export function DietSection() {
           </div>
           <Button 
             onClick={() => setIsUploadOpen(true)}
-            className="bg-[#38B2AC] hover:bg-[#2C9B95] text-white rounded-full gap-2"
+            className="bg-[#38B2AC] hover:bg-[#2C9B95] text-white rounded-full gap-2 w-full sm:w-auto"
           >
             <Plus className="w-4 h-4" />
             上传菜谱
@@ -162,7 +162,7 @@ export function DietSection() {
           </TabsList>
 
           <TabsContent value="all" className="space-y-6">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {filteredRecipes.map((recipe) => (
                 <RecipeCard
                   key={recipe.id}
@@ -183,7 +183,7 @@ export function DietSection() {
           </TabsContent>
 
           <TabsContent value="favorites" className="space-y-6">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {favoriteRecipes.map((recipe) => (
                 <RecipeCard
                   key={recipe.id}
@@ -204,7 +204,7 @@ export function DietSection() {
           </TabsContent>
 
           <TabsContent value="my" className="space-y-6">
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {myRecipes.map((recipe) => (
                 <RecipeCard
                   key={recipe.id}

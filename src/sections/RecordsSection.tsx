@@ -89,7 +89,7 @@ export function RecordsSection() {
           </div>
           <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
             <DialogTrigger asChild>
-              <Button className="bg-[#38B2AC] hover:bg-[#2C9B95] text-white rounded-full gap-2">
+              <Button className="bg-[#38B2AC] hover:bg-[#2C9B95] text-white rounded-full gap-2 w-full sm:w-auto">
                 <Plus className="w-4 h-4" />
                 新增记录
               </Button>
@@ -135,7 +135,7 @@ export function RecordsSection() {
                 </Card>
               }
             >
-              <ExerciseCalendar events={getCalendarEvents()} onDateClick={() => undefined} onEventClick={() => undefined} />
+              <ExerciseCalendar events={getCalendarEvents()} />
             </Suspense>
             ) : null}
           </TabsContent>

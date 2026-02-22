@@ -19,7 +19,7 @@ export function AISection() {
         <AIChat />
 
         {/* Tips */}
-        <div className="mt-8 grid md:grid-cols-3 gap-4">
+        <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           <div className="p-4 bg-white rounded-xl shadow-card">
             <h3 className="font-medium text-[#333333] mb-2">健身训练</h3>
             <p className="text-sm text-[#718096]">
