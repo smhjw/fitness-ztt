@@ -6,10 +6,10 @@ import { ScrollArea } from '@/components/ui/scroll-area';
 import { useAIChat } from '@/hooks/useAIChat';
 
 const suggestions = [
-  { icon: <Dumbbell className="w-4 h-4" />, text: '如何制定健身计划？' },
-  { icon: <Apple className="w-4 h-4" />, text: '减脂期间应该怎么吃？' },
-  { icon: <Heart className="w-4 h-4" />, text: '如何保持健康的生活方式？' },
-  { icon: <Zap className="w-4 h-4" />, text: '增肌需要补充什么营养？' },
+  { icon: <Dumbbell className="w-4 h-4" />, text: '帮我生成一周训练计划' },
+  { icon: <Apple className="w-4 h-4" />, text: '推荐低脂高蛋白菜谱' },
+  { icon: <Heart className="w-4 h-4" />, text: '提高心肺能力的训练' },
+  { icon: <Zap className="w-4 h-4" />, text: '训练后如何恢复' },
 ];
 
 export function AIChat() {
@@ -27,7 +27,7 @@ export function AIChat() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
-    
+
     await sendMessage(input);
     setInput('');
   };
@@ -45,8 +45,8 @@ export function AIChat() {
             <Bot className="w-6 h-6 text-white" />
           </div>
           <div>
-            <h3 className="font-semibold text-white">FitTrack 智能助手</h3>
-            <p className="text-xs text-white/80">训练、饮食、恢复一问即得</p>
+            <h3 className="font-semibold text-white">FitTrack AI 助手</h3>
+            <p className="text-xs text-white/80">训练、饮食、恢复随问随答</p>
           </div>
         </div>
         <Button
@@ -68,8 +68,8 @@ export function AIChat() {
               className={`flex gap-3 ${message.role === 'user' ? 'flex-row-reverse' : ''}`}
             >
               <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
-                message.role === 'user' 
-                  ? 'bg-[#38B2AC]' 
+                message.role === 'user'
+                  ? 'bg-[#38B2AC]'
                   : 'bg-gradient-to-br from-[#38B2AC] to-[#2C9B95]'
               }`}>
                 {message.role === 'user' ? (
@@ -90,7 +90,7 @@ export function AIChat() {
               </div>
             </div>
           ))}
-          
+
           {isLoading && (
             <div className="flex gap-3">
               <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#38B2AC] to-[#2C9B95] flex items-center justify-center">
@@ -109,7 +109,7 @@ export function AIChat() {
         {/* Suggestions */}
         {messages.length <= 1 && (
           <div className="mt-6">
-            <p className="text-sm text-[#718096] mb-3">推荐问题</p>
+            <p className="text-sm text-[#718096] mb-3">常用提问</p>
             <div className="flex flex-wrap gap-2">
               {suggestions.map((suggestion, index) => (
                 <button
