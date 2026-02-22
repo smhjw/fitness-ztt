@@ -139,7 +139,7 @@ export function LoginForm() {
                   placeholder="请输入邮箱"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="pl-10 h-12 rounded-xl border-gray-200 focus:border-[#38B2AC] focus:ring-[#38B2AC]"
+                  className="pl-10 h-12 rounded-xl border-gray-200 focus:border-[#FF6A3D] focus:ring-[#FF6A3D]"
                   autoComplete="email"
                   required
                 />
@@ -156,7 +156,7 @@ export function LoginForm() {
                   placeholder="请输入密码"
                   value={formData.password}
                   onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-                  className="pl-10 pr-10 h-12 rounded-xl border-gray-200 focus:border-[#38B2AC] focus:ring-[#38B2AC]"
+                  className="pl-10 pr-10 h-12 rounded-xl border-gray-200 focus:border-[#FF6A3D] focus:ring-[#FF6A3D]"
                   autoComplete="current-password"
                   required
                 />
@@ -185,7 +185,7 @@ export function LoginForm() {
               </div>
               <Link
                 to="/forgot-password"
-                className="text-sm text-[#38B2AC] hover:text-[#2C9B95]"
+                className="text-sm text-[#FF6A3D] hover:text-[#F4511E]"
               >
                 忘记密码
               </Link>
@@ -194,7 +194,7 @@ export function LoginForm() {
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full h-12 bg-[#38B2AC] hover:bg-[#2C9B95] text-white rounded-xl font-medium"
+              className="w-full h-12 bg-[#FF6A3D] hover:bg-[#F4511E] text-white rounded-xl font-medium"
             >
               {isLoading ? (
                 <>
@@ -220,7 +220,7 @@ export function LoginForm() {
                   placeholder="13800138000"
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                  className="pl-10 h-12 rounded-xl border-gray-200 focus:border-[#38B2AC] focus:ring-[#38B2AC]"
+                  className="pl-10 h-12 rounded-xl border-gray-200 focus:border-[#FF6A3D] focus:ring-[#FF6A3D]"
                   autoComplete="tel"
                   inputMode="numeric"
                   required
@@ -237,7 +237,7 @@ export function LoginForm() {
                   placeholder="123456"
                   value={formData.verificationCode}
                   onChange={(e) => setFormData({ ...formData, verificationCode: e.target.value })}
-                  className="h-12 rounded-xl border-gray-200 focus:border-[#38B2AC] focus:ring-[#38B2AC]"
+                  className="h-12 rounded-xl border-gray-200 focus:border-[#FF6A3D] focus:ring-[#FF6A3D]"
                   inputMode="numeric"
                   autoComplete="one-time-code"
                   required
@@ -257,7 +257,7 @@ export function LoginForm() {
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full h-12 bg-[#38B2AC] hover:bg-[#2C9B95] text-white rounded-xl font-medium"
+              className="w-full h-12 bg-[#FF6A3D] hover:bg-[#F4511E] text-white rounded-xl font-medium"
             >
               {isLoading ? (
                 <>
@@ -296,7 +296,7 @@ export function LoginForm() {
             variant="outline"
             onClick={handleDemoLogin}
             disabled={isLoading}
-            className="h-12 rounded-xl border-[#38B2AC] text-[#38B2AC] hover:bg-[#E6F7F6]"
+            className="h-12 rounded-xl border-[#FF6A3D] text-[#FF6A3D] hover:bg-[#FFF1EA]"
           >
             体验账号
           </Button>
@@ -315,7 +315,7 @@ export function LoginForm() {
 
       <p className="mt-6 text-center text-sm text-[#718096]">
         还没有账号？{' '}
-        <Link to="/register" className="text-[#38B2AC] hover:text-[#2C9B95] font-medium">
+        <Link to="/register" className="text-[#FF6A3D] hover:text-[#F4511E] font-medium">
           立即注册
         </Link>
       </p>

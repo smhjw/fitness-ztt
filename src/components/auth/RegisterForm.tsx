@@ -84,7 +84,7 @@ export function RegisterForm() {
               placeholder="请输入昵称"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="pl-10 h-12 rounded-xl border-gray-200 focus:border-[#38B2AC] focus:ring-[#38B2AC]"
+              className="pl-10 h-12 rounded-xl border-gray-200 focus:border-[#FF6A3D] focus:ring-[#FF6A3D]"
               autoComplete="name"
               required
             />
@@ -101,7 +101,7 @@ export function RegisterForm() {
               placeholder="请输入邮箱"
               value={formData.email}
               onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-              className="pl-10 h-12 rounded-xl border-gray-200 focus:border-[#38B2AC] focus:ring-[#38B2AC]"
+              className="pl-10 h-12 rounded-xl border-gray-200 focus:border-[#FF6A3D] focus:ring-[#FF6A3D]"
               autoComplete="email"
               required
             />
@@ -118,7 +118,7 @@ export function RegisterForm() {
               placeholder="请输入密码（至少 6 位）"
               value={formData.password}
               onChange={(e) => setFormData({ ...formData, password: e.target.value })}
-              className="pl-10 pr-10 h-12 rounded-xl border-gray-200 focus:border-[#38B2AC] focus:ring-[#38B2AC]"
+              className="pl-10 pr-10 h-12 rounded-xl border-gray-200 focus:border-[#FF6A3D] focus:ring-[#FF6A3D]"
               autoComplete="new-password"
               required
               minLength={6}
@@ -143,7 +143,7 @@ export function RegisterForm() {
               placeholder="再次输入密码"
               value={formData.confirmPassword}
               onChange={(e) => setFormData({ ...formData, confirmPassword: e.target.value })}
-              className="pl-10 pr-10 h-12 rounded-xl border-gray-200 focus:border-[#38B2AC] focus:ring-[#38B2AC]"
+              className="pl-10 pr-10 h-12 rounded-xl border-gray-200 focus:border-[#FF6A3D] focus:ring-[#FF6A3D]"
               autoComplete="new-password"
               required
             />
@@ -168,11 +168,11 @@ export function RegisterForm() {
           />
           <Label htmlFor="terms" className="text-sm text-[#718096] cursor-pointer leading-relaxed">
             我已阅读并同意{' '}
-            <Link to="/terms" className="text-[#38B2AC] hover:text-[#2C9B95]">
+            <Link to="/terms" className="text-[#FF6A3D] hover:text-[#F4511E]">
               服务条款
             </Link>
-            {' '}与{' '}
-            <Link to="/privacy" className="text-[#38B2AC] hover:text-[#2C9B95]">
+            {' '}和{' '}
+            <Link to="/privacy" className="text-[#FF6A3D] hover:text-[#F4511E]">
               隐私政策
             </Link>
           </Label>
@@ -181,7 +181,7 @@ export function RegisterForm() {
         <Button
           type="submit"
           disabled={isLoading}
-          className="w-full h-12 bg-[#38B2AC] hover:bg-[#2C9B95] text-white rounded-xl font-medium"
+          className="w-full h-12 bg-[#FF6A3D] hover:bg-[#F4511E] text-white rounded-xl font-medium"
         >
           {isLoading ? (
             <>
@@ -196,7 +196,7 @@ export function RegisterForm() {
 
       <p className="mt-6 text-center text-sm text-[#718096]">
         已有账号？{' '}
-        <Link to="/login" className="text-[#38B2AC] hover:text-[#2C9B95] font-medium">
+        <Link to="/login" className="text-[#FF6A3D] hover:text-[#F4511E] font-medium">
           去登录
         </Link>
       </p>
