@@ -49,7 +49,7 @@ export function StaticPage({ title, description, sections = [], backTo, cta }: S
                   <ul className="text-sm text-[#718096] space-y-2">
                     {section.items.map((item, itemIndex) => (
                       <li key={`${item}-${itemIndex}`} className="flex items-start gap-2">
-                        <span className="mt-1 h-1.5 w-1.5 rounded-full bg-[#38B2AC]" />
+                        <span className="mt-1 h-1.5 w-1.5 rounded-full bg-[#FF6A3D]" />
                         <span>{item}</span>
                       </li>
                     ))}
@@ -62,7 +62,7 @@ export function StaticPage({ title, description, sections = [], backTo, cta }: S
 
         {cta && (
           <div className="mt-6">
-            <Button asChild className="w-full sm:w-auto rounded-full bg-[#38B2AC] hover:bg-[#2C9B95] text-white">
+            <Button asChild className="w-full sm:w-auto rounded-full bg-[#FF6A3D] hover:bg-[#F4511E] text-white">
               <Link to={cta.href}>{cta.label}</Link>
             </Button>
           </div>

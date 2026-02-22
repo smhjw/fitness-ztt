@@ -27,7 +27,6 @@ function PageLoader() {
   );
 }
 
-// Protected Route Component
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, isLoading } = useAuth();
 
@@ -46,7 +45,6 @@ function ProtectedRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
-// Public Route Component (redirects to home if already authenticated)
 function PublicRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, isLoading } = useAuth();
 
@@ -65,7 +63,6 @@ function PublicRoute({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
-// Layout with Navbar and Footer
 function MainLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-[#F5F7FA]">
@@ -79,20 +76,14 @@ function MainLayout({ children }: { children: React.ReactNode }) {
   );
 }
 
-// Layout without Navbar (for auth pages)
 function AuthLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="min-h-screen bg-[#F5F7FA]">
-      {children}
-    </div>
-  );
+  return <div className="min-h-screen bg-[#F5F7FA]">{children}</div>;
 }
 
 function AppRoutes() {
   return (
     <Suspense fallback={<PageLoader />}>
       <Routes>
-        {/* Public Routes */}
         <Route
           path="/login"
           element={
@@ -114,7 +105,6 @@ function AppRoutes() {
           }
         />
 
-        {/* Main Routes */}
         <Route
           path="/"
           element={
@@ -226,7 +216,107 @@ function AppRoutes() {
           }
         />
 
-        {/* Static Pages */}
+        <Route
+          path="/community"
+          element={
+            <MainLayout>
+              <StaticPage
+                title="训练社区"
+                description="分享训练打卡、结识同路人，打造持续的运动习惯。"
+                sections={[
+                  {
+                    title: '今日热门',
+                    items: ['30 天挑战打卡', '居家燃脂心得', '跑步配速分享'],
+                  },
+                  {
+                    title: '话题广场',
+                    content: '选择你感兴趣的话题，与更多健身伙伴互动交流。',
+                  },
+                  {
+                    title: '我的关注',
+                    content: '登录后可查看关注的教练与好友动态。',
+                  },
+                ]}
+                cta={{ label: '去发布动态', href: '/records' }}
+              />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/plans"
+          element={
+            <MainLayout>
+              <StaticPage
+                title="训练计划"
+                description="根据目标选择训练计划，系统化提升体能与体态。"
+                sections={[
+                  {
+                    title: '本周计划',
+                    items: ['周一：上肢力量', '周三：燃脂 HIIT', '周五：全身拉伸'],
+                  },
+                  {
+                    title: '热门课程',
+                    content: '精选高评分课程，适合不同训练阶段。',
+                  },
+                  {
+                    title: '计划管理',
+                    content: '登录后可同步训练记录与完成进度。',
+                  },
+                ]}
+                cta={{ label: '开始训练', href: '/records' }}
+              />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/shop"
+          element={
+            <MainLayout>
+              <StaticPage
+                title="装备商城"
+                description="精选训练装备与健康补给，助力你的训练计划。"
+                sections={[
+                  {
+                    title: '推荐装备',
+                    items: ['弹力带套装', '可调节哑铃', '瑜伽垫升级款'],
+                  },
+                  {
+                    title: '训练好物',
+                    content: '根据训练目标匹配适合的装备清单。',
+                  },
+                  {
+                    title: '购买咨询',
+                    content: '如需团购或合作，欢迎联系我们。',
+                  },
+                ]}
+                cta={{ label: '联系顾问', href: '/contact' }}
+              />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/search"
+          element={
+            <MainLayout>
+              <StaticPage
+                title="搜索中心"
+                description="输入关键词，快速查找课程、饮食与知识内容。"
+                sections={[
+                  {
+                    title: '热门搜索',
+                    items: ['燃脂 HIIT', '瑜伽拉伸', '高蛋白食谱', '跑步训练'],
+                  },
+                  {
+                    title: '快捷分类',
+                    content: '可以从首页功能入口进入对应模块。',
+                  },
+                ]}
+                cta={{ label: '查看知识库', href: '/knowledge' }}
+              />
+            </MainLayout>
+          }
+        />
+
         <Route
           path="/features"
           element={
@@ -238,7 +328,7 @@ function AppRoutes() {
                   {
                     title: '运动记录',
                     content: '快速录入每一次训练，自动生成统计图表。',
-                    items: ['多类型运动支持', '日历视图回看', '训练强度与心情记录'],
+                    items: ['多类型运动支持', '日历视图回顾', '训练强度与心情记录'],
                   },
                   {
                     title: '饮食管理',
@@ -270,10 +360,10 @@ function AppRoutes() {
                   },
                   {
                     title: '使用建议',
-                    content: '建议每天记录训练与饮食，持续 2-4 周即可看到趋势变化。',
+                    content: '建议每天记录训练与饮食，坚持 2-4 周即可看到趋势变化。',
                   },
                 ]}
-                cta={{ label: '联系客户', href: '/contact' }}
+                cta={{ label: '联系客服', href: '/contact' }}
               />
             </MainLayout>
           }
@@ -284,18 +374,18 @@ function AppRoutes() {
             <MainLayout>
               <StaticPage
                 title="联系我们"
-                description="有任何问题或合作意向，欢迎随时联系。"
+                description="有任何建议或合作意向，欢迎联系。"
                 sections={[
                   {
                     title: '邮箱',
-                    content: 'support@fittrack.app',
+                    content: 'support@fittrack.com（工作日 24 小时内回复）',
                   },
                   {
-                    title: '社交媒体',
-                    content: '关注 FitTrack 获取最新动态。',
+                    title: '商务合作',
+                    content: 'biz@fittrack.com',
                   },
                 ]}
-                cta={{ label: '返回首页', href: '/' }}
+                cta={{ label: '反馈建议', href: '/feedback' }}
               />
             </MainLayout>
           }
@@ -306,18 +396,18 @@ function AppRoutes() {
             <MainLayout>
               <StaticPage
                 title="反馈建议"
-                description="你的意见对我们很重要。"
+                description="你的想法会直接影响我们下一次更新。"
                 sections={[
                   {
-                    title: '提交方式',
-                    content: '发送邮件至 feedback@fittrack.app 或在 AI 助手中留言。',
+                    title: '反馈方式',
+                    items: ['应用内意见反馈', '发送邮件至 feedback@fittrack.com'],
                   },
                   {
-                    title: '处理时间',
-                    content: '我们会在 2 个工作日内回复。',
+                    title: '我们会做什么',
+                    content: '收到反馈后 3 个工作日内回复，并在更新日志中同步进展。',
                   },
                 ]}
-                cta={{ label: '去 AI 助手', href: '/ai' }}
+                cta={{ label: '查看功能介绍', href: '/features' }}
               />
             </MainLayout>
           }
@@ -328,18 +418,17 @@ function AppRoutes() {
             <MainLayout>
               <StaticPage
                 title="隐私政策"
-                description="我们非常重视你的隐私安全。"
+                description="我们重视你的数据安全与隐私保护。"
                 sections={[
                   {
-                    title: '数据存储',
-                    content: '训练与饮食数据保存在本地浏览器，不会上传到服务器。',
+                    title: '数据收集',
+                    content: '仅用于提供训练记录、统计分析与个性化建议。',
                   },
                   {
-                    title: '第三方服务',
-                    content: '仅在必要时使用统计与分析服务，用于优化体验。',
+                    title: '数据保护',
+                    content: '所有数据均本地存储或经加密处理，未经授权不会分享。',
                   },
                 ]}
-                cta={{ label: '返回首页', href: '/' }}
               />
             </MainLayout>
           }
@@ -350,24 +439,40 @@ function AppRoutes() {
             <MainLayout>
               <StaticPage
                 title="服务条款"
-                description="使用 FitTrack 前请阅读以下条款。"
+                description="使用 FitTrack 即表示你同意以下条款。"
                 sections={[
                   {
                     title: '使用范围',
-                    content: '本产品仅用于健身记录与健康管理，不构成医疗建议。',
+                    content: '仅供个人健康管理使用，不作为医疗建议。',
                   },
                   {
-                    title: '责任限制',
-                    content: '请在专业人士指导下进行训练，注意运动安全。',
+                    title: '责任说明',
+                    content: '请在专业人士指导下进行训练与饮食调整。',
                   },
                 ]}
-                cta={{ label: '返回首页', href: '/' }}
               />
             </MainLayout>
           }
         />
+        <Route
+          path="/forgot-password"
+          element={
+            <AuthLayout>
+              <StaticPage
+                title="找回密码"
+                description="找回功能正在完善中。"
+                sections={[
+                  {
+                    title: '临时方案',
+                    content: '请发送邮件至 support@fittrack.com，我们将协助重置。',
+                  },
+                ]}
+                backTo="/login"
+              />
+            </AuthLayout>
+          }
+        />
 
-        {/* Fallback */}
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Suspense>
@@ -379,7 +484,7 @@ function App() {
     <AuthProvider>
       <Router>
         <AppRoutes />
-        <Toaster 
+        <Toaster
           position="top-right"
           toastOptions={{
             style: {
