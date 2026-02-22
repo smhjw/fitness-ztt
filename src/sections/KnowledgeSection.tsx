@@ -7,6 +7,7 @@ import { useArticles, categoryColors, categoryLabels } from '@/hooks/useArticles
 import ArticleCard from '@/components/knowledge/ArticleCard';
 import ArticleDetail from '@/components/knowledge/ArticleDetail';
 import type { KnowledgeCategory } from '@/types';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const categories: KnowledgeCategory[] = [
   'nutrition',
@@ -20,6 +21,8 @@ const categories: KnowledgeCategory[] = [
 ];
 
 export function KnowledgeSection() {
+  const navigate = useNavigate();
+  const { articleId } = useParams();
   const {
     filteredArticles,
     searchQuery,
@@ -31,16 +34,28 @@ export function KnowledgeSection() {
     getRelatedArticles,
   } = useArticles();
 
-  const [selectedArticleId, setSelectedArticleId] = useState<string | null>(null);
-
-  const selectedArticle = selectedArticleId ? getArticleById(selectedArticleId) : null;
-  const relatedArticles = selectedArticleId ? getRelatedArticles(selectedArticleId) : [];
+  const selectedArticle = articleId ? getArticleById(articleId) : null;
+  const relatedArticles = articleId ? getRelatedArticles(articleId) : [];
 
   // Group articles by category for tab view
   const articlesByCategory = categories.reduce((acc, category) => {
     acc[category] = filteredArticles.filter(a => a.category.includes(category));
     return acc;
   }, {} as Record<KnowledgeCategory, typeof filteredArticles>);
+
+  if (articleId && !selectedArticle) {
+    return (
+      <section className="py-12">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-2xl font-bold text-[#333333] mb-2">文章不存在</h2>
+          <p className="text-[#718096] mb-6">该文章可能已被删除或不存在。</p>
+          <Button onClick={() => navigate('/knowledge')} className="rounded-full">
+            返回知识库
+          </Button>
+        </div>
+      </section>
+    );
+  }
 
   if (selectedArticle) {
     return (
@@ -49,7 +64,8 @@ export function KnowledgeSection() {
           <ArticleDetail
             article={selectedArticle}
             relatedArticles={relatedArticles}
-            onBack={() => setSelectedArticleId(null)}
+            onBack={() => navigate('/knowledge')}
+            onSelectRelated={(id) => navigate(`/knowledge/${id}`)}
           />
         </div>
       </div>
@@ -148,7 +164,7 @@ export function KnowledgeSection() {
                 <ArticleCard
                   article={filteredArticles[0]}
                   variant="featured"
-                  onClick={() => setSelectedArticleId(filteredArticles[0].id)}
+                  onClick={() => navigate(`/knowledge/${filteredArticles[0].id}`)}
                 />
               </div>
             )}
@@ -162,7 +178,7 @@ export function KnowledgeSection() {
                 <ArticleCard
                   key={article.id}
                   article={article}
-                  onClick={() => setSelectedArticleId(article.id)}
+                  onClick={() => navigate(`/knowledge/${article.id}`)}
                 />
               ))}
             </div>
@@ -183,7 +199,7 @@ export function KnowledgeSection() {
                   <ArticleCard
                     key={article.id}
                     article={article}
-                    onClick={() => setSelectedArticleId(article.id)}
+                    onClick={() => navigate(`/knowledge/${article.id}`)}
                   />
                 ))}
               </div>

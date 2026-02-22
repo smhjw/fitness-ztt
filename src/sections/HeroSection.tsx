@@ -68,10 +68,10 @@ export function HeroSection() {
   }, []);
 
   const features = [
-    { icon: <Activity className="w-5 h-5" />, title: '运动记录', description: '记录每次训练' },
-    { icon: <TrendingUp className="w-5 h-5" />, title: '数据统计', description: '掌握训练趋势' },
-    { icon: <Calendar className="w-5 h-5" />, title: '日历', description: '一眼查看安排' },
-    { icon: <BookOpen className="w-5 h-5" />, title: '知识库', description: '专业健身与健康知识' },
+    { icon: <Activity className="w-5 h-5" />, title: '运动记录', description: '记录每次训练', href: '/records' },
+    { icon: <TrendingUp className="w-5 h-5" />, title: '数据统计', description: '掌握训练趋势', href: '/statistics' },
+    { icon: <Calendar className="w-5 h-5" />, title: '日历', description: '一眼查看安排', href: '/calendar' },
+    { icon: <BookOpen className="w-5 h-5" />, title: '知识库', description: '专业健身与健康知识', href: '/knowledge' },
   ];
 
   return (
@@ -125,13 +125,19 @@ export function HeroSection() {
 
             <div className="grid grid-cols-2 gap-4 pt-8">
               {features.map((feature, index) => (
-                <div key={index} className="flex items-start gap-3 p-4 rounded-xl bg-white/80 backdrop-blur-sm shadow-card hover:shadow-card-hover transition-shadow">
+                <button
+                  key={index}
+                  type="button"
+                  onClick={() => navigate(feature.href)}
+                  className="flex items-start gap-3 p-4 rounded-xl bg-white/80 backdrop-blur-sm shadow-card hover:shadow-card-hover transition-shadow text-left"
+                  aria-label={`前往${feature.title}`}
+                >
                   <div className="w-10 h-10 rounded-lg bg-[#E6F7F6] text-[#38B2AC] flex items-center justify-center flex-shrink-0">{feature.icon}</div>
                   <div>
                     <h3 className="font-medium text-[#333333]">{feature.title}</h3>
                     <p className="text-sm text-[#718096]">{feature.description}</p>
                   </div>
-                </div>
+                </button>
               ))}
             </div>
           </div>

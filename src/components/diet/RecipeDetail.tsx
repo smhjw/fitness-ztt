@@ -30,6 +30,7 @@ interface RecipeDetailProps {
   onToggleFavorite: () => void;
   onToggleLike: () => void;
   onAddComment: (content: string) => void;
+  onSelectRelated?: (recipeId: string) => void;
 }
 
 export function RecipeDetail({ 
@@ -40,6 +41,7 @@ export function RecipeDetail({
   onToggleFavorite,
   onToggleLike,
   onAddComment,
+  onSelectRelated,
 }: RecipeDetailProps) {
   const { user } = useAuth();
   const [liked, setLiked] = useState(false);
@@ -271,9 +273,11 @@ export function RecipeDetail({
           <h3 className="text-xl font-bold text-[#333333] mb-4">相关菜谱</h3>
           <div className="grid md:grid-cols-2 gap-4">
             {relatedRecipes.map((relatedRecipe) => (
-              <div 
+              <button 
                 key={relatedRecipe.id}
-                className="flex gap-3 p-3 bg-white rounded-xl shadow-card hover:shadow-card-hover transition-shadow cursor-pointer"
+                type="button"
+                onClick={() => onSelectRelated?.(relatedRecipe.id)}
+                className="flex gap-3 p-3 bg-white rounded-xl shadow-card hover:shadow-card-hover transition-shadow text-left"
               >
                 {relatedRecipe.images[0] && (
                   <img 
@@ -286,7 +290,7 @@ export function RecipeDetail({
                   <h4 className="font-medium text-[#333333] line-clamp-1">{relatedRecipe.name}</h4>
                   <p className="text-sm text-[#718096] line-clamp-2 mt-1">{relatedRecipe.description}</p>
                 </div>
-              </div>
+              </button>
             ))}
           </div>
         </div>

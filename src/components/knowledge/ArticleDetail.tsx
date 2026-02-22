@@ -11,9 +11,10 @@ interface ArticleDetailProps {
   article: KnowledgeArticle;
   relatedArticles: KnowledgeArticle[];
   onBack: () => void;
+  onSelectRelated?: (articleId: string) => void;
 }
 
-export function ArticleDetail({ article, relatedArticles, onBack }: ArticleDetailProps) {
+export function ArticleDetail({ article, relatedArticles, onBack, onSelectRelated }: ArticleDetailProps) {
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [likeCount, setLikeCount] = useState(article.likes);
@@ -211,6 +212,11 @@ export function ArticleDetail({ article, relatedArticles, onBack }: ArticleDetai
                 key={relatedArticle.id}
                 article={relatedArticle}
                 variant="compact"
+                onClick={
+                  onSelectRelated
+                    ? () => onSelectRelated(relatedArticle.id)
+                    : undefined
+                }
               />
             ))}
           </div>

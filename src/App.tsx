@@ -159,7 +159,23 @@ function AppRoutes() {
           }
         />
         <Route
+          path="/knowledge/:articleId"
+          element={
+            <MainLayout>
+              <KnowledgeSection />
+            </MainLayout>
+          }
+        />
+        <Route
           path="/diet"
+          element={
+            <MainLayout>
+              <DietSection />
+            </MainLayout>
+          }
+        />
+        <Route
+          path="/diet/:recipeId"
           element={
             <MainLayout>
               <DietSection />

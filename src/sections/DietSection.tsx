@@ -9,6 +9,7 @@ import RecipeCard from '@/components/diet/RecipeCard';
 import RecipeDetail from '@/components/diet/RecipeDetail';
 import UploadRecipeDialog from '@/components/diet/UploadRecipeDialog';
 import useAuth from '@/hooks/useAuth';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const categories: RecipeCategory[] = [
   'breakfast', 'lunch', 'dinner', 'snack',
@@ -16,8 +17,9 @@ const categories: RecipeCategory[] = [
 ];
 
 export function DietSection() {
+  const navigate = useNavigate();
+  const { recipeId } = useParams();
   const { user } = useAuth();
-  const [selectedRecipeId, setSelectedRecipeId] = useState<string | null>(null);
   const [isUploadOpen, setIsUploadOpen] = useState(false);
   
   const {
@@ -37,9 +39,9 @@ export function DietSection() {
     addComment,
   } = useDiet();
 
-  const selectedRecipe = selectedRecipeId ? getRecipeById(selectedRecipeId) : null;
-  const relatedRecipes = selectedRecipeId 
-    ? filteredRecipes.filter(r => r.id !== selectedRecipeId).slice(0, 4)
+  const selectedRecipe = recipeId ? getRecipeById(recipeId) : null;
+  const relatedRecipes = recipeId 
+    ? filteredRecipes.filter(r => r.id !== recipeId).slice(0, 4)
     : [];
 
   const handleCreateRecipe = (data: any) => {
@@ -52,6 +54,20 @@ export function DietSection() {
     });
   };
 
+  if (recipeId && !selectedRecipe) {
+    return (
+      <section className="py-12">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-2xl font-bold text-[#333333] mb-2">菜谱不存在</h2>
+          <p className="text-[#718096] mb-6">该菜谱可能已被删除或不存在。</p>
+          <Button onClick={() => navigate('/diet')} className="rounded-full">
+            返回饮食页
+          </Button>
+        </div>
+      </section>
+    );
+  }
+
   if (selectedRecipe) {
     return (
       <section className="py-8">
@@ -60,10 +76,11 @@ export function DietSection() {
             recipe={selectedRecipe}
             isFavorite={isFavorite(selectedRecipe.id)}
             relatedRecipes={relatedRecipes}
-            onBack={() => setSelectedRecipeId(null)}
+            onBack={() => navigate('/diet')}
             onToggleFavorite={() => toggleFavorite(selectedRecipe.id)}
             onToggleLike={() => toggleLike(selectedRecipe.id)}
             onAddComment={(content) => addComment(selectedRecipe.id, content)}
+            onSelectRelated={(id) => navigate(`/diet/${id}`)}
           />
         </div>
       </section>
@@ -151,7 +168,7 @@ export function DietSection() {
                   key={recipe.id}
                   recipe={recipe}
                   isFavorite={isFavorite(recipe.id)}
-                  onClick={() => setSelectedRecipeId(recipe.id)}
+                  onClick={() => navigate(`/diet/${recipe.id}`)}
                   onToggleFavorite={() => toggleFavorite(recipe.id)}
                   onToggleLike={() => toggleLike(recipe.id)}
                 />
@@ -172,7 +189,7 @@ export function DietSection() {
                   key={recipe.id}
                   recipe={recipe}
                   isFavorite={true}
-                  onClick={() => setSelectedRecipeId(recipe.id)}
+                  onClick={() => navigate(`/diet/${recipe.id}`)}
                   onToggleFavorite={() => toggleFavorite(recipe.id)}
                   onToggleLike={() => toggleLike(recipe.id)}
                 />
@@ -193,7 +210,7 @@ export function DietSection() {
                   key={recipe.id}
                   recipe={recipe}
                   isFavorite={isFavorite(recipe.id)}
-                  onClick={() => setSelectedRecipeId(recipe.id)}
+                  onClick={() => navigate(`/diet/${recipe.id}`)}
                   onToggleFavorite={() => toggleFavorite(recipe.id)}
                   onToggleLike={() => toggleLike(recipe.id)}
                 />
