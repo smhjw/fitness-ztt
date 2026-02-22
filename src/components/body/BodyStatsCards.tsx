@@ -43,7 +43,7 @@ export function BodyStatsCards({ stats }: BodyStatsCardsProps) {
       title: '平均体重',
       value: stats.avgWeight.toFixed(1),
       unit: 'kg',
-      extra: `最高: ${stats.maxWeight.toFixed(1)} / 最低: ${stats.minWeight.toFixed(1)}`,
+      extra: `最高 ${stats.maxWeight.toFixed(1)} / 最低 ${stats.minWeight.toFixed(1)}`,
       icon: <Ruler className="w-5 h-5" />,
       color: 'from-blue-500 to-blue-600',
       bgColor: 'bg-blue-50',
@@ -79,7 +79,7 @@ export function BodyStatsCards({ stats }: BodyStatsCardsProps) {
                 {card.value}
                 {card.unit && <span className="text-sm font-normal text-[#718096] ml-1">{card.unit}</span>}
               </p>
-              
+
               {/* Change indicator */}
               {(card.change !== undefined && card.change !== 0) && (
                 <div className={`flex items-center gap-1 mt-1 text-sm ${getChangeColor(card.change)}`}>
@@ -90,17 +90,17 @@ export function BodyStatsCards({ stats }: BodyStatsCardsProps) {
                   </span>
                 </div>
               )}
-              
+
               {/* Subtitle (BMI category) */}
               {card.subtitle && (
                 <p className="mt-1 text-sm text-[#718096]">
                   {card.subtitle === 'underweight' && '偏瘦'}
                   {card.subtitle === 'normal' && '正常'}
-                  {card.subtitle === 'overweight' && '超重'}
+                  {card.subtitle === 'overweight' && '偏重'}
                   {card.subtitle === 'obese' && '肥胖'}
                 </p>
               )}
-              
+
               {/* Extra info */}
               {card.extra && (
                 <p className="mt-1 text-xs text-[#718096]">{card.extra}</p>

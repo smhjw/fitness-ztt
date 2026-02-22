@@ -31,7 +31,7 @@ export function BodyTrendChart({ title, data, unit, color = '#38B2AC', height = 
         </CardHeader>
         <CardContent>
           <div className="h-[300px] flex items-center justify-center text-[#718096]">
-            <p>暂无记录</p>
+            <p>暂无数据</p>
           </div>
         </CardContent>
       </Card>

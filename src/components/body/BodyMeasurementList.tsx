@@ -8,7 +8,6 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog';
-import { ScrollArea } from '@/components/ui/scroll-area';
 import type { BodyMeasurement } from '@/types';
 import BodyMeasurementForm from './BodyMeasurementForm';
 
@@ -41,8 +40,8 @@ export function BodyMeasurementList({ measurements, onUpdate, onDelete }: BodyMe
         <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#E6F7F6] flex items-center justify-center">
           <Scale className="w-8 h-8 text-[#38B2AC]" />
         </div>
-        <h3 className="text-lg font-medium text-[#333333] mb-1">暂无记录</h3>
-        <p className="text-[#718096]">开始记录你的身体数据吧</p>
+        <h3 className="text-lg font-medium text-[#333333] mb-1">暂无体测记录</h3>
+        <p className="text-[#718096]">开始记录你的身体变化</p>
       </div>
     );
   }
@@ -70,7 +69,7 @@ export function BodyMeasurementList({ measurements, onUpdate, onDelete }: BodyMe
                   </span>
                   {measurement.bodyFat && (
                     <Badge variant="outline" className="text-xs">
-                      体脂率: {measurement.bodyFat}%
+                      体脂 {measurement.bodyFat}%
                     </Badge>
                   )}
                 </div>
@@ -181,10 +180,10 @@ export function BodyMeasurementList({ measurements, onUpdate, onDelete }: BodyMe
       <Dialog open={!!deleteConfirmId} onOpenChange={() => setDeleteConfirmId(null)}>
         <DialogContent className="max-w-sm">
           <DialogHeader>
-            <DialogTitle>确认删除</DialogTitle>
+            <DialogTitle>删除记录</DialogTitle>
           </DialogHeader>
           <p className="text-[#718096] mb-4">
-            确认删除这条记录吗？此操作无法撤销。
+            删除后无法恢复，确定要删除吗？
           </p>
           <div className="flex gap-3">
             <Button variant="outline" onClick={() => setDeleteConfirmId(null)} className="flex-1">

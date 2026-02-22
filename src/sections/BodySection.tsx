@@ -18,7 +18,7 @@ import BodyTrendChart from '@/components/body/BodyTrendChart';
 export function BodySection() {
   const { toast } = useToast();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  
+
   const {
     measurements,
     stats,
@@ -34,27 +34,27 @@ export function BodySection() {
     try {
       await createMeasurement(data);
       setIsDialogOpen(false);
-      toast.success('保存成功');
+      toast.success('记录已添加');
     } catch (error) {
-      toast.error('操作失败，请稍后重试');
+      toast.error('添加失败，请重试');
     }
   };
 
   const handleUpdateMeasurement = async (id: string, data: any) => {
     try {
       await updateMeasurement(id, data);
-      toast.success('保存成功');
+      toast.success('记录已更新');
     } catch (error) {
-      toast.error('操作失败，请稍后重试');
+      toast.error('更新失败，请重试');
     }
   };
 
   const handleDeleteMeasurement = async (id: string) => {
     try {
       await deleteMeasurement(id);
-      toast.success('保存成功');
+      toast.success('记录已删除');
     } catch (error) {
-      toast.error('操作失败，请稍后重试');
+      toast.error('删除失败，请重试');
     }
   };
 
@@ -65,11 +65,11 @@ export function BodySection() {
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
           <div>
             <h1 className="text-3xl font-bold text-[#333333]">身体数据</h1>
-            <p className="text-[#718096] mt-1">记录并追踪身体变化</p>
+            <p className="text-[#718096] mt-1">记录体重与围度，掌握变化趋势</p>
           </div>
-          <Button 
+          <Button
             onClick={() => setIsDialogOpen(true)}
-            className="bg-[#38B2AC] hover:bg-[#2C9B95] text-white rounded-full gap-2"
+            className="bg-[#38B2AC] hover:bg-[#2C9B95] text-white rounded-full gap-2 w-full sm:w-auto"
           >
             <Plus className="w-4 h-4" />
             新增记录
@@ -90,7 +90,7 @@ export function BodySection() {
             </TabsTrigger>
             <TabsTrigger value="history" className="rounded-full data-[state=active]:bg-[#38B2AC] data-[state=active]:text-white gap-2">
               <History className="w-4 h-4" />
-              历史记录
+              记录
             </TabsTrigger>
           </TabsList>
 
@@ -106,7 +106,7 @@ export function BodySection() {
             {/* Body Fat Trend */}
             {bodyFatChartData.length > 0 && (
               <BodyTrendChart
-                title="体脂率趋势"
+                title="体脂趋势"
                 data={bodyFatChartData.map(d => ({ date: d.date, value: d.bodyFat }))}
                 unit="%"
                 color="#F59E0B"
@@ -148,6 +148,15 @@ export function BodySection() {
                   data={measurementChartData('arms')}
                   unit="cm"
                   color="#10B981"
+                  height={250}
+                />
+              )}
+              {measurementChartData('thighs').length > 0 && (
+                <BodyTrendChart
+                  title="大腿围"
+                  data={measurementChartData('thighs')}
+                  unit="cm"
+                  color="#F97316"
                   height={250}
                 />
               )}

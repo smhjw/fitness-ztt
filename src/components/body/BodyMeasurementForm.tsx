@@ -85,6 +85,7 @@ export function BodyMeasurementForm({ initialData, onSubmit, onCancel, isSubmitt
             onChange={(e) => setFormData({ ...formData, height: e.target.value })}
             placeholder="175"
             className="h-12 rounded-xl"
+            inputMode="decimal"
           />
         </div>
         <div className="space-y-2">
@@ -99,6 +100,7 @@ export function BodyMeasurementForm({ initialData, onSubmit, onCancel, isSubmitt
             onChange={(e) => setFormData({ ...formData, weight: e.target.value })}
             placeholder="70"
             className="h-12 rounded-xl"
+            inputMode="decimal"
             required
           />
         </div>
@@ -119,6 +121,7 @@ export function BodyMeasurementForm({ initialData, onSubmit, onCancel, isSubmitt
           onChange={(e) => setFormData({ ...formData, bodyFat: e.target.value })}
           placeholder="15"
           className="h-12 rounded-xl"
+          inputMode="decimal"
         />
       </div>
 
@@ -135,6 +138,7 @@ export function BodyMeasurementForm({ initialData, onSubmit, onCancel, isSubmitt
               onChange={(e) => setFormData({ ...formData, chest: e.target.value })}
               placeholder="100"
               className="h-10 rounded-xl"
+              inputMode="decimal"
             />
           </div>
           <div>
@@ -146,6 +150,7 @@ export function BodyMeasurementForm({ initialData, onSubmit, onCancel, isSubmitt
               onChange={(e) => setFormData({ ...formData, waist: e.target.value })}
               placeholder="80"
               className="h-10 rounded-xl"
+              inputMode="decimal"
             />
           </div>
           <div>
@@ -157,6 +162,7 @@ export function BodyMeasurementForm({ initialData, onSubmit, onCancel, isSubmitt
               onChange={(e) => setFormData({ ...formData, hips: e.target.value })}
               placeholder="95"
               className="h-10 rounded-xl"
+              inputMode="decimal"
             />
           </div>
           <div>
@@ -168,6 +174,7 @@ export function BodyMeasurementForm({ initialData, onSubmit, onCancel, isSubmitt
               onChange={(e) => setFormData({ ...formData, arms: e.target.value })}
               placeholder="35"
               className="h-10 rounded-xl"
+              inputMode="decimal"
             />
           </div>
           <div>
@@ -179,6 +186,7 @@ export function BodyMeasurementForm({ initialData, onSubmit, onCancel, isSubmitt
               onChange={(e) => setFormData({ ...formData, thighs: e.target.value })}
               placeholder="55"
               className="h-10 rounded-xl"
+              inputMode="decimal"
             />
           </div>
         </div>
@@ -188,12 +196,12 @@ export function BodyMeasurementForm({ initialData, onSubmit, onCancel, isSubmitt
       <div className="space-y-2">
         <Label className="flex items-center gap-2">
           <FileText className="w-4 h-4" />
-          备注（可选）
+          备注
         </Label>
         <Textarea
           value={formData.notes}
           onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-          placeholder="记录身体状态或变化"
+          placeholder="记录身体状态或备注"
           className="min-h-[80px] rounded-xl resize-none"
         />
       </div>
@@ -215,7 +223,7 @@ export function BodyMeasurementForm({ initialData, onSubmit, onCancel, isSubmitt
           disabled={isSubmitting}
           className="flex-1 h-12 bg-[#38B2AC] hover:bg-[#2C9B95] text-white rounded-xl font-medium"
         >
-          {isSubmitting ? '加载中...' : initialData ? '更新记录' : '新增记录'}
+          {isSubmitting ? '保存中...' : initialData ? '保存修改' : '保存记录'}
         </Button>
       </div>
     </form>
