@@ -1,0 +1,44 @@
+<svg width="1200" height="720" viewBox="0 0 1200 720" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1200" y2="720" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#E6F7F6" />
+      <stop offset="1" stop-color="#F5F7FA" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop stop-color="#38B2AC" />
+      <stop offset="1" stop-color="#6D28D9" />
+    </linearGradient>
+    <filter id="shadow" x="0" y="0" width="1200" height="720" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="12" stdDeviation="24" flood-color="#0F172A" flood-opacity="0.12" />
+    </filter>
+  </defs>
+
+  <rect width="1200" height="720" fill="url(#bg)" />
+
+  <rect x="80" y="60" width="1040" height="600" rx="32" fill="white" filter="url(#shadow)" />
+
+  <rect x="120" y="100" width="280" height="56" rx="18" fill="url(#accent)" />
+  <text x="148" y="138" font-size="24" font-family="Segoe UI, Arial" fill="white">FitTrack</text>
+
+  <rect x="120" y="190" width="360" height="24" rx="12" fill="#E6F7F6" />
+  <rect x="120" y="230" width="520" height="16" rx="8" fill="#E2E8F0" />
+  <rect x="120" y="260" width="460" height="16" rx="8" fill="#E2E8F0" />
+
+  <rect x="120" y="320" width="300" height="170" rx="20" fill="#F8FAFC" stroke="#E2E8F0" />
+  <rect x="440" y="320" width="300" height="170" rx="20" fill="#F8FAFC" stroke="#E2E8F0" />
+  <rect x="760" y="320" width="300" height="170" rx="20" fill="#F8FAFC" stroke="#E2E8F0" />
+
+  <rect x="160" y="360" width="140" height="16" rx="8" fill="#CBD5F5" />
+  <rect x="480" y="360" width="140" height="16" rx="8" fill="#CBD5F5" />
+  <rect x="800" y="360" width="140" height="16" rx="8" fill="#CBD5F5" />
+
+  <rect x="160" y="392" width="220" height="12" rx="6" fill="#E2E8F0" />
+  <rect x="480" y="392" width="220" height="12" rx="6" fill="#E2E8F0" />
+  <rect x="800" y="392" width="220" height="12" rx="6" fill="#E2E8F0" />
+
+  <rect x="120" y="520" width="940" height="96" rx="24" fill="#0F172A" opacity="0.06" />
+  <rect x="160" y="552" width="180" height="18" rx="9" fill="#94A3B8" />
+  <rect x="160" y="578" width="260" height="12" rx="6" fill="#CBD5F5" />
+  <rect x="720" y="548" width="300" height="36" rx="18" fill="url(#accent)" />
+  <text x="790" y="572" font-size="16" font-family="Segoe UI, Arial" fill="white">移动端优先体验</text>
+</svg>

@@ -1,66 +1,66 @@
 # FitTrack 健身记录器
 
-[![Deploy to GitHub Pages](https://github.com/smhjw/fitness-ztt/actions/workflows/deploy.yml/badge.svg)](https://github.com/smhjw/fitness-ztt/actions/workflows/deploy.yml)
-![Vite](https://img.shields.io/badge/Vite-7.2-646CFF?logo=vite&logoColor=white)
+![Vite](https://img.shields.io/badge/Vite-7.x-646CFF?logo=vite&logoColor=white)
 ![React](https://img.shields.io/badge/React-19-149ECA?logo=react&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?logo=tailwindcss&logoColor=white)
 
-一个纯前端的健身记录与健康管理应用，覆盖训练记录、数据统计、饮食与知识库、身体数据追踪和 AI 助手。项目默认简体中文，并针对移动端做了深入适配与交互动效优化。
+![FitTrack 预览](public/screenshot.svg)
 
-## 界面截图
-![首页](docs/screenshots/home.svg)
-![运动记录](docs/screenshots/records.svg)
-![饮食](docs/screenshots/diet.svg)
+## 项目简介
 
-## 功能概览
-- 运动记录：新增/编辑/删除、心情/强度/备注/图片，列表与日历双视图
-- 数据统计：训练趋势、类型分布、月度概览、近 7 天统计
-- 知识库：分类筛选、搜索、文章详情、相关文章跳转
-- 饮食：菜谱上传、收藏、评论、分类与搜索
-- 身体数据：体重/体脂/围度趋势与历史记录
-- AI 助手：训练/饮食/恢复问答
-- 账户与偏好：登录/注册、个人资料、偏好设置
-- 视觉与动效：卡片跳出动效、3D 轻微倾斜、流光高光与噪点纹理
+FitTrack 是一款移动端优先的健身记录应用，围绕训练、饮食与知识库提供轻量化管理体验，并集成 AI 助手帮助你持续进步。
 
-> 数据默认存储在浏览器 `localStorage`，无需后端即可体验完整功能。
+## 功能亮点
 
-## 技术栈
-- React 19 + TypeScript
-- Vite 7
-- Tailwind CSS
-- Radix UI
-- React Router
-- FullCalendar / Recharts
+- 运动记录：快速新增/编辑/删除训练，支持强度与心情记录
+- 数据统计：趋势图表一目了然
+- 日历回顾：按日期回看训练安排
+- 饮食管理：菜谱分类筛选、收藏与上传
+- AI 助手：训练、饮食、恢复建议随问随答
+- 移动端优先：底部导航、触控优化、安全区适配
 
-## 本地运行
+## 快速开始
+
 ```bash
 npm install
 npm run dev
 ```
 
-## 构建与预览
+构建生产版本：
+
 ```bash
 npm run build
-npm run preview
 ```
 
-## 部署说明
-- 已集成 GitHub Actions 自动部署到 GitHub Pages
-- 路由使用 `HashRouter`，页面访问路径为 `#/xxx`
+## 项目结构
 
-## 目录结构
-```
-src/
-  components/   # 组件与基础 UI
-  sections/     # 页面区块
-  hooks/        # 业务逻辑 hooks
-  services/     # 本地存储/认证等服务
-  types/        # 类型定义
-```
+- `src/components` 组件与 UI 基础库
+- `src/sections` 页面模块
+- `src/hooks` 业务逻辑与状态管理
+- `src/services` 本地存储与默认数据
 
-## 开发建议
-- Node.js 20+ 推荐
-- 如遇依赖问题，可删除 `node_modules` 后重新 `npm install`
+## 主要路由
 
----
+- `/` 首页
+- `/records` 运动记录
+- `/statistics` 数据统计
+- `/calendar` 训练日历
+- `/knowledge` 健身知识
+- `/diet` 饮食管理
+- `/ai` AI 助手
+- `/profile` 个人资料
 
-如需对接后端、增加多语言或扩展功能，请在 issue 中说明需求。
+## 技术栈
+
+- React 19 + TypeScript
+- Vite 7
+- Tailwind CSS
+- Radix UI
+- FullCalendar
+
+## 说明
+
+- 仅提供简体中文体验
+- 数据存储在浏览器 `localStorage`
+- 移动端体验为主要设计目标
