@@ -24,14 +24,12 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
+      - name: Clean dependencies
+        run: rm -rf node_modules package-lock.json
       - name: Install dependencies
-        run: |
-          npm install --include=optional || (
-            rm -rf node_modules package-lock.json &&
-            npm cache clean --force &&
-            npm install --include=optional
-          )
-          npm ls @rollup/rollup-linux-x64-gnu || npm install --no-save @rollup/rollup-linux-x64-gnu
+        run: npm install --include=optional --platform=linux --arch=x64
+      - name: Ensure rollup native package
+        run: npm ls @rollup/rollup-linux-x64-gnu || npm install --no-save @rollup/rollup-linux-x64-gnu
       - name: Build
         run: npm run build
       - name: Upload artifact
