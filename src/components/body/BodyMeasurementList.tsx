@@ -37,8 +37,8 @@ export function BodyMeasurementList({ measurements, onUpdate, onDelete }: BodyMe
   if (measurements.length === 0) {
     return (
       <div className="text-center py-12">
-        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#E6F7F6] flex items-center justify-center">
-          <Scale className="w-8 h-8 text-[#38B2AC]" />
+        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#FFF1EA] flex items-center justify-center">
+          <Scale className="w-8 h-8 text-[#FF6A3D]" />
         </div>
         <h3 className="text-lg font-medium text-[#333333] mb-1">暂无体测记录</h3>
         <p className="text-[#718096]">开始记录你的身体变化</p>
@@ -55,8 +55,8 @@ export function BodyMeasurementList({ measurements, onUpdate, onDelete }: BodyMe
         >
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-lg bg-[#E6F7F6] flex items-center justify-center">
-                <Calendar className="w-5 h-5 text-[#38B2AC]" />
+              <div className="w-10 h-10 rounded-lg bg-[#FFF1EA] flex items-center justify-center">
+                <Calendar className="w-5 h-5 text-[#FF6A3D]" />
               </div>
               <div>
                 <h4 className="font-medium text-[#333333]">
@@ -93,7 +93,7 @@ export function BodyMeasurementList({ measurements, onUpdate, onDelete }: BodyMe
                 variant="ghost"
                 size="sm"
                 onClick={() => setEditingMeasurement(measurement)}
-                className="h-8 text-[#38B2AC] hover:text-[#2C9B95] hover:bg-[#E6F7F6]"
+                className="h-8 text-[#FF6A3D] hover:text-[#F4511E] hover:bg-[#FFF1EA]"
               >
                 <Edit2 className="w-4 h-4" />
               </Button>

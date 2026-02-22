@@ -15,9 +15,9 @@ export function BodyStatsCards({ stats }: BodyStatsCardsProps) {
       change: stats.weightChange,
       changePercent: stats.weightChangePercent,
       icon: <Scale className="w-5 h-5" />,
-      color: 'from-[#38B2AC] to-[#2C9B95]',
-      bgColor: 'bg-[#E6F7F6]',
-      textColor: 'text-[#38B2AC]',
+      color: 'from-[#FF6A3D] to-[#F4511E]',
+      bgColor: 'bg-[#FFF1EA]',
+      textColor: 'text-[#FF6A3D]',
     },
     {
       title: 'BMI',

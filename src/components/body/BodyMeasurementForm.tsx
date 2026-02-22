@@ -221,7 +221,7 @@ export function BodyMeasurementForm({ initialData, onSubmit, onCancel, isSubmitt
         <Button
           type="submit"
           disabled={isSubmitting}
-          className="flex-1 h-12 bg-[#38B2AC] hover:bg-[#2C9B95] text-white rounded-xl font-medium"
+          className="flex-1 h-12 bg-[#FF6A3D] hover:bg-[#F4511E] text-white rounded-xl font-medium"
         >
           {isSubmitting ? '保存中...' : initialData ? '保存修改' : '保存记录'}
         </Button>

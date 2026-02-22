@@ -10,7 +10,7 @@ interface BodyTrendChartProps {
   height?: number;
 }
 
-export function BodyTrendChart({ title, data, unit, color = '#38B2AC', height = 300 }: BodyTrendChartProps) {
+export function BodyTrendChart({ title, data, unit, color = '#FF6A3D', height = 300 }: BodyTrendChartProps) {
   const chartData = useMemo(
     () =>
       data.map((item) => {
