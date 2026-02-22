@@ -1,4 +1,4 @@
-import { Suspense, lazy, useMemo, useState } from 'react';
+import { Suspense, lazy, useMemo, useState, useEffect } from 'react';
 import { Plus, Filter, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -9,14 +9,25 @@ import RecordList from '@/components/records/RecordList';
 import { useRecords } from '@/hooks/useRecords';
 import { useToast } from '@/components/ui/sonner';
 import type { ExerciseType } from '@/types';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const ExerciseCalendar = lazy(() => import('@/components/calendar/ExerciseCalendar'));
 
 export function RecordsSection() {
   const { toast } = useToast();
   const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState<'list' | 'calendar'>('list');
+  const location = useLocation();
+  const navigate = useNavigate();
+  const getTabFromPath = (pathname: string) => (pathname.startsWith('/calendar') ? 'calendar' : 'list');
+  const [activeTab, setActiveTab] = useState<'list' | 'calendar'>(() => getTabFromPath(location.pathname));
   const { records, filteredRecords, filter, setFilter, createRecord, updateRecord, deleteRecord, getCalendarEvents } = useRecords();
+
+  useEffect(() => {
+    const nextTab = getTabFromPath(location.pathname);
+    if (nextTab !== activeTab) {
+      setActiveTab(nextTab);
+    }
+  }, [location.pathname, activeTab]);
 
   const handleCreateRecord = async (data: any) => {
     try {
@@ -103,7 +114,15 @@ export function RecordsSection() {
           </Dialog>
         </div>
 
-        <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as 'list' | 'calendar')} className="space-y-6">
+        <Tabs
+          value={activeTab}
+          onValueChange={(value) => {
+            const nextTab = value as 'list' | 'calendar';
+            setActiveTab(nextTab);
+            navigate(nextTab === 'calendar' ? '/calendar' : '/records');
+          }}
+          className="space-y-6"
+        >
           <TabsList className="bg-white border border-gray-200 p-1 rounded-full overflow-x-auto flex-nowrap max-w-full justify-start md:justify-center">
             <TabsTrigger value="list" className="rounded-full data-[state=active]:bg-[#38B2AC] data-[state=active]:text-white gap-2">
               <Filter className="w-4 h-4" />
